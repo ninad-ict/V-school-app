@@ -16,9 +16,16 @@ function App() {
 
   const [login,setLogin]=useState(()=>{
     if(localStorage.getItem('login')&&localStorage.getItem("login")==="true")
-    return true
+    {
+      console.log("Login is true");
+      return true;
+    }
     else
-    return false;
+    {
+      console.log("Login is false");
+      return false;
+
+    }
     });
 
   const [profileSelect,setProfileSelect]=useState(false);
