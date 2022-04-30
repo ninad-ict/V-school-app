@@ -54,7 +54,8 @@ function App() {
 
   return (
     <>
-      <Router>
+    {/* /V-school-app */}
+      <Router basename="/V-school-app">
         <AccessibleNavigationAnnouncer />
        
           {
