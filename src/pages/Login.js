@@ -68,7 +68,7 @@ function Login(props) {
                 placeholder="" value={number} 
               onChange={e=>setNumber(e.target.value)}
               />
-              {(!number||number.length==10) ? "":<HelperText valid={false}>Provide a valid Contact Number</HelperText>}
+              {(/^[6-9]\d{9}$/.test(number)&&number) ? "":<HelperText valid={false}>Provide a valid Contact Number</HelperText>}
             </Label>
             {/* {if (number!=10)} <p className='text-red-600 text-xs'>Enter Correct Number</p> */}
             </div>    
@@ -91,7 +91,7 @@ function Login(props) {
           
           }
               <Button className="mt-4" block
-              disabled={((numberMode&&number.length!=10)||(!numberMode&&otp.length!=4)) ? true:false} onClick={handleSubmitPhone}>
+              disabled={((numberMode&&!/^[6-9]\d{9}$/.test(number))||(!numberMode&&otp.length!=4)) ? true:false} onClick={handleSubmitPhone}>
                 {(numberMode) ? "Send OTP":"Login"}
               </Button>
             </div>
