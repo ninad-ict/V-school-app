@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "88c3a633e797b6a6f86a3a5707196c60",
+    "revision": "516b7cfb7eddc044ef1d3e4e7568d452",
     "url": "/V-school-app/index.html"
   },
   {
-    "revision": "03c57e5f340a8942d657",
+    "revision": "f79abb7db4f3b3c2b88e",
     "url": "/V-school-app/static/css/main.533a7547.chunk.css"
   },
   {
@@ -108,8 +108,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/V-school-app/static/js/9.c8b61c10.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "03c57e5f340a8942d657",
-    "url": "/V-school-app/static/js/main.0886f258.chunk.js"
+    "revision": "f79abb7db4f3b3c2b88e",
+    "url": "/V-school-app/static/js/main.d2264c2e.chunk.js"
   },
   {
     "revision": "e8bd6a35d44583c17208",
