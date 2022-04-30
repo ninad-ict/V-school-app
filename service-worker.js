@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/V-school-app/precache-manifest.7d4a3a71afc4c9317ac58869841bdb64.js"
+  "/V-school-app/precache-manifest.9e2ab3503c89ab7ad86e7cd95ba442b3.js"
 );
 
 self.addEventListener('message', (event) => {
