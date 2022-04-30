@@ -24,7 +24,6 @@ function App() {
     {
       console.log("Login is false");
       return false;
-
     }
     });
 
@@ -63,8 +62,7 @@ function App() {
             <Switch> 
             <Route exact path="/" render={()=><Login checkLogin={setLogin}/>} />
             <Route path="/login" render={()=><Login checkLogin={setLogin}/>}  />
-            <Redirect exact from="/" render={()=><Login checkLogin={setLogin}/>} />
-            <Redirect from="*" render={()=><Login checkLogin={setLogin}/>} />
+            <Redirect from="*" to="/" />
             </Switch>
             
             :
