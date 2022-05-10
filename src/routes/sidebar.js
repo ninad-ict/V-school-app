@@ -34,6 +34,10 @@ const routes = [
     path: '/app/settings', // the url
     icon: 'MenuIcon', // the component being exported from icons/index.js
     name: 'Settings', // name that appear in Sidebar
+  },{
+    path: '/app/s', // the url
+    icon: 'OutlineLogoutIcon', // the component being exported from icons/index.js
+    name: 'Logout', // name that appear in Sidebar
   }
   // }, {
   //   path: '/app/dashboard', // the url

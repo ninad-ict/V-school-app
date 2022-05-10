@@ -177,7 +177,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       
 <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4" >
 {chapters.map((v,k)=>(
-      <Card className="mb-8 shadow-md hover:bg-purple-100" onClick={()=>setCurrChapter(v.chapter)}>
+      <Card className="mb-8 shadow-md dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v.chapter)}>
         <CardBody>
 
        
@@ -208,7 +208,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      </div>
      {parts.map((v,k)=>(
       <div className="w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
-      <Card className="mb-8 shadow-md hover:bg-purple-100" onClick={()=>setCurrPart(v.part)}>
+      <Card className="mb-8 shadow-md hover:bg-purple-100 dark:hover:bg-purple-300" onClick={()=>setCurrPart(v.part)}>
         <CardBody>
 
        
