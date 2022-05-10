@@ -242,7 +242,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
        <p className="text-gray-600 dark:text-gray-400">
             <img
               aria-hidden="true"
-              className="object-cover w-full h-full dark:hidden"
+              className="object-cover w-full h-full"
               src={Tiger}
               alt="tiger"
             />
