@@ -26,6 +26,7 @@ function Layout() {
 
       <div className="flex flex-col flex-1 w-full">
         <Header />
+        
         <Main>
           <Suspense fallback={<ThemedSuspense />}>
             <Switch>
@@ -46,6 +47,7 @@ function Layout() {
           </Suspense>
         </Main>
       </div>
+      
     </div>
   )
 }

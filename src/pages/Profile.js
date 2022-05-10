@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import ImageLight from '../assets/img/SchoolChildren.jpeg'
@@ -14,28 +14,29 @@ import RoundIcon from '../components/RoundIcon';
 import { fa } from 'faker/lib/locales'
 
 function Profile(props) {
-  const [number,setNumber]=useState("");
-  const [otp,setOtp]=useState("");
-  const [password,setPassword]=useState("");
-  const [numberMode,setNumberMode]=useState(true);
 
-  const student=['Ninad Khanolkar','Amol Khanolkar','Rahul Nair','Vivek Sinha'];
+  const student=['Ninad Khanolkar','Amol Khanolkar','Vivek Sinha','Rahul Nair'];
 
-  const handlecheckLogin=props.checkProfile;
+  const [profileName,setProfileName]=useState("");
 
-  function handleSubmitPhone()
+  const handlecheckProfile=props.checkProfile;
+
+
+  function handleProfileClick(v)
   {
-
-    if(numberMode)
-     {
-       setNumberMode(false);
-       return;
-     }
-
-      handlecheckLogin(true);
-      localStorage.setItem("login",true);
-
+    console.log("Click");
+    handlecheckProfile(true);
+    localStorage.setItem("profile",v)
   }
+
+
+  useEffect(()=>{
+    if(profileName)
+    {
+      handlecheckProfile(true);
+      localStorage.setItem("profile",profileName)
+    }
+  },[profileName]);
 
 
 
@@ -74,7 +75,7 @@ function Profile(props) {
       <div className="w-full lg:w-12/12 pr-4 font-light">
 
   {/* <Image src= */}
-  <InfoCard title="Student" value={v}>
+  <InfoCard title="Student" value={v} handleClick={e=>setProfileName(v)}>
           <RoundIcon
             icon={SmileIcon}
             className="mr-4 hover:bg-sky-200"

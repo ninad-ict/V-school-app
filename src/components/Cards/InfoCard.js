@@ -1,9 +1,9 @@
 import React from 'react'
 import { Card, CardBody } from '@windmill/react-ui'
 
-function InfoCard({ title, value, children: icon }) {
+function InfoCard({ title, value, children: icon,handleClick}) {
   return (
-    <Card>
+    <Card onClick={handleClick}>
       <CardBody className="flex items-center hover:bg-purple-400 hover:text-gray-50">
         {icon}
         <div>

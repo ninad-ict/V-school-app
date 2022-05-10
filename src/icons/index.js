@@ -28,6 +28,8 @@ import { ReactComponent as OutlineCogIcon } from './outlineCog.svg'
 import { ReactComponent as OutlineLogoutIcon } from './outlineLogout.svg'
 import { ReactComponent as RightIcon } from './right.svg'
 import { ReactComponent as SmileIcon } from './smile.svg'
+import { ReactComponent as DownIcon } from './down.svg'
+import { ReactComponent as BookIcon } from './book.svg'
 
 export {
   ButtonsIcon,
@@ -59,5 +61,7 @@ export {
   OutlineCogIcon,
   OutlineLogoutIcon,
   RightIcon,
-  SmileIcon
+  SmileIcon,
+  DownIcon,
+  BookIcon
 }

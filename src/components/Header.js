@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import { SidebarContext } from '../context/SidebarContext'
+import { UserContext } from '../context/UserContext';
 import {
   SearchIcon,
   MoonIcon,
@@ -10,7 +11,13 @@ import {
   OutlineCogIcon,
   OutlineLogoutIcon,
 } from '../icons'
-import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui'
+import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext,Button } from '@windmill/react-ui'
+import { HeartIcon, DownIcon } from '../icons';
+
+const sectionList=['Main Syllabus','Special Courses','Total Usage'];
+
+
+
 
 function Header() {
   const { mode, toggleMode } = useContext(WindmillContext)
@@ -18,9 +25,24 @@ function Header() {
 
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  const [isMainSectionOpen,setIsMainSectionOpen]=useState(false);
+  
+  const [sectionName,setSectionName]=useState(sectionList[0]);
+
+  const userContext=useContext(UserContext);
+
+  userContext.changeSection(sectionName);
+
+
+  // useEffect(()=>{
+  //   userContext.changeSection(sectionName)
+  // },[sectionName]);
+
+ 
 
   const routeChange=()=>{
     localStorage.setItem("login",false);
+    localStorage.setItem("profile","");
     window.location.reload();
 }
 
@@ -32,9 +54,13 @@ function Header() {
     setIsProfileMenuOpen(!isProfileMenuOpen)
   }
 
+  function toggleDropdown() {
+    setIsMainSectionOpen(!isMainSectionOpen)
+  }
+
   return (
     <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
-      <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+      <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300 ">
         {/* <!-- Mobile hamburger --> */}
         <button
           className="p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple"
@@ -44,16 +70,24 @@ function Header() {
           <MenuIcon className="w-6 h-6" aria-hidden="true" />
         </button>
         {/* <!-- Search input --> */}
-        <div className="flex justify-center flex-1 lg:mr-32">
-          <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-            <div className="absolute inset-y-0 flex items-center pl-2">
-              <SearchIcon className="w-4 h-4" aria-hidden="true" />
-            </div>
-            <Input
-              className="pl-8 text-gray-700"
-              placeholder="Search for projects"
-              aria-label="Search"
-            />
+        <div className="flex flex-1 lg:mr-2">
+          <div className="relative w-full max-w-xl focus-within:text-purple-500 mx-auto">
+            <div className="inset-y-0 flex items-center pl-2">
+              {/* <SearchIcon className="w-4 h-4" aria-hidden="true" /> */}
+              <div className="relative mx-auto">
+      <Button layout="outline" onClick={toggleDropdown} aria-label="Notifications" aria-haspopup="true" className='px-10 lg:px-20 mx-auto' iconRight={DownIcon}>
+       {sectionName}
+      </Button>
+      <Dropdown isOpen={isMainSectionOpen} onClose={() => setIsMainSectionOpen(false)} value={sectionName}>
+      {sectionList.map( (v,k)=>(
+        <DropdownItem className="justify-between" onClick={e => (setSectionName(e.target.innerText),setIsMainSectionOpen(false))}>
+        {v}
+        </DropdownItem> 
+      ))
+      }
+      </Dropdown>
+    </div>
+            </div>     
           </div>
         </div>
         <ul className="flex items-center flex-shrink-0 space-x-6">
@@ -94,7 +128,7 @@ function Header() {
             >
               <DropdownItem tag="a" href="#" className="justify-between">
                 <span>Messages</span>
-                <Badge type="danger">13</Badge>
+                <Badge type="danger">133</Badge>
               </DropdownItem>
               <DropdownItem tag="a" href="#" className="justify-between">
                 <span>Sales</span>
@@ -145,4 +179,4 @@ function Header() {
   )
 }
 
-export default Header
+export default Header;
