@@ -1,7 +1,8 @@
-import React, { lazy, useRef } from 'react'
+import React, { lazy, useRef,useContext } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
 import { useState } from 'react';
+import { UserContext } from './context/UserContext';
 
 const Layout = lazy(() => import('./containers/Layout'))
 const Login = lazy(() => import('./pages/Login'))
@@ -13,60 +14,61 @@ const Home = lazy(() => import('./pages/Home'))
 
 function App() {
 
+  const pageHeading=useContext(UserContext);
 
 
   console.log("local->"+localStorage.getItem('login'));
     
-  const [profileSelect,setProfileSelect]=useState(()=>{
-    if(localStorage.getItem('profile'))
-    {
-      console.log("Profile is selected");
-      return localStorage.getItem('profile');
-    }
-    else
-    {
-      console.log("profile is not selected");
-      return "";
-    }
-    });
+  // const [profileSelect,setProfileSelect]=useState(()=>{
+  //   if(localStorage.getItem('profile'))
+  //   {
+  //     console.log("Profile is selected");
+  //     return localStorage.getItem('profile');
+  //   }
+  //   else
+  //   {
+  //     console.log("profile is not selected");
+  //     return "";
+  //   }
+  //   });
 
-    console.log("profile->"+localStorage.getItem('profile'));
+  //   console.log("profile->"+localStorage.getItem('profile'));
 
-  const [login,setLogin]=useState(()=>{
-    if(localStorage.getItem('login')&&localStorage.getItem("login")==="true")
-    {
-      console.log("Login is true");
-      return true;
-    }
-    else
-    {
-      console.log("Login is false");
-      setProfileSelect("");
-      return false;
-    }
-    });
+  // const [login,setLogin]=useState(()=>{
+  //   if(localStorage.getItem('login')&&localStorage.getItem("login")==="true")
+  //   {
+  //     console.log("Login is true");
+  //     return true;
+  //   }
+  //   else
+  //   {
+  //     console.log("Login is false");
+  //     setProfileSelect("");
+  //     return false;
+  //   }
+  //   });
 
 
   return (
     <>
-    {console.log("Profile is "+profileSelect)}
+    {console.log("Profile is "+pageHeading.profile)}
     {/* /V-school-app */}
       <Router basename="/V-school-app">
         <AccessibleNavigationAnnouncer />
        
           {
-            (!login)?
+            (!pageHeading.login)?
             <Switch> 
-            <Route exact path="/" render={()=><Login checkLogin={setLogin}/>} />
-            <Route path="/login" render={()=><Login checkLogin={setLogin}/>}  />
+            <Route exact path="/" render={()=><Login/>} />
+            <Route path="/login" render={()=><Login/>}  />
             <Redirect from="*" to="/" />
             </Switch>
             
             :
 
-              (!profileSelect)? 
+              (!pageHeading.profile)? 
             <Switch>
-            <Route exact path="/profile" render={()=><Profile checkProfile={setProfileSelect}/>} />
+            <Route exact path="/profile" render={()=><Profile/>} />
             <Redirect from="*" to="/profile" />
             </Switch>
             :

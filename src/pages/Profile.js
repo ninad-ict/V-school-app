@@ -1,19 +1,25 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect,useContext } from 'react'
+import { Link,useHistory,useNavigate } from 'react-router-dom';
 
-import ImageLight from '../assets/img/SchoolChildren.jpeg'
-import ImageDark from '../assets/img/SchoolChildren.jpeg'
-import { GithubIcon, TwitterIcon } from '../icons'
-import { Label, Input, Button,HelperText } from '@windmill/react-ui'
+import ImageLight from '../assets/img/SchoolChildren.jpeg';
+import ImageDark from '../assets/img/SchoolChildren.jpeg';
+import { GithubIcon, TwitterIcon } from '../icons';
+import { Label, Input, Button,HelperText } from '@windmill/react-ui';
 import {RightIcon} from "../icons";
 // import {HeartIcon} from "../icons";
 import {useState} from "react";
-import { SmileIcon } from '../icons';
+import { SmileIcon,OutlineLogoutIcon } from '../icons';
 import InfoCard from '../components/Cards/InfoCard'
 import RoundIcon from '../components/RoundIcon';
-import { fa } from 'faker/lib/locales'
+import { fa } from 'faker/lib/locales';
+import { UserContext } from '../context/UserContext';
+
 
 function Profile(props) {
+
+  const history=useHistory();
+
+  const pageHeading=useContext(UserContext);
 
   const student=['Ninad Khanolkar','Amol Khanolkar','Vivek Sinha','Rahul Nair'];
 
@@ -22,21 +28,28 @@ function Profile(props) {
   const handlecheckProfile=props.checkProfile;
 
 
-  function handleProfileClick(v)
-  {
-    console.log("Click");
-    handlecheckProfile(true);
-    localStorage.setItem("profile",v)
-  }
+  // function handleLogout()
+  // {
+  //   console.log("It reached handleLogout")
+  //   localStorage.setItem("login",false);
+  //   localStorage.setItem("profile","");
+  //   history.push('/login');
+  // }
 
+  const handleLogout = () => {
+
+    localStorage.setItem("login",false);
+    localStorage.setItem("profile","");
+    pageHeading.changeLogin(false);
+    pageHeading.changeProfile("");
+  };
 
   useEffect(()=>{
     if(profileName)
     {
-      handlecheckProfile(true);
       localStorage.setItem("profile",profileName)
     }
-  },[profileName]);
+  },[pageHeading.profile]);
 
 
 
@@ -75,7 +88,7 @@ function Profile(props) {
       <div className="w-full lg:w-12/12 pr-4 font-light">
 
   {/* <Image src= */}
-  <InfoCard title="Student" value={v} handleClick={e=>setProfileName(v)}>
+  <InfoCard title="Student" value={v} handleClick={e=>pageHeading.changeProfile(v)}>
           <RoundIcon
             icon={SmileIcon}
             className="mr-4 hover:bg-sky-200"
@@ -84,10 +97,13 @@ function Profile(props) {
 </div>
     ))
   }
-              
-    
-     
             </div>
+            <div className='flex flex-wrap mt-10 float-right'>
+            <Button onClick={handleLogout}><OutlineLogoutIcon className="w-5 h-5" aria-hidden="true" />
+            logout
+          </Button>
+            </div>
+            
             </div>
           </main>
         </div>

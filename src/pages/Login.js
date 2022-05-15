@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { Link } from 'react-router-dom'
 
 import ImageLight from '../assets/img/SchoolChildren.jpeg'
@@ -8,15 +8,20 @@ import { Label, Input, Button,HelperText } from '@windmill/react-ui'
 import {RightIcon} from "../icons";
 // import {HeartIcon} from "../icons";
 import {useState} from "react";
-import { fa } from 'faker/lib/locales'
+import { fa } from 'faker/lib/locales';
 
-function Login(props) {
+import { UserContext } from '../context/UserContext';
+
+
+function Login() {
   const [number,setNumber]=useState("");
   const [otp,setOtp]=useState("");
   const [password,setPassword]=useState("");
   const [numberMode,setNumberMode]=useState(true);
 
-  const handlecheckLogin=props.checkLogin;
+  // const handlecheckLogin=props.checkLogin;
+
+  const pageHeading=useContext(UserContext);
 
   function handleSubmitPhone()
   {
@@ -27,7 +32,8 @@ function Login(props) {
        return;
      }
 
-      handlecheckLogin(true);
+      // handlecheckLogin(true);
+      pageHeading.changeLogin(true);
       localStorage.setItem("login",true);
 
   }
