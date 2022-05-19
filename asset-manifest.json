@@ -9,8 +9,8 @@
     "static/js/3.aabf5bc0.chunk.js": "/V-school-app/static/js/3.aabf5bc0.chunk.js",
     "static/js/3.aabf5bc0.chunk.js.map": "/V-school-app/static/js/3.aabf5bc0.chunk.js.map",
     "main.css": "/V-school-app/static/css/main.52ccd651.chunk.css",
-    "main.js": "/V-school-app/static/js/main.8d65938f.chunk.js",
-    "main.js.map": "/V-school-app/static/js/main.8d65938f.chunk.js.map",
+    "main.js": "/V-school-app/static/js/main.45e02f42.chunk.js",
+    "main.js.map": "/V-school-app/static/js/main.45e02f42.chunk.js.map",
     "runtime-main.js": "/V-school-app/static/js/runtime-main.c055b21b.js",
     "runtime-main.js.map": "/V-school-app/static/js/runtime-main.c055b21b.js.map",
     "static/js/6.8263c4a7.chunk.js": "/V-school-app/static/js/6.8263c4a7.chunk.js",
@@ -38,7 +38,7 @@
     "static/js/17.78faae38.chunk.js": "/V-school-app/static/js/17.78faae38.chunk.js",
     "static/js/17.78faae38.chunk.js.map": "/V-school-app/static/js/17.78faae38.chunk.js.map",
     "index.html": "/V-school-app/index.html",
-    "precache-manifest.f2f6e439ca3645e363dfde9f90d3a507.js": "/V-school-app/precache-manifest.f2f6e439ca3645e363dfde9f90d3a507.js",
+    "precache-manifest.be1a8d4e8cbddde1199ce0e953633ada.js": "/V-school-app/precache-manifest.be1a8d4e8cbddde1199ce0e953633ada.js",
     "service-worker.js": "/V-school-app/service-worker.js",
     "static/css/main.52ccd651.chunk.css.map": "/V-school-app/static/css/main.52ccd651.chunk.css.map",
     "static/js/0.5ca22ba4.chunk.js.LICENSE.txt": "/V-school-app/static/js/0.5ca22ba4.chunk.js.LICENSE.txt",
@@ -90,6 +90,6 @@
     "static/js/runtime-main.c055b21b.js",
     "static/js/6.8263c4a7.chunk.js",
     "static/css/main.52ccd651.chunk.css",
-    "static/js/main.8d65938f.chunk.js"
+    "static/js/main.45e02f42.chunk.js"
   ]
 }
