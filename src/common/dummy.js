@@ -1,0 +1,171 @@
+export default chapter = `
+[
+
+	{
+		"0":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><span style='font-weight: 400;'>विद्यार्थी मित्र मैत्रिणींनो, मागील भागात आपण छाया निर्मिती या घटकाचा अभ्यास केला. या भागात आपण </span><strong>सूर्यतबकडी</strong><span style='font-weight: 400;'> या कालमापक या यंत्राचा आणि थोर भारतीय शास्त्रज्ञ </span><strong>सर सी.व्ही.रामन</strong><span style='font-weight: 400;'> यांचा अभ्यास करणार आहोत.</span></p><hr /><p>&nbsp;</p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"1":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><strong>खालील व्हिडिओ लक्षपूर्वक पहा आणि महत्वाच्या बाबी वहीत लिहा.</strong></p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"2":{
+		"tag":"",
+		"type":"VIDEO",
+		"color":"#F0F0F0",
+		"value":"https://youtu.be/65En7nvX7fk",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"3":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><strong>सूर्य तबकडी - </strong></p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"4":{
+		"type":"GIF",
+		"color":"#F0F0F0",
+		"value":"https://s3-ap-south-1.amazonaws.com/vopa-api/media/22/null/Pic36.gif",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"5":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><strong>सूर्य तबकडी -&nbsp;</strong></p><p><span style='font-weight: 400;'>जंतर मंतर अथवा यंत्र मंदिर ह्या खगोलशास्त्राचा अभ्यास करण्यासाठी बांधल्या गेलेल्या वास्तू आहेत. इ.स. १७२४ ते १७३५ ह्या दरम्यान जयपूरचे महाराजा जयसिंग ह्यांनी भारतातील दिल्ली, जयपूर, उज्जैन, वाराणसी व मथुरा ह्या ५ शहरांमध्ये ह्या वेधशाळा बांधल्या. ह्यांचा प्रमुख उद्देश खगोलशास्त्रीय तक्ते तयार करून सूर्य, चंद्र व इतर ग्रहांच्या गतीचे निरीक्षण, गणित व भाकित करणे हा होता.</span></p><hr /><p>&nbsp;</p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"6":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><strong>सावली कोणत्या अंशात पडते हे पाहून आपण वेळे सांगण्याची हि पुरातन पद्धत आहे. </strong></p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"7":{
+		"type":"IMG",
+		"color":"#F0F0F0",
+		"value":"https://s3-ap-south-1.amazonaws.com/vopa-api/media/22/null/Pic35.jpg",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"8":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><strong>जंतर मंतर या ऐतिहासिक स्थानाची थोडक्यात माहिती घेऊया - </strong></p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"9":{
+		"tag":"",
+		"type":"VIDEO",
+		"color":"#F0F0F0",
+		"value":"https://youtu.be/DAMdQ-1yVbU",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"10":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><strong>सौर घड्याळ कसे कार्य करते हे समजून घ्या.</strong></p>",
+		"content_id":125,
+		"sequence_id":7
+		}
+	},
+	{
+		"11":{
+		"tag":"",
+		"type":"VIDEO",
+		"color":"#F0F0F0",
+		"value":"https://youtu.be/_MFM8PFio6k",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"12":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><span style='color: #be00ff;'><strong>Do it Yourself -</strong></span></p><p><span style='color: #be00ff;'><strong>स्वतः करून पहा -</strong></span></p><p><span style='font-weight: 400;'>घरातील वस्तूंच्या सहाय्याने सौर घड्याळ बनवा आणि शिक्षकांना दाखवा.</span></p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"13":{
+		"tag":"",
+		"type":"VIDEO",
+		"color":"#F0F0F0",
+		"value":"https://youtu.be/Hbda718rFmM",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"14":{
+		"type":"IMG",
+		"color":"#F0F0F0",
+		"value":"https://s3-ap-south-1.amazonaws.com/vopa-api/media/22/null/Pic38.jpg",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"15":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><strong>खालील पावर पोइंट प्रेझेन्टेशन (PPT) लक्षपूर्वक पहा. आणि महत्वाचे मुद्दे वहीत लिहा. </strong></p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"16":{
+		"type":"PPT",
+		"color":"#F0F0F0",
+		"value":"https://s3-ap-south-1.amazonaws.com/vopa-api/media/22/null/Light PPT-Marathi Medium.pptx",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"17":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><span style='font-weight: 400;'>खालील </span><strong>वर्कशीट प्रिंट करा</strong><span style='font-weight: 400;'> आणि वर्कशीट मधील सोडविलेले प्रश्न शिक्षकांना दाखवा.</span></p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"18":{
+		"type":"PDF",
+		"color":"#F0F0F0",
+		"value":"https://s3-ap-south-1.amazonaws.com/vopa-api/media/22/null/Worksheet Marathi.pdf",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"19":{
+		"tag":"span",
+		"type":"TEXT",
+		"color":"#F0F0F0",
+		"value":"<p><strong>खालील ऑनलाईन टेस्ट पेपर लक्षपूर्वक सोडवा.</strong></p>",
+		"content_id":125,
+		"sequence_id":7
+		},
+		"20":{
+		"tag":"",
+		"type":"gForm",
+		"color":"#F0F0F0",
+		"value":"https://docs.google.com/forms/d/e/1FAIpQLSejCpV9i1QJNF0C255UDjZkqtTc7Fe6F1s5zw-RSinI1MIhGg/viewform",
+		"content_id":125,
+		"sequence_id":7
+		}
+	}
+]`;

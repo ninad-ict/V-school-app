@@ -1,10 +1,11 @@
-import React from 'react'
-import { Card, CardBody } from '@windmill/react-ui'
+import React,{useState} from 'react'
+import { Card, CardBody } from '@windmill/react-ui';
 
 function InfoCard({ title, value, children: icon,handleClick}) {
+
   return (
-    <Card onClick={handleClick}>
-      <CardBody className="flex items-center hover:bg-purple-400 hover:text-gray-50">
+    <Card onClick={handleClick} >
+      <CardBody className="flex items-center hover:bg-purple-400 hover:text-gray-50 ">
         {icon}
         <div>
           <p className="mb-2 text-sm font-medium text-gray-600">{title}</p>

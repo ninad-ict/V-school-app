@@ -12,6 +12,10 @@ import { fa } from 'faker/lib/locales';
 
 import { UserContext } from '../context/UserContext';
 
+import {startAuth,verifyOTP} from "../dataFromServer";
+
+// import {login, startAuth} from '../redux/actions';
+
 
 function Login() {
   const [number,setNumber]=useState("");
@@ -25,12 +29,19 @@ function Login() {
 
   function handleSubmitPhone()
   {
+    console.log("Before numberMode condition");
 
     if(numberMode)
      {
+
+      console.log("ABout to enter startAuth");
+       startAuth(number,false,null);
        setNumberMode(false);
+
        return;
      }
+     console.log("ABout to enter verifyOTP");
+     verifyOTP(number,otp);
 
       // handlecheckLogin(true);
       pageHeading.changeLogin(true);
@@ -97,7 +108,7 @@ function Login() {
           
           }
               <Button className="mt-4" block
-              disabled={((numberMode&&!/^[6-9]\d{9}$/.test(number))||(!numberMode&&otp.length!=4)) ? true:false} onClick={handleSubmitPhone}>
+              disabled={((numberMode&&!/^[6-9]\d{9}$/.test(number))||(!numberMode&&otp.length<4)) ? true:false} onClick={handleSubmitPhone}>
                 {(numberMode) ? "Send OTP":"Login"}
               </Button>
             </div>

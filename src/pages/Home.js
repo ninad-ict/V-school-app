@@ -49,6 +49,8 @@ function Home() {
   const [currChapter,setCurrChapter]=useState("");
   const [currPart,setCurrPart]=useState("");
 
+  const [colorSubject,setcolorSubject]=useState("");
+
   const pageHeading=useContext(UserContext);
 
   const chapterRef=useRef();
@@ -156,7 +158,12 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 overflow-x-auto">
       {
         subjects.map((v,k)=>(
-          <InfoCard title={v.subject} value={v.subject} handleClick={e=>{setCurrSubject(v.subject);currSubject&&chapterRef.current.focus();}} >
+          <InfoCard color={colorSubject} title={v.subject} value={v.subject} handleClick={
+            e=>{
+              setCurrSubject(v.subject);
+              currSubject&&chapterRef.current.focus();
+              setcolorSubject((colorSubject) ? "":'bg-blue-400')
+              }} >
           <RoundIcon
             icon={v.Icon}
             iconColorClass="text-orange-500 dark:text-orange-100"
