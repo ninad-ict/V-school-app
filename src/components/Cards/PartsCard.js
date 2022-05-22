@@ -7,8 +7,66 @@ import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext,Button } 
 
 function PartsCard(props) {
 
-  const {title,children} = {...props};
-  const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false)
+  const {title,children,type} = {...props};
+  const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
+
+  function getMarkdownText() {
+    return { __html: children };
+  }
+
+  function CheckPart()
+  {
+    switch(type) {
+      case 'TEXT':
+        return (
+          <>
+            <p className="text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={getMarkdownText()}>
+              {/* <div  /> */}
+
+              {/* {children} */}
+            </p>
+
+          </>
+        );      
+      case 'IMG'||'GIF':
+        return (
+          <>
+           <p className="text-gray-600 dark:text-gray-400">
+            <img
+              aria-hidden="true"
+              className="object-cover w-full h-full"
+              src={children}
+              alt="tiger"
+            />
+            </p>
+
+          </>
+        );          
+      case 'VIDEO':
+        return (<>
+        {console.log(`https://www.youtube.com/embed/${children}`)}
+    <iframe width="100%" height="600" src={`https://www.youtube.com/embed/${children}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </>);      
+      case 'AUDIO':
+        return (<>
+        <p className="text-gray-600 dark:text-gray-400">
+        <audio controls>
+  <source src="https://vopa-bunny.b-cdn.net/media/99657/2847/1628932722358.mp3" type="audio/mpeg"/>
+  Your browser does not support the audio element.
+        </audio>        
+        </p>
+</>);
+      default:
+        return 'foo';
+    }
+
+  }
+  // switch(param) {
+  //   case 'foo':
+  //     return 'bar';
+  //   default:
+  //     return 'foo';
+  // }
 
 
   function handleNotificationsClick() {
@@ -49,7 +107,8 @@ function PartsCard(props) {
 </span>
 </p>
       <p className="text-gray-600 dark:text-gray-400">
-      {children}
+      <CheckPart/>
+      {/* {children} */}
       </p>
     </CardBody>
   </Card>
