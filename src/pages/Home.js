@@ -169,6 +169,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
     setCurrChapter("");
     setCurrSubject("");
     setCurrPart("");
+    setContentList("");
     subjectRef.current.scrollIntoView();
 
   },[userContext]);
@@ -176,6 +177,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   useEffect(()=>{
 
     const profile=JSON.parse(userContext.profile);
+    setContentList("");
+    setCurrPart("");
 
     if(currSubject)
     {
@@ -204,6 +207,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   
   useEffect(()=>{    
       subjectRef.current.scrollIntoView();
+
+      setContentList("");
+      setCurrPart("");
+  
 
       if(currChapter)
       {
@@ -390,6 +397,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
                         case "TEXT":  return v.value;
                         case "IMG"||'GIF': return v.value.filePath;
                         case "VIDEO": return (v.value.url.split('/').pop());
+                        case "AUDIO": return v.value;
+                        case "gForm": return v.value;
+                        case "PDF": return v.value;
                         default: return v.value;
                     }
 })()}
