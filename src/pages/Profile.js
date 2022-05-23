@@ -14,18 +14,45 @@ import RoundIcon from '../components/RoundIcon';
 import { fa } from 'faker/lib/locales';
 import { UserContext } from '../context/UserContext';
 
+import {getStudentList} from "../dataFromServer";
+
+
 
 function Profile(props) {
 
   const history=useHistory();
 
-  const pageHeading=useContext(UserContext);
+  const userContext=useContext(UserContext);
 
   const student=['Ninad Khanolkar','Amol Khanolkar','Vivek Sinha','Rahul Nair'];
 
   const [profileName,setProfileName]=useState("");
 
+  const [students,setStudents]=useState(()=>{
+
+    if(localStorage.getItem("students"))
+    {
+      console.log(localStorage.getItem("students"));
+      return JSON.parse(localStorage.getItem('students'));
+    }
+    else
+    {
+      return "";
+    }
+
+  }
+   
+  );
+
   const handlecheckProfile=props.checkProfile;
+
+
+  useEffect(()=>{
+
+    console.log(JSON.stringify(students));
+    console.log(JSON.stringify(students[0]));
+
+  },[students]);
 
 
   // function handleLogout()
@@ -40,8 +67,8 @@ function Profile(props) {
 
     localStorage.setItem("login",false);
     localStorage.setItem("profile","");
-    pageHeading.changeLogin(false);
-    pageHeading.changeProfile("");
+    userContext.changeLogin(false);
+    userContext.changeProfile("");
   };
 
   useEffect(()=>{
@@ -49,7 +76,12 @@ function Profile(props) {
     {
       localStorage.setItem("profile",profileName)
     }
-  },[pageHeading.profile]);
+  },[userContext.profile]);
+
+
+  // useEffect(()=>{
+  //   getStudentList().then(d=>console.log(d));
+  // },[]);
 
 
 
@@ -84,11 +116,13 @@ function Profile(props) {
         <div className="flex flex-wrap mt-10">
   {/* <Image src= */}
   {
-    student.map((v,k)=>(
+    students.map((v,k)=>(
+
+      
       <div className="w-full lg:w-12/12 pr-4 font-light">
 
   {/* <Image src= */}
-  <InfoCard title="Student" value={v} handleClick={e=>pageHeading.changeProfile(v)}>
+  <InfoCard title="Student" value={v.first_name+" "+v.last_name} handleClick={e=>userContext.changeProfile(JSON.stringify(v))}>
           <RoundIcon
             icon={SmileIcon}
             className="mr-4 hover:bg-sky-200"
