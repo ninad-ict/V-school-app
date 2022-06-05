@@ -66,7 +66,8 @@ function Home() {
   const partRef=useRef();
 
   const marginSize=[0,1,2,3,4,5,6,8,10,12,16,20,24,32,40,48,56,64];
-  const [marginIndex,setMarginIndex]=useState(10)
+  const [marginIndex,setMarginIndex]=useState(10);
+  const [marginText,setmarginText]=useState(`mx-${marginSize[marginIndex]}`);
 
 
 
@@ -266,7 +267,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
   useEffect(()=>{
 
-    console.log(`{mx-${marginSize[marginIndex]}}`)
+    console.log(`Mrgin Text->`)
+    console.log(marginText);
+    setmarginText(`mx-${marginSize[marginIndex]}`);
   },[marginIndex])
 
   return (
@@ -388,7 +391,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      ))}
      </div>
     { (currPart) ?
-     <div className={`flex flex-wrap lg:w-12/12 ${`mx-${marginSize[marginIndex]}`}`}ref={partRef}>
+     <div className={`flex flex-wrap lg:w-12/12 ${marginText}`}ref={partRef}>
      <hr className='mb-4'/>
 
      {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}
