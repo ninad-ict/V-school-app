@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0d4313f2adefa5f397e580002845e8e5",
+    "revision": "c9fbe7aaa9fcfd67e8a842723d998302",
     "url": "/V-school-app/index.html"
   },
   {
-    "revision": "a1ce4ed7ae1bfde89892",
-    "url": "/V-school-app/static/css/main.1206c0fc.chunk.css"
+    "revision": "6a948ebd61b8f4403532",
+    "url": "/V-school-app/static/css/main.8570319e.chunk.css"
   },
   {
     "revision": "fcb349f44a4a2d703ec6",
@@ -16,12 +16,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/V-school-app/static/js/0.946d905f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0959473229d45f931bb9",
-    "url": "/V-school-app/static/js/1.9012b9d5.chunk.js"
+    "revision": "b26826ceb2ec2a88c4e8",
+    "url": "/V-school-app/static/js/1.3412553d.chunk.js"
   },
   {
     "revision": "81896c98bac7b5b16ab1d3790da5b937",
-    "url": "/V-school-app/static/js/1.9012b9d5.chunk.js.LICENSE.txt"
+    "url": "/V-school-app/static/js/1.3412553d.chunk.js.LICENSE.txt"
   },
   {
     "revision": "8e5002e3b74001997f1e",
@@ -96,16 +96,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/V-school-app/static/js/9.39a2293c.chunk.js"
   },
   {
-    "revision": "a1ce4ed7ae1bfde89892",
-    "url": "/V-school-app/static/js/main.0fe0a34f.chunk.js"
+    "revision": "6a948ebd61b8f4403532",
+    "url": "/V-school-app/static/js/main.01c617a2.chunk.js"
   },
   {
     "revision": "4e0e34f265fae8f33b01b27ae29d9d6f",
-    "url": "/V-school-app/static/js/main.0fe0a34f.chunk.js.LICENSE.txt"
+    "url": "/V-school-app/static/js/main.01c617a2.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "15b86009b8a2025a6c27",
-    "url": "/V-school-app/static/js/runtime-main.b9cc05da.js"
+    "revision": "d9e9540ed41a42f7b494",
+    "url": "/V-school-app/static/js/runtime-main.89215f07.js"
   },
   {
     "revision": "6a157358a94aa850e00da5a781a99d4b",
@@ -258,5 +258,13 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "c6bd77d7d4321627a185c1cbc89276d8",
     "url": "/V-school-app/static/media/twitter.c6bd77d7.svg"
+  },
+  {
+    "revision": "79f5b27cc34d213a4fc74ad70faa5cd6",
+    "url": "/V-school-app/static/media/zoomin.79f5b27c.svg"
+  },
+  {
+    "revision": "fa0339b68abb3a8cb9a72bc52b470b5c",
+    "url": "/V-school-app/static/media/zoomout.fa0339b6.svg"
   }
 ]);
