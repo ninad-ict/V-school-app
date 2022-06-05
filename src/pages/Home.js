@@ -13,7 +13,7 @@ import { Card, CardBody } from '@windmill/react-ui';
 import { UserContext } from '../context/UserContext';
 import { BookIcon } from '../icons';
 import Tiger from '../assets/img/tiger.png';
-import { HeartIcon, MenuIcon } from '../icons'
+import { HeartIcon,ZoomIn,ZoomOut } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
 
@@ -64,6 +64,9 @@ function Home() {
   const chapterRef=useRef();
   const subjectRef=useRef();
   const partRef=useRef();
+
+  const marginSize=[0,1,2,3,4,5,6,8,10,12,16,20,24,32,40,48,56,64];
+  const [marginIndex,setMarginIndex]=useState(10)
 
 
 
@@ -260,6 +263,12 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
   },[contentList])
 
+
+  useEffect(()=>{
+
+    console.log(`{mx-${marginSize[marginIndex]}}`)
+  },[marginIndex])
+
   return (
     <>
     <div ref={subjectRef}></div>
@@ -332,10 +341,24 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
    </> :<>
      <div className='flex flex-wrap'>
      <div className="w-full lg:w-4/12 pr-4 font-light">
-     <CTA text={`Chapter-${currSubject.subject_name}`} showMore='Back' handleClick={()=>{setCurrSubject("");setCurrChapter("")}} />
+     <CTA text={`Subject-${currSubject.subject_name}`} showMore='Back' handleClick={()=>{setCurrSubject("");setCurrChapter("")}} />
      </div>
-     <div className="w-full lg:w-8/12 pr-4 font-light">
-     <CTA text={`Subject-${currChapter.chapter_name}`} bgColor='bg-orange-600' showMore='Back' handleClick={()=>setCurrChapter("")} />
+     <div className="w-full lg:w-6/12 pr-4 font-light">
+     <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-orange-600' showMore='Back' handleClick={()=>setCurrChapter("")} />
+     </div> 
+      <div className="w-full lg:w-2/12 pr-4 font-light">
+      <Button className='text-purple-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
+        
+        if(marginIndex!=0)
+        setMarginIndex(marginIndex-1)
+        
+        }} />
+      <Button  className='text-purple-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
+        
+        if(marginIndex!=marginSize.length-1)
+        setMarginIndex(marginIndex+1)
+        
+        }}/>
      </div>
 
      {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
@@ -365,7 +388,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      ))}
      </div>
     { (currPart) ? 
-     <div className='flex flex-wrap' ref={partRef}>
+     <div className={`flex flex-wrap lg:w-12/12 mx-${marginSize[marginIndex]}`}ref={partRef}>
      <hr className='mb-4'/>
 
      {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}

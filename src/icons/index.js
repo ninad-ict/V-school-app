@@ -30,6 +30,8 @@ import { ReactComponent as RightIcon } from './right.svg'
 import { ReactComponent as SmileIcon } from './smile.svg'
 import { ReactComponent as DownIcon } from './down.svg'
 import { ReactComponent as BookIcon } from './book.svg'
+import { ReactComponent as ZoomIn } from './zoomin.svg'
+import { ReactComponent as ZoomOut } from './zoomout.svg'
 
 export {
   ButtonsIcon,
@@ -63,5 +65,7 @@ export {
   RightIcon,
   SmileIcon,
   DownIcon,
-  BookIcon
+  BookIcon,
+  ZoomIn,
+  ZoomOut
 }
