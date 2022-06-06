@@ -3,7 +3,12 @@ const windmill = require('@windmill/react-ui/config')
 
 module.exports = windmill({
   // purge: ['src/**/*.js'],
-  purge: ['src/**/*.js'],
+  purge:{
+    content: ['src/**/*.js'],
+    safelist:[0,1,2,3,4,5,6,8,10,12,16,20,24,32,40,48,56,64].map(v=>{
+      return "mx-"+v;
+    })
+  },
   theme: {
     extend: {
       fontFamily: {
