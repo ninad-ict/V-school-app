@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1828b67e5bbd2f2c17bd3ca458db3778",
+    "revision": "7adc4854221adec9cff4f0a116d23207",
     "url": "/V-school-app/index.html"
   },
   {
-    "revision": "6a948ebd61b8f4403532",
-    "url": "/V-school-app/static/css/main.8570319e.chunk.css"
+    "revision": "9585957cec2e002dba9f",
+    "url": "/V-school-app/static/css/main.b3c509fa.chunk.css"
   },
   {
     "revision": "fcb349f44a4a2d703ec6",
@@ -16,12 +16,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/V-school-app/static/js/0.946d905f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2d4be04b7bf512656c9d",
-    "url": "/V-school-app/static/js/1.bbefc25a.chunk.js"
+    "revision": "6f7f527cf4e023a109aa",
+    "url": "/V-school-app/static/js/1.54b5cb99.chunk.js"
   },
   {
     "revision": "81896c98bac7b5b16ab1d3790da5b937",
-    "url": "/V-school-app/static/js/1.bbefc25a.chunk.js.LICENSE.txt"
+    "url": "/V-school-app/static/js/1.54b5cb99.chunk.js.LICENSE.txt"
   },
   {
     "revision": "8e5002e3b74001997f1e",
@@ -96,7 +96,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/V-school-app/static/js/9.39a2293c.chunk.js"
   },
   {
-    "revision": "6a948ebd61b8f4403532",
+    "revision": "9585957cec2e002dba9f",
     "url": "/V-school-app/static/js/main.01c617a2.chunk.js"
   },
   {
@@ -104,8 +104,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/V-school-app/static/js/main.01c617a2.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "23d81d31f8df43f1762b",
-    "url": "/V-school-app/static/js/runtime-main.a87f93a4.js"
+    "revision": "07ce3e813f9c9b12b83f",
+    "url": "/V-school-app/static/js/runtime-main.b3741d27.js"
   },
   {
     "revision": "6a157358a94aa850e00da5a781a99d4b",
