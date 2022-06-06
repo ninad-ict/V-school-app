@@ -45,8 +45,9 @@ function PartsCard(props) {
       case 'VIDEO':
         return (<>
         {console.log(`https://www.youtube.com/embed/${children}`)}
-    <iframe width="100%" height="600" src={`https://www.youtube.com/embed/${children}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </>);   
+        <div className="video-container">
+    <iframe src={`https://www.youtube.com/embed/${children}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div> </>);   
       case 'PPT':
         return (<>
         {console.log(`${children}`)}
