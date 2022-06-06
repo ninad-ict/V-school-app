@@ -69,7 +69,7 @@ function Home() {
     return "mx-"+v;
   });
   const [marginIndex,setMarginIndex]=useState(10);
-  const [marginText,setmarginText]=useState(`mx-${marginSize[marginIndex]}`);
+  const [marginText,setmarginText]=useState(`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`);
 
 
 
@@ -275,7 +275,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     console.log(`Mrgin Text->`)
     console.log(marginText);
-    setmarginText(`mx-${marginSize[marginIndex]}`);
+    setmarginText(`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`);
     console.log(marginSize[marginIndex]);
   },[marginIndex])
 
@@ -398,7 +398,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      ))}
      </div>
     { (currPart) ?
-     <div className={`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`} ref={partRef}>
+     <div className={marginText} ref={partRef}>
      <hr className='mb-4'/>
 
      {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}
