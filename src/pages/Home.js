@@ -273,8 +273,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
   useEffect(()=>{
 
-    console.log(`Mrgin Text->`)
-    console.log(marginText);
+    console.log(`Mrgin Index->`+marginIndex)
+    console.log(marginIndex);
     setmarginText(`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`);
     console.log(marginSize[marginIndex]);
   },[marginIndex])
@@ -359,14 +359,14 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       <div className="w-full lg:w-2/12 pr-4 font-light">
       <Button className='text-purple-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
         
-        if(marginIndex!=0)
-        setMarginIndex(marginIndex-1)
+        if(marginIndex>=1)
+        setMarginIndex(marginIndex-2)
         
         }} />
       <Button  className='text-purple-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
         
-        if(marginIndex!=marginSize.length-1)
-        setMarginIndex(marginIndex+1)
+        if(marginIndex<=30)
+        setMarginIndex(marginIndex+2)
         
         }}/>
      </div>
@@ -398,7 +398,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      ))}
      </div>
     { (currPart) ?
-     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}px`}} ref={partRef}>
+     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef}>
      <hr className='mb-4'/>
 
      {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}
