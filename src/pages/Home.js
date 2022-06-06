@@ -398,7 +398,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      ))}
      </div>
     { (currPart) ?
-     <div className={marginText} ref={partRef}>
+     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}px`}} ref={partRef}>
      <hr className='mb-4'/>
 
      {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}
