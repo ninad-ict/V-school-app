@@ -1,9 +1,10 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import routes from '../../routes/sidebar'
 import { NavLink, Route } from 'react-router-dom'
 import * as Icons from '../../icons'
 import SidebarSubmenu from './SidebarSubmenu'
-import { Button } from '@windmill/react-ui'
+import { Button } from '@windmill/react-ui';
+import { UserContext } from '../../context/UserContext';
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon]
@@ -20,6 +21,8 @@ function handleLogout()
 const newClass="";
 
 function SidebarContent() {
+  const userContext=useContext(UserContext);
+  const profile=JSON.parse(userContext.profile);
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
       <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
@@ -55,8 +58,15 @@ function SidebarContent() {
           )
         )}
       </ul>
-      <div className="px-6 my-6 hidden">
-        <Button>
+      <div className="px-2 my-6 border-t border-b rounded text-sm bg-purple-200 dark:bg-purple-600 dark:text-white py-4">
+
+      <p className='font-bold'>Welcome ,{profile.first_name} {profile.last_name}! </p>
+      <p><strong>Class: </strong> {profile.class_name} </p>
+      <p><strong>Board: </strong>{profile.board_name}  </p>
+      <p><strong>Medium:</strong>{profile.medium_name}  </p>
+      <p><strong>School:</strong>{profile.school_name} </p>
+
+        <Button className='hidden'>
           Create account
           <span className="ml-2" aria-hidden="true">
             +

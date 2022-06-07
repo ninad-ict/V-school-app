@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext,useRef } from 'react'
 
-import CTA from '../components/CTA'
-import InfoCard from '../components/Cards/InfoCard'
+import CTA from '../components/CTA';
+import InfoCard from '../components/Cards/InfoCard';
 import ChartCard from '../components/Chart/ChartCard'
 import { Doughnut, Line } from 'react-chartjs-2'
 import ChartLegend from '../components/Chart/ChartLegend'
@@ -16,6 +16,7 @@ import Tiger from '../assets/img/tiger.png';
 import { HeartIcon,ZoomIn,ZoomOut } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
+import { NavLink } from 'react-router-dom';
 
 import {getStudentSubjects,getChapters,getChapterPreview,getChapterPartContentNew} from "../dataFromServer";
 
@@ -100,6 +101,7 @@ function Home() {
 
     
 
+   console.log(profile)
 
 
     console.log("CHanges again");
@@ -298,7 +300,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       }
       {
         allSubjects && allSubjects.map((v,k)=>(
-          <InfoCard color={colorSubject} title={v.subject_name} value={v.subject_name} handleClick={
+      
+         <InfoCard color={colorSubject} title={v.subject_name} value={v.subject_name} handleClick={
             e=>{
               setCurrSubject(v);
               currSubject&&chapterRef.current.focus();
@@ -311,6 +314,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             className="mr-4"
           />
         </InfoCard>
+
         ))
       }        
         </div>

@@ -20,8 +20,8 @@ function PartsCard(props) {
       case 'TEXT':
         return (
           <>
-            <p className="text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={getMarkdownText(children)}>
-   
+            <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}>
+          
             </p>
 
           </>
@@ -114,8 +114,8 @@ function PartsCard(props) {
               </DropdownItem>
 </Dropdown>
 </div>
-    <CardBody>
-      <p className="mb-4 font-semibold text-gray-600 dark:text-gray-300" >
+    <CardBody className={(type=='TEXT') ? 'bg-red-300':''}>
+      <p className="mb-4 font-semibold text-gray-600 dark:text-gray-600" >
       <p dangerouslySetInnerHTML={getMarkdownText(title)}/>
       <span className='text-right float-right'>
       {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -128,7 +128,6 @@ function PartsCard(props) {
 </p>
       <p className="text-gray-600 dark:text-gray-400">
       <CheckPart/>
-      {/* {children} */}
       </p>
     </CardBody>
   </Card>
