@@ -289,10 +289,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       {(!currChapter||!currSubject) ?  <>
 
       <div className='flex flex-wrap'>
-      <div className="w-full lg:w-12/12">
+      <div className="w-full lg:w-6/12 pr-4 border-r">
       <CTA text='Select Subject' />
 
-      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 overflow-x-auto">
+      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2 overflow-x-auto">
       {/* {allSubjects.response.map((v,k)=>(console.log(v)))} */}
       {console.log("f"+allSubjects)}
       {console.log("f"+subjects)}
@@ -305,7 +305,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
        <InfoCard color={colorSubject} title={v.subject_name} value={v.subject_name} handleClick={
             e=>{
               setCurrSubject(v);
-              currSubject&&chapterRef.current.focus();
+              // currSubject&&chapterRef.current.focus();
               setcolorSubject((colorSubject) ? "":'bg-blue-400')
               }} >
           <RoundIcon
@@ -321,12 +321,47 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </div>
 
         </div>
+        {/* <div className="lg:w-1/12 border-l ml-4">
+        </div> */}
+        {(currSubject) ?
+<>
+        <div className="w-full lg:w-6/12 pl-4 ">
+        <CTA text={`Select Chapter for ${currSubject.subject_name}`} />
+      
+<div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2" >
+{
+  allChapters&&allChapters.map((v,k)=>(console.log(v)))
+      }
+{allChapters&&allChapters.map((v,k)=>(
+      <Card className="mb-8 shadow-md dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+        <CardBody>
+
+       
+          <div className="flex items-center">
+        <RoundIcon
+            icon={PeopleIcon}
+            iconColorClass="text-orange-500 dark:text-orange-100"
+            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            className="mr-4"
+          />
+        <span className='dark:text-white'>{v.chapter_name}</span>
+      </div>
+        </CardBody>
+      </Card>
+      
+      )) }
+</div>
+        </div>
+        </> :""}
+    
         </div>
 
-<hr className='mb-4'/>
+{/* <hr className='mb-4'/> */}
 
 {(currSubject) ?
 <>
+<div className='flex flex-wrap hidden'>
+      <div className="w-full lg:w-6/12">
 <div ref={chapterRef}></div>
 <CTA text={`Select Chapter for ${currSubject.subject_name}`} />
       
@@ -353,6 +388,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       
       )) }
 </div>
+</div></div>  
 </>
 :""}
 
