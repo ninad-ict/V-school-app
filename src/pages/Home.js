@@ -288,7 +288,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
       {(!currChapter||!currSubject) ?  <>
 
-      
+      <div className='flex flex-wrap'>
+      <div className="w-full lg:w-12/12">
       <CTA text='Select Subject' />
 
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 overflow-x-auto">
@@ -301,7 +302,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       {
         allSubjects && allSubjects.map((v,k)=>(
       
-         <InfoCard color={colorSubject} title={v.subject_name} value={v.subject_name} handleClick={
+       <InfoCard color={colorSubject} title={v.subject_name} value={v.subject_name} handleClick={
             e=>{
               setCurrSubject(v);
               currSubject&&chapterRef.current.focus();
@@ -317,6 +318,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
         ))
       }        
+        </div>
+
+        </div>
         </div>
 
 <hr className='mb-4'/>

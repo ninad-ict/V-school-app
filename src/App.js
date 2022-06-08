@@ -73,6 +73,7 @@ function App() {
             </Switch>
             :
             <Switch>
+            {/* <Route path='/subject/:subject' component={Home} ></Route>  */}
             <Route path="/app" component={Layout} />
             <Route path="/app/Home" component={Home} />
             {/* <Route path="/profile" component={Profile} /> */}
