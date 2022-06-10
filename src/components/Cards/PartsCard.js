@@ -26,7 +26,8 @@ function PartsCard(props) {
 
           </>
         );      
-      case 'IMG'||'GIF':
+      case 'GIF':
+      case 'IMG':
         return (
           <>
           {children &&
@@ -50,8 +51,9 @@ function PartsCard(props) {
     </div> </>);   
       case 'PPT':
         return (<>
-        {console.log(`${children}`)}
-        <iframe src={children} width="100%" height="500px"/>        </>);    
+        {(console.log("It worked"),console.log(`${children}`))}
+        {/* https://view.officeapps.live.com/op/embed.aspx?src=${linkToPPTFile}` */}
+        <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${children}`} width="100%" height="500px" frameborder='0'/>        </>);    
       case 'PDF':
         return (<>
         {console.log(`${children}`)}
@@ -92,6 +94,7 @@ function PartsCard(props) {
     setIsNotificationsMenuOpen(!isNotificationsMenuOpen)
   }
 
+  if(children)
   return (
     <Card>
     <div className="relative mr-10">
@@ -132,6 +135,8 @@ function PartsCard(props) {
     </CardBody>
   </Card>
   )
+  else
+  return "";
 }
 
 export default PartsCard

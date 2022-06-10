@@ -14,6 +14,8 @@ import {
 import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext,Button } from '@windmill/react-ui'
 import { HeartIcon, DownIcon } from '../icons';
 
+import ProfilePhoto from "../assets/img/ProfilePhoto.png";
+
 const sectionList=['Main Syllabus','Special Courses','Total Usage'];
 
 
@@ -149,19 +151,22 @@ function Header() {
             >
               <Avatar
                 className="align-middle"
-                src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                src={ProfilePhoto}
                 alt=""
                 aria-hidden="true"
-              />
+              /> 
+             
             </button>
             <Dropdown
               align="right"
               isOpen={isProfileMenuOpen}
               onClose={() => setIsProfileMenuOpen(false)}
             >
-              <DropdownItem tag="a" href="#">
+              <DropdownItem tag="a" onClick={()=>{
+                userContext.changeProfile("");
+              }}>
                 <OutlinePersonIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                <span>Profile</span>
+                <span>Change Profile</span>
               </DropdownItem>
               <DropdownItem tag="a" href="#">
                 <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />

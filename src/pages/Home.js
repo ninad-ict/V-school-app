@@ -415,9 +415,12 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         }}/>
      </div>
 
+     
+
      {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
        console.log(v.part_name)
      })}
+     
      
      {chapterPreview && [...chapterPreview.response.chapter_parts,"summary"].map((v,k)=>(
 
@@ -472,7 +475,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
        {(() => {
     switch (v.type) {
                         case "TEXT":  return v.value;
-                        case "IMG"||'GIF': return v.value.filePath;
+                        case "IMG":case 'GIF': return v.value.filePath;
                         case "VIDEO": return (v.value.url.split('/').pop());
                         case "AUDIO": return v.value;
                         case "gForm": return v.value;

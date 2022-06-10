@@ -18,11 +18,13 @@ const routes = [
     path: '/app/bookmarks', // the url
     icon: 'CardsIcon', // the component being exported from icons/index.js
     name: 'Bookmarks', // name that appear in Sidebar
-  }, {
-    path: '/app/download', // the url
-    icon: 'GithubIcon', // the component being exported from icons/index.js
-    name: 'Download', // name that appear in Sidebar
-  }, {
+  }, 
+  // {
+  //   path: '/app/download', // the url
+  //   icon: 'GithubIcon', // the component being exported from icons/index.js
+  //   name: 'Download', // name that appear in Sidebar
+  // }, 
+  {
     path: '/app/toppers', // the url
     icon: 'SmileIcon', // the component being exported from icons/index.js
     name: 'Toppers', // name that appear in Sidebar
@@ -30,11 +32,13 @@ const routes = [
     path: '/app/school', // the url
     icon: 'PeopleIcon', // the component being exported from icons/index.js
     name: 'My School', // name that appear in Sidebar
-  }, {
+  }, 
+  {
     path: '/app/settings', // the url
     icon: 'MenuIcon', // the component being exported from icons/index.js
-    name: 'Settings', // name that appear in Sidebar
-  },{
+    name: 'About Us', // name that appear in Sidebar
+  },
+  {
     path: '/app/s', // the url
     icon: 'OutlineLogoutIcon', // the component being exported from icons/index.js
     name: 'Logout', // name that appear in Sidebar

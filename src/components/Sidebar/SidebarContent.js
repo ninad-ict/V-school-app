@@ -58,9 +58,11 @@ function SidebarContent() {
           )
         )}
       </ul>
+      
       <div className="px-2 my-6 mx-4 border-t border-b rounded text-sm bg-purple-200 dark:bg-purple-600 dark:text-white py-4">
 
       <p className='font-bold'>Welcome ,{profile.first_name} {profile.last_name}! </p>
+      <br/>
       <p><strong>Class: </strong> {profile.class_name} </p>
       <p><strong>Board: </strong>{profile.board_name}  </p>
       <p><strong>Medium:</strong>{profile.medium_name}  </p>
