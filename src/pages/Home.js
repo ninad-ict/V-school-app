@@ -17,6 +17,7 @@ import { HeartIcon,ZoomIn,ZoomOut } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
 import { NavLink } from 'react-router-dom';
+import BasicTabs  from '../components/Cards/BasicTabs';
 
 import {getStudentSubjects,getChapters,getChapterPreview,getChapterPartContentNew} from "../dataFromServer";
 
