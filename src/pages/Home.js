@@ -298,12 +298,14 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   return (
     <>
      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <ModalHeader>Modal header</ModalHeader>
-        <ModalBody>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendi repudiandae
-          voluptatem tempore!
+        <ModalBody className='h-screen py-50'>
+
+      
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendieligendieligendieligendieligendieligendieligendi repudiandae voluptatem tempore!Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendieligendieligendieligendieligendieligendieligendi repudiandae voluptatem tempore!Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendieligendieligendieligendieligendieligendieligendi repudiandae voluptatem tempore!Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendieligendieligendieligendieligendieligendieligendi repudiandae voluptatem tempore!
+        
+        
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className='hidden'>
           {/* I don't like this approach. Consider passing a prop to ModalFooter
            * that if present, would duplicate the buttons in a way similar to this.
            * Or, maybe find some way to pass something like size="large md:regular"
@@ -495,7 +497,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      </div>
      </div>
     { (currPart) ?
-     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef}>
+     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef} onClick={openModal}>
      <hr className='mb-4'/>
 
      {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}

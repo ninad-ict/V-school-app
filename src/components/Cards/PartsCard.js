@@ -117,8 +117,8 @@ function PartsCard(props) {
               </DropdownItem>
 </Dropdown>
 </div>
-    <CardBody className={(type=='TEXT') ? (index%2==0)?'bg-red-500':'bg-red-500':''}>
-      <p className="mb-4 font-semibold text-gray-600 dark:text-gray-600" >
+    <CardBody className={(type=='TEXT') ? 'bg-red-300':''}>
+      <p className="mb-4 font-semibold text-gray-100 dark:text-gray-100" >
       <p dangerouslySetInnerHTML={getMarkdownText(title)}/>
       <span className='text-right float-right'>
       {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
