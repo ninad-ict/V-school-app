@@ -7,7 +7,7 @@ import ReactAudioPlayer from 'react-audio-player';
 
 function PartsCard(props) {
 
-  const {title,children,type} = {...props};
+  const {title,children,type,index} = {...props};
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
 
   function getMarkdownText(text) {
@@ -117,14 +117,14 @@ function PartsCard(props) {
               </DropdownItem>
 </Dropdown>
 </div>
-    <CardBody className={(type=='TEXT') ? 'bg-red-300':''}>
+    <CardBody className={(type=='TEXT') ? (index%2==0)?'bg-red-500':'bg-red-500':''}>
       <p className="mb-4 font-semibold text-gray-600 dark:text-gray-600" >
       <p dangerouslySetInnerHTML={getMarkdownText(title)}/>
       <span className='text-right float-right'>
       {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
 </svg> */}
-<Button icon={MenuIcon} layout="link" aria-label="Like" onClick={handleNotificationsClick} />
+{/* <Button icon={MenuIcon} layout="link" aria-label="Like" onClick={handleNotificationsClick} /> */}
 
 
 </span>

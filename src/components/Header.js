@@ -62,10 +62,10 @@ function Header() {
 
   return (
     <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
-      <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300 ">
+      <div className="container flex items-center justify-between h-full px-6 mx-auto text-red-600 dark:text-red-300 ">
         {/* <!-- Mobile hamburger --> */}
         <button
-          className="p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple"
+          className="p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-red"
           onClick={toggleSidebar}
           aria-label="Menu"
         >
@@ -73,7 +73,7 @@ function Header() {
         </button>
         {/* <!-- Search input --> */}
         <div className="flex flex-1 lg:mr-2">
-          <div className="relative w-full max-w-xl focus-within:text-purple-500 mx-auto">
+          <div className="relative w-full max-w-xl focus-within:text-red-500 mx-auto">
             <div className="inset-y-0 flex items-center pl-2">
               {/* <SearchIcon className="w-4 h-4" aria-hidden="true" /> */}
               <div className="relative mx-auto">
@@ -96,7 +96,7 @@ function Header() {
           {/* <!-- Theme toggler --> */}
           <li className="flex">
             <button
-              className="rounded-md focus:outline-none focus:shadow-outline-purple"
+              className="rounded-md focus:outline-none focus:shadow-outline-red"
               onClick={toggleMode}
               aria-label="Toggle color mode"
             >
@@ -110,7 +110,7 @@ function Header() {
           {/* <!-- Notifications menu --> */}
           <li className="relative">
             <button
-              className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
+              className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-red"
               onClick={handleNotificationsClick}
               aria-label="Notifications"
               aria-haspopup="true"
@@ -144,7 +144,7 @@ function Header() {
           {/* <!-- Profile menu --> */}
           <li className="relative">
             <button
-              className="rounded-full focus:shadow-outline-purple focus:outline-none"
+              className="rounded-full focus:shadow-outline-red focus:outline-none"
               onClick={handleProfileClick}
               aria-label="Account"
               aria-haspopup="true"

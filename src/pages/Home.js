@@ -17,9 +17,12 @@ import { HeartIcon,ZoomIn,ZoomOut } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
 import { NavLink } from 'react-router-dom';
-import BasicTabs  from '../components/Cards/BasicTabs';
+// import BasicTabs  from '../components/Cards/BasicTabs';
 
 import {getStudentSubjects,getChapters,getChapterPreview,getChapterPartContentNew} from "../dataFromServer";
+
+import { Modal, ModalHeader, ModalBody, ModalFooter } from '@windmill/react-ui';
+
 
 
 
@@ -72,6 +75,16 @@ function Home() {
   });
   const [marginIndex,setMarginIndex]=useState(10);
   const [marginText,setmarginText]=useState(`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`);
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  function openModal() {
+    setIsModalOpen(true)
+  }
+
+  function closeModal() {
+    setIsModalOpen(false)
+  }
 
 
 
@@ -284,12 +297,44 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
   return (
     <>
-    <div ref={subjectRef}></div>
+     <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <ModalHeader>Modal header</ModalHeader>
+        <ModalBody>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendi repudiandae
+          voluptatem tempore!
+        </ModalBody>
+        <ModalFooter>
+          {/* I don't like this approach. Consider passing a prop to ModalFooter
+           * that if present, would duplicate the buttons in a way similar to this.
+           * Or, maybe find some way to pass something like size="large md:regular"
+           * to Button
+           */}
+          <div className="hidden sm:block">
+            <Button layout="outline" onClick={closeModal}>
+              Cancel
+            </Button>
+          </div>
+          <div className="hidden sm:block">
+            <Button>Accept</Button>
+          </div>
+          <div className="block w-full sm:hidden">
+            <Button block size="large" layout="outline" onClick={closeModal}>
+              Cancel
+            </Button>
+          </div>
+          <div className="block w-full sm:hidden">
+            <Button block size="large">
+              Accept
+            </Button>
+          </div>
+        </ModalFooter>
+      </Modal>
+    <div ref={subjectRef} ></div>
       <PageTitle>{userContext.section}</PageTitle>
 
       {(!currChapter||!currSubject) ?  <>
 
-      <div className='flex flex-wrap'>
+      <div className='flex flex-wrap '>
       <div className="w-full lg:w-6/12 pr-4 border-r">
       <CTA text='Select Subject' />
 
@@ -334,7 +379,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
 {allChapters&&allChapters.map((v,k)=>(
-      <Card className="mb-8 shadow-md dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+      <Card className="mb-8 shadow-lg dark:hover:bg-red-300 hover:bg-red-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
         <CardBody>
 
        
@@ -371,7 +416,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
 {allChapters&&allChapters.map((v,k)=>(
-      <Card className="mb-8 shadow-md dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+      <Card className="mb-8 shadow-md dark:hover:bg-red-300 hover:bg-red-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
         <CardBody>
 
        
@@ -402,13 +447,13 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-orange-600' showMore='Back' handleClick={()=>setCurrChapter("")} />
      </div> 
       <div className="w-full lg:w-2/12 pr-4 font-light">
-      <Button className='text-purple-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
+      <Button className='text-red-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex>=1)
         setMarginIndex(marginIndex-2)
         
         }} />
-      <Button  className='text-purple-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
+      <Button  className='text-red-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex<=30)
         setMarginIndex(marginIndex+2)
@@ -416,18 +461,21 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         }}/>
      </div>
 
-     
+     <div className='sticky top-500 flex flex-wrap w-full lg:w-12/12 pr-4'>
 
      {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
        console.log(v.part_name)
      })}
      
      
-     {chapterPreview && [...chapterPreview.response.chapter_parts,"summary"].map((v,k)=>(
+     {/* {chapterPreview && [...chapterPreview.response.chapter_parts,"Summary"].map((v,k)=>( */}
+     {chapterPreview && [...chapterPreview.response.chapter_parts].map((v,k)=>(
 
-      <div className="w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
+      <div className=" focus:border-red-400 w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
       {console.log("Value is"+v)}
-      <Card className="mb-8 shadow-md hover:bg-purple-100 dark:hover:bg-purple-300" onClick={()=>setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v)}>
+      {console.log("Iteration is "+k)}
+      {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
+      <Card className="mb-8 shadow-lg hover:bg-red-100 dark:hover:bg-red-300" onClick={()=>setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v)}>
         <CardBody>
 
        
@@ -438,12 +486,13 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             bgColorClass="bg-orange-100 dark:bg-orange-500"
             className="mr-4"
           />
-        <span className='dark:text-white'>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v.part_name} </span>
+        <span className='dark:text-white'>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":"Part "+Number.parseInt(k+1)} </span>
       </div>
         </CardBody>
       </Card>
       </div>
      ))}
+     </div>
      </div>
     { (currPart) ?
      <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef}>
@@ -462,17 +511,17 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
-        <div className="w-full lg:w-12/12 pr-4 font-light my-4">
+        <div className="w-full lg:w-12/12 pr-4 font-light my-4 transform shadow hover:shadow-lg">
         {console.log(v)}
        <PartsCard title={
          (() => {
                   switch (v.type) {
                         case "IMG": return v.value.description;
-                        case "VIDEO": return v.value.tag;
+                        case "VIDEO": return (v.value.tag) ? v.value.tag:"    ";
                         default: return "";
                                   }
                     })()}       
- type={v.type}>
+ type={v.type} index={k}>
        {(() => {
     switch (v.type) {
                         case "TEXT":  return v.value;

@@ -5,6 +5,7 @@ import * as Icons from '../../icons'
 import SidebarSubmenu from './SidebarSubmenu'
 import { Button } from '@windmill/react-ui';
 import { UserContext } from '../../context/UserContext';
+import Logo from "../../assets/img/logo512.png";
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon]
@@ -26,7 +27,7 @@ function SidebarContent() {
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
       <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-        VOPA
+        <img src={Logo} width='30%' className='ml-6'/>
       </a>
       <ul className="mt-6">
         {routes.map((route) =>
@@ -39,13 +40,13 @@ function SidebarContent() {
               <NavLink
                 exact
                 to={route.path}
-                className={`inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 ${(route.name=='Logout')? "text-purple-400":""}`}
+                className={`inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 ${(route.name=='Logout')? "text-red-400":""}`}
                 activeClassName="text-gray-800 dark:text-gray-100"
                 onClick={(route.name=='Logout')? handleLogout:""}
               >
                 <Route path={route.path} exact={route.exact} >
                   <span
-                    className="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    className="absolute inset-y-0 left-0 w-1 bg-red-600 rounded-tr-lg rounded-br-lg"
                     aria-hidden="true"
                   ></span>
                 </Route>
@@ -59,7 +60,7 @@ function SidebarContent() {
         )}
       </ul>
       
-      <div className="px-2 my-6 mx-4 border-t border-b rounded text-sm bg-purple-200 dark:bg-purple-600 dark:text-white py-4">
+      <div className="px-2 my-6 mx-4 border-t border-b rounded text-sm bg-red-200 dark:bg-red-600 dark:text-white py-4">
 
       <p className='font-bold'>Welcome ,{profile.first_name} {profile.last_name}! </p>
       <br/>

@@ -53,7 +53,7 @@ function App() {
     <>
     {console.log("Profile is "+pageHeading.profile)}
     {/* /V-school-app */}
-      <Router basename="/V-school-app">
+      <Router basename="/V-school-app"  className="GeeksForGeeks">
         <AccessibleNavigationAnnouncer />
        
           {
