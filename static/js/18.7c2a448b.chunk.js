@@ -1,0 +1,2 @@
+(this["webpackJsonpwindmill-dashboard-react"]=this["webpackJsonpwindmill-dashboard-react"]||[]).push([[18],{1107:function(e,a,t){"use strict";var n=t(0),r=t.n(n);a.a=function(e){var a=e.children;return r.a.createElement("h1",{className:"my-6 text-2xl font-semibold text-white dark:text-gray-200"},r.a.createElement("span",{className:"p-2 rounded"},a))}},1272:function(e,a,t){"use strict";t.r(a);var n=t(0),r=t.n(n),l=t(1107);a.default=function(){return r.a.createElement(r.a.Fragment,null,r.a.createElement(l.a,null,"Blank"))}}}]);
+//# sourceMappingURL=18.7c2a448b.chunk.js.map
