@@ -33,7 +33,7 @@
     background-repeat: 'no-repeat';
     background-size: 'cover';
     z-index: -1;
-    opacity: 0.1;
+    /* opacity: 0.1; */
   }
 
  .setBackground-Content {
@@ -41,3 +41,20 @@
     width: '100%';
     background-color: '#d1aeae'
   }
+
+
+  .each-slide > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    height: 350px;
+  }
+  
+  .each-slide span {
+    padding: 20px;
+    font-size: 20px;
+    background: #efefef;
+    text-align: center;
+  }
+  

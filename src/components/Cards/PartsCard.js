@@ -20,7 +20,8 @@ function PartsCard(props) {
       case 'TEXT':
         return (
           <>
-            <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}>
+            <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}
+            >
           
             </p>
 

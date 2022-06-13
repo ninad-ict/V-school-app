@@ -23,6 +23,10 @@ import {getStudentSubjects,getChapters,getChapterPreview,getChapterPartContentNe
 
 import { Modal, ModalHeader, ModalBody, ModalFooter } from '@windmill/react-ui';
 
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+import styles from "../assets/css/Slider.module.css";
+
 
 
 
@@ -293,16 +297,164 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
     console.log(marginIndex);
     setmarginText(`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`);
     console.log(marginSize[marginIndex]);
-  },[marginIndex])
+  },[marginIndex]);
+
+  const slideImages = [
+    '../assets/img/tiger.png',
+    '../assets/img/tiger.png',
+    '../assets/img/tiger.png'
+  ];
+
+//  function renderSwitchForSlides()
+//   {
+//     switch(v.type)
+//     {
+//                 case "TEXT":
+//                 {
+//                   console.log("Reacged Text");
+//                   return(  
+//                               <span>{v.value}</span>              
+//                         )
+//                 }
+//                 case "IMG":case 'GIF': return v.value.filePath;
+//                 case "VIDEO": return (v.value.url.split('/').pop());
+//                 case "AUDIO": return v.value;
+//                 case "gForm": return v.value;
+//                 case "PDF": return v.value;
+//     }
+//   }
 
   return (
     <>
-     <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <ModalBody className='h-screen py-50'>
-
-      
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendieligendieligendieligendieligendieligendieligendi repudiandae voluptatem tempore!Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendieligendieligendieligendieligendieligendieligendi repudiandae voluptatem tempore!Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendieligendieligendieligendieligendieligendieligendi repudiandae voluptatem tempore!Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendieligendieligendieligendieligendieligendieligendi repudiandae voluptatem tempore!
+     <Modal isOpen={isModalOpen} onClose={closeModal}  >
+        <ModalBody  className='w-3\/4'>
         
+        <div className="each-slide hidden">
+            <div style={{'backgroundImage': `url(${Tiger})`}}>
+              {/* <span>Slide 1</span> */}
+            </div>
+          </div>
+          <div className="each-slide hidden">
+            <div >
+              <span>People seldom have a </span>
+            </div>
+          </div>
+          <div className="each-slide hidden">
+            <div>
+             <iframe width="100%" height="600" src="https://www.youtube.com/embed/YE7VzlLtp-4?ecver=2&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+      
+        <div className='w-3\/4 py-auto content-center'>
+        <Slide easing="ease" style={{background:'none'}}>
+          {
+       contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
+         return(
+  
+         (() => {
+                  switch (v.type) {
+                        case v.value&& "TEXT":  
+                        return (
+                          <div className="each-slide"  style={{backgroundColor:'transparent'}}>
+          <div style={{'background':'none'}}
+          className='w-3\/4 my-auto mt-64 mb-64 content-center py-auto'>
+                          <p className="text-2xl px-4" 
+                          style={{backgroundColor:'transparent'}}>
+                            <div  style={{backgroundColor:'transparent'}} dangerouslySetInnerHTML={{__html:`<p style="color:'none';background-color:transparent;background:'none';text-align: justify;">${v.value}</p>`}}></div>
+                          </p>
+                          </div></div>
+                        )
+                         case v.value.filePath && "IMG":case v.value.filePath && 'GIF':
+                          {console.log(`${v.value.filePath}`)}
+                        return (   
+                          <>
+                          {/* <div className="each-slide">   
+                           <div
+                           className='min-h-96 content-center py-auto'>
+                              <img
+                                aria-hidden="true"
+                                className="object-cover my-auto"
+                                src={`${v.value.filePath}`}
+                                alt="tiger"
+                              />
+                    </div>
+                    </div> */}
+
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <img
+                                aria-hidden="true"
+                                className="object-cover"
+                                src={`${v.value.filePath}`}
+                                alt="tiger"
+                              />                          </div>
+                        </div>
+
+                        </>
+
+                        )
+                        case v.value&&'VIDEO':
+                        return(
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <iframe width="100%" height='600' src={`https://www.youtube.com/embed/${v.value.url.split('/').pop()}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                          </div>
+                        </div>
+
+                        )  
+                        case v.value && 'AUDIO':
+                        return(
+                          
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <audio controls>
+                             <source src={`${v.value}`} type="audio/mp3"/>
+                          </audio>                         
+           </div>
+                        </div>
+
+                        )                   
+                        case v.value && 'gForm':
+                        return(
+                          
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <iframe src={v.value} width="100%" height="500px"/>                      
+           </div>
+                        </div>
+
+                        )  
+                        case v.value && 'PDF':
+                        return(
+                          
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <iframe src={v.value} width="100%" height="500px"/>                    
+           </div>
+                        </div>
+
+                        )
+                        case v.value && 'PPT':
+                        return(
+                          
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                    <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${v.value}`} width="100%" height="500px" frameborder='0'/> 
+                 
+           </div>
+                        </div>
+
+                        )
+                        default: return;
+                                  }
+                    })()
+                  
+ 
+      )
+       })
+     }
+        </Slide>
+      </div>        
         
         </ModalBody>
         <ModalFooter className='hidden'>
