@@ -3,12 +3,23 @@ import { Card, CardBody } from '@windmill/react-ui';
 import { MenuIcon } from '../../icons';
 import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext,Button } from '@windmill/react-ui'
 import ReactAudioPlayer from 'react-audio-player';
+import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../../icons';
 
+import { useSpeechSynthesis } from "react-speech-kit";
 
 function PartsCard(props) {
 
-  const {title,children,type,index} = {...props};
+  const {title,children,type,index,cardColor} = {...props};
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
+
+  const [value, setValue] = React.useState("");
+  const { speak } = useSpeechSynthesis();
+
+
+  const [textSound,setTextSound]=useState(false);
+
+  const colors = ['#CCE5FE', '#e3b3b8', '#FFF3CE', '#D4EDDA'];
+  let colorIndex = 0;
 
   function getMarkdownText(text) {
     return { __html: text };
@@ -20,8 +31,30 @@ function PartsCard(props) {
       case 'TEXT':
         return (
           <>
+          { 
+            console.log("XXX"+children.replace(/<[^>]+>/g, '').replace(/&nbsp;/gi,''))
+            }
+          {setValue(children.replace(/<[^>]+>/g, '').replace(/&nbsp;/gi,''))}
+          {/* {setValue(children.innerHTML)} */}
+                      <Button className='text-red-600 float-right' icon={(textSound)? SoundOn:SoundOff} layout="link" aria-label="Like"  
+                        onClick={()=>{
+                          speak({text:""})
+                          setTextSound(!textSound);
+                          if(!textSound)
+                          {
+                            speak({ text:value })
+                          }
+                          // else
+                          // {
+                            
+                          // }
+
+                        }}
+                      />
+
             <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}
             >
+{/* {setValue(this.target.innerText)} */}
           
             </p>
 
@@ -48,7 +81,8 @@ function PartsCard(props) {
         return (<>
         {console.log(`https://www.youtube.com/embed/${children}`)}
         <div className="video-container">
-    <iframe src={`https://www.youtube.com/embed/${children}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {/* <iframe src={`https://www.youtube.com/embed/${children}?rel=0&autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
+    <iframe src={`https://www.youtube.com/embed/${children}`} allow="fullscreen;" frameborder="0" allowfullscreen></iframe>
     </div> </>);   
       case 'PPT':
         return (<>
@@ -61,8 +95,10 @@ function PartsCard(props) {
         <iframe src={children} width="100%" height="500px"/>        </>);     
       case 'gForm':
         return (<>
-        {console.log(`${children}`)}
-        <iframe src={children} width="100%" height="500px"/>        </>);      
+        {console.log(`https://docs.google.com/gview?url=${children}`)}
+        {/* <iframe src={children} width="100%" height="500px"/>         */}
+        <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>        
+        </>);      
       case 'AUDIO':
         return (<>
          {console.log(`The audio file is ${children}`)}
@@ -118,7 +154,12 @@ function PartsCard(props) {
               </DropdownItem>
 </Dropdown>
 </div>
-    <CardBody className={(type=='TEXT') ? 'bg-red-300':''}>
+{
+  console.log(cardColor)}
+    <CardBody style={{
+       backgroundColor: cardColor,
+                                  padding: 8,
+    }}>
       <p className="mb-4 font-semibold text-gray-100 dark:text-gray-100" >
       <p dangerouslySetInnerHTML={getMarkdownText(title)}/>
       <span className='text-right float-right'>

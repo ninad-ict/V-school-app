@@ -1,7 +1,7 @@
 {
-  "name": "windmill-dashboard-react",
+  "name": "vschool",
   "version": "0.4.0",
-  "description": "A multi theme, completely accessible, with components and pages examples, (almost) ready for production dashboard.",
+  "description": "vschool",
   "private": true,
   "homepage": "https://ninad-ict.github.io/V-school-app/",
   "scripts": {
@@ -35,6 +35,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "react-slideshow-image": "^3.7.5",
+    "react-speech-kit": "^3.0.1",
     "react-transition-group": "4.4.1",
     "redux": "^4.2.0"
   },

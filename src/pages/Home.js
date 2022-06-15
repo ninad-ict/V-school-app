@@ -13,7 +13,7 @@ import { Card, CardBody } from '@windmill/react-ui';
 import { UserContext } from '../context/UserContext';
 import { BookIcon } from '../icons';
 import Tiger from '../assets/img/tiger.png';
-import { HeartIcon,ZoomIn,ZoomOut } from '../icons'
+import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
 import { NavLink } from 'react-router-dom';
@@ -68,6 +68,7 @@ function Home() {
 
   const [colorSubject,setcolorSubject]=useState("");
 
+
   const userContext=useContext(UserContext);
 
   const chapterRef=useRef();
@@ -80,7 +81,10 @@ function Home() {
   const [marginIndex,setMarginIndex]=useState(10);
   const [marginText,setmarginText]=useState(`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`);
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const colors = ['#CCE5FE', '#F8D7DA', '#FFF3CE', '#D4EDDA'];
+  let colorIndex = 0;
 
   function openModal() {
     setIsModalOpen(true)
@@ -649,7 +653,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      </div>
      </div>
     { (currPart) ?
-     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef} onClick={openModal}>
+     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef} >
      <hr className='mb-4'/>
 
      {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}
@@ -665,7 +669,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
-        <div className="w-full lg:w-12/12 pr-4 font-light my-4 transform shadow hover:shadow-lg">
+        <div className="w-full lg:w-12/12 pr-4 font-light my-4 transform shadow hover:shadow-lg " onDoubleClick={openModal}>
         {console.log(v)}
        <PartsCard title={
          (() => {
@@ -675,14 +679,39 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
                         default: return "";
                                   }
                     })()}       
- type={v.type} index={k}>
+ type={v.type} index={k} 
+ cardColor={(()=>{
+
+   if(v.type=='TEXT')
+   {
+    let presentColor=colors[colorIndex];
+   colorIndex+=1;
+   return presentColor;
+   }
+   return "";
+ })()
+
+ }
+ >
        {(() => {
     switch (v.type) {
                         case "TEXT":  return v.value;
                         case "IMG":case 'GIF': return v.value.filePath;
                         case "VIDEO": return (v.value.url.split('/').pop());
                         case "AUDIO": return v.value;
-                        case "gForm": return v.value;
+                        case "gForm": {
+                          {/* if(JSON.stringify(v.value).includes('forms.gle'))
+                          {
+                            console.log("Bad GFORM");
+                            let tempText=v.value.split('/').pop();
+                            console.log(tempText);
+                            tempText=`https://docs.google.com/forms/d/e/${tempText}/viewform?usp=sf_link`;
+                            console.log(tempText);
+                            v.value=tempText;
+                            console.log(v.value);
+                          } */}
+                          return v.value
+                          };
                         case "PDF": return v.value;
                         default: return v.value;
                     }
