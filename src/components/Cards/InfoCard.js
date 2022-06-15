@@ -3,9 +3,28 @@ import { Card, CardBody } from '@windmill/react-ui';
 
 function InfoCard({ title, value, children: icon,handleClick}) {
 
+  const [isActive, setIsActive] = useState(false);
+
+  const handleClickk = () => {
+    // 👇️ toggle
+    setIsActive(current => !current);
+
+    // 👇️ or set to true
+    // setIsActive(true);
+  };
+
+
   return (
-    <Card onClick={handleClick} >
-      <CardBody className="flex items-center hover:bg-purple-400 hover:text-gray-50 ">
+    <Card  className='shadow shadow-2xl'   
+    onClick={handleClick}
+    
+    //   style={{
+    //   backgroundColor: isActive ? 'salmon' : '',
+    //   color: isActive ? 'white' : '',
+    // }}
+    // onClick={handleClickk}
+     >
+      <CardBody className="flex items-center hover:bg-red-400 hover:text-gray-50 ">
         {icon}
         <div>
           <p className="mb-2 text-sm font-medium text-gray-600">{title}</p>

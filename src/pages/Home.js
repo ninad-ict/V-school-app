@@ -13,12 +13,20 @@ import { Card, CardBody } from '@windmill/react-ui';
 import { UserContext } from '../context/UserContext';
 import { BookIcon } from '../icons';
 import Tiger from '../assets/img/tiger.png';
-import { HeartIcon,ZoomIn,ZoomOut } from '../icons'
+import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
 import { NavLink } from 'react-router-dom';
+// import BasicTabs  from '../components/Cards/BasicTabs';
 
 import {getStudentSubjects,getChapters,getChapterPreview,getChapterPartContentNew} from "../dataFromServer";
+
+import { Modal, ModalHeader, ModalBody, ModalFooter } from '@windmill/react-ui';
+
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+import styles from "../assets/css/Slider.module.css";
+
 
 
 
@@ -60,6 +68,7 @@ function Home() {
 
   const [colorSubject,setcolorSubject]=useState("");
 
+
   const userContext=useContext(UserContext);
 
   const chapterRef=useRef();
@@ -71,6 +80,19 @@ function Home() {
   });
   const [marginIndex,setMarginIndex]=useState(10);
   const [marginText,setmarginText]=useState(`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const colors = ['#CCE5FE', '#F8D7DA', '#FFF3CE', '#D4EDDA'];
+  let colorIndex = 0;
+
+  function openModal() {
+    setIsModalOpen(true)
+  }
+
+  function closeModal() {
+    setIsModalOpen(false)
+  }
 
 
 
@@ -279,20 +301,202 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
     console.log(marginIndex);
     setmarginText(`flex flex-wrap lg:w-12/12 ${marginSize[marginIndex]}`);
     console.log(marginSize[marginIndex]);
-  },[marginIndex])
+  },[marginIndex]);
+
+  const slideImages = [
+    '../assets/img/tiger.png',
+    '../assets/img/tiger.png',
+    '../assets/img/tiger.png'
+  ];
+
+//  function renderSwitchForSlides()
+//   {
+//     switch(v.type)
+//     {
+//                 case "TEXT":
+//                 {
+//                   console.log("Reacged Text");
+//                   return(  
+//                               <span>{v.value}</span>              
+//                         )
+//                 }
+//                 case "IMG":case 'GIF': return v.value.filePath;
+//                 case "VIDEO": return (v.value.url.split('/').pop());
+//                 case "AUDIO": return v.value;
+//                 case "gForm": return v.value;
+//                 case "PDF": return v.value;
+//     }
+//   }
 
   return (
     <>
-    <div ref={subjectRef}></div>
+     <Modal isOpen={isModalOpen} onClose={closeModal}  >
+        <ModalBody  className='w-3\/4'>
+        
+        <div className="each-slide hidden">
+            <div style={{'backgroundImage': `url(${Tiger})`}}>
+              {/* <span>Slide 1</span> */}
+            </div>
+          </div>
+          <div className="each-slide hidden">
+            <div >
+              <span>People seldom have a </span>
+            </div>
+          </div>
+          <div className="each-slide hidden">
+            <div>
+             <iframe width="100%" height="600" src="https://www.youtube.com/embed/YE7VzlLtp-4?ecver=2&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+      
+        <div className='w-3\/4 py-auto content-center'>
+        <Slide easing="ease" style={{background:'none'}}>
+          {
+       contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
+         return(
+  
+         (() => {
+                  switch (v.type) {
+                        case v.value&& "TEXT":  
+                        return (
+                          <div className="each-slide"  style={{backgroundColor:'transparent'}}>
+          <div style={{'background':'none'}}
+          className='w-3\/4 my-auto mt-64 mb-64 content-center py-auto'>
+                          <p className="text-2xl px-4" 
+                          style={{backgroundColor:'transparent'}}>
+                            <div  style={{backgroundColor:'transparent'}} dangerouslySetInnerHTML={{__html:`<p style="color:'none';background-color:transparent;background:'none';text-align: justify;">${v.value}</p>`}}></div>
+                          </p>
+                          </div></div>
+                        )
+                         case v.value.filePath && "IMG":case v.value.filePath && 'GIF':
+                          {console.log(`${v.value.filePath}`)}
+                        return (   
+                          <>
+                          {/* <div className="each-slide">   
+                           <div
+                           className='min-h-96 content-center py-auto'>
+                              <img
+                                aria-hidden="true"
+                                className="object-cover my-auto"
+                                src={`${v.value.filePath}`}
+                                alt="tiger"
+                              />
+                    </div>
+                    </div> */}
+
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <img
+                                aria-hidden="true"
+                                className="object-cover"
+                                src={`${v.value.filePath}`}
+                                alt="tiger"
+                              />                          </div>
+                        </div>
+
+                        </>
+
+                        )
+                        case v.value&&'VIDEO':
+                        return(
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <iframe width="100%" height='600' src={`https://www.youtube.com/embed/${v.value.url.split('/').pop()}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                          </div>
+                        </div>
+
+                        )  
+                        case v.value && 'AUDIO':
+                        return(
+                          
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <audio controls>
+                             <source src={`${v.value}`} type="audio/mp3"/>
+                          </audio>                         
+           </div>
+                        </div>
+
+                        )                   
+                        case v.value && 'gForm':
+                        return(
+                          
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <iframe src={v.value} width="100%" height="500px"/>                      
+           </div>
+                        </div>
+
+                        )  
+                        case v.value && 'PDF':
+                        return(
+                          
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                          <iframe src={v.value} width="100%" height="500px"/>                    
+           </div>
+                        </div>
+
+                        )
+                        case v.value && 'PPT':
+                        return(
+                          
+                          <div className="each-slide">
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
+                    <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${v.value}`} width="100%" height="500px" frameborder='0'/> 
+                 
+           </div>
+                        </div>
+
+                        )
+                        default: return;
+                                  }
+                    })()
+                  
+ 
+      )
+       })
+     }
+        </Slide>
+      </div>        
+        
+        </ModalBody>
+        <ModalFooter className='hidden'>
+          {/* I don't like this approach. Consider passing a prop to ModalFooter
+           * that if present, would duplicate the buttons in a way similar to this.
+           * Or, maybe find some way to pass something like size="large md:regular"
+           * to Button
+           */}
+          <div className="hidden sm:block">
+            <Button layout="outline" onClick={closeModal}>
+              Cancel
+            </Button>
+          </div>
+          <div className="hidden sm:block">
+            <Button>Accept</Button>
+          </div>
+          <div className="block w-full sm:hidden">
+            <Button block size="large" layout="outline" onClick={closeModal}>
+              Cancel
+            </Button>
+          </div>
+          <div className="block w-full sm:hidden">
+            <Button block size="large">
+              Accept
+            </Button>
+          </div>
+        </ModalFooter>
+      </Modal>
+    <div ref={subjectRef} ></div>
       <PageTitle>{userContext.section}</PageTitle>
 
       {(!currChapter||!currSubject) ?  <>
 
-      <div className='flex flex-wrap'>
-      <div className="w-full lg:w-12/12">
+      <div className='flex flex-wrap '>
+      <div className="w-full lg:w-6/12 pr-4 border-r">
       <CTA text='Select Subject' />
 
-      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 overflow-x-auto">
+      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2 overflow-x-auto">
       {/* {allSubjects.response.map((v,k)=>(console.log(v)))} */}
       {console.log("f"+allSubjects)}
       {console.log("f"+subjects)}
@@ -305,7 +509,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
        <InfoCard color={colorSubject} title={v.subject_name} value={v.subject_name} handleClick={
             e=>{
               setCurrSubject(v);
-              currSubject&&chapterRef.current.focus();
+              // currSubject&&chapterRef.current.focus();
               setcolorSubject((colorSubject) ? "":'bg-blue-400')
               }} >
           <RoundIcon
@@ -321,21 +525,19 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </div>
 
         </div>
-        </div>
-
-<hr className='mb-4'/>
-
-{(currSubject) ?
+        {/* <div className="lg:w-1/12 border-l ml-4">
+        </div> */}
+        {(currSubject) ?
 <>
-<div ref={chapterRef}></div>
-<CTA text={`Select Chapter for ${currSubject.subject_name}`} />
+        <div className="w-full lg:w-6/12 pl-4 ">
+        <CTA text={`Select Chapter for ${currSubject.subject_name}`} />
       
-<div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4" >
+<div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2" >
 {
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
 {allChapters&&allChapters.map((v,k)=>(
-      <Card className="mb-8 shadow-md dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+      <Card className="mb-8 shadow-lg dark:hover:bg-red-300 hover:bg-red-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
         <CardBody>
 
        
@@ -353,6 +555,44 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       
       )) }
 </div>
+        </div>
+        </> :""}
+    
+        </div>
+
+{/* <hr className='mb-4'/> */}
+
+{(currSubject) ?
+<>
+<div className='flex flex-wrap hidden'>
+      <div className="w-full lg:w-6/12">
+<div ref={chapterRef}></div>
+<CTA text={`Select Chapter for ${currSubject.subject_name}`} />
+      
+<div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4" >
+{
+  allChapters&&allChapters.map((v,k)=>(console.log(v)))
+      }
+{allChapters&&allChapters.map((v,k)=>(
+      <Card className="mb-8 shadow-md dark:hover:bg-red-300 hover:bg-red-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+        <CardBody>
+
+       
+          <div className="flex items-center">
+        <RoundIcon
+            icon={PeopleIcon}
+            iconColorClass="text-orange-500 dark:text-orange-100"
+            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            className="mr-4"
+          />
+        <span className='dark:text-white'>{v.chapter_name}</span>
+      </div>
+        </CardBody>
+      </Card>
+      
+      )) }
+</div>
+</div></div>  
 </>
 :""}
 
@@ -365,13 +605,13 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-orange-600' showMore='Back' handleClick={()=>setCurrChapter("")} />
      </div> 
       <div className="w-full lg:w-2/12 pr-4 font-light">
-      <Button className='text-purple-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
+      <Button className='text-red-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex>=1)
         setMarginIndex(marginIndex-2)
         
         }} />
-      <Button  className='text-purple-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
+      <Button  className='text-red-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex<=30)
         setMarginIndex(marginIndex+2)
@@ -379,15 +619,21 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         }}/>
      </div>
 
+     <div className='sticky top-500 flex flex-wrap w-full lg:w-12/12 pr-4'>
+
      {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
        console.log(v.part_name)
      })}
      
-     {chapterPreview && [...chapterPreview.response.chapter_parts,"summary"].map((v,k)=>(
+     
+     {/* {chapterPreview && [...chapterPreview.response.chapter_parts,"Summary"].map((v,k)=>( */}
+     {chapterPreview && [...chapterPreview.response.chapter_parts].map((v,k)=>(
 
-      <div className="w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
+      <div className=" focus:border-red-400 w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
       {console.log("Value is"+v)}
-      <Card className="mb-8 shadow-md hover:bg-purple-100 dark:hover:bg-purple-300" onClick={()=>setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v)}>
+      {console.log("Iteration is "+k)}
+      {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
+      <Card className="mb-8 shadow-lg hover:bg-red-100 dark:hover:bg-red-300" onClick={()=>setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v)}>
         <CardBody>
 
        
@@ -398,15 +644,16 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             bgColorClass="bg-orange-100 dark:bg-orange-500"
             className="mr-4"
           />
-        <span className='dark:text-white'>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v.part_name} </span>
+        <span className='dark:text-white'>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":"Part "+Number.parseInt(k+1)} </span>
       </div>
         </CardBody>
       </Card>
       </div>
      ))}
      </div>
+     </div>
     { (currPart) ?
-     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef}>
+     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef} >
      <hr className='mb-4'/>
 
      {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}
@@ -422,24 +669,49 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
-        <div className="w-full lg:w-12/12 pr-4 font-light my-4">
+        <div className="w-full lg:w-12/12 pr-4 font-light my-4 transform shadow hover:shadow-lg " onDoubleClick={openModal}>
         {console.log(v)}
        <PartsCard title={
          (() => {
                   switch (v.type) {
                         case "IMG": return v.value.description;
-                        case "VIDEO": return v.value.tag;
+                        case "VIDEO": return (v.value.tag) ? v.value.tag:"    ";
                         default: return "";
                                   }
                     })()}       
- type={v.type}>
+ type={v.type} index={k} 
+ cardColor={(()=>{
+
+   if(v.type=='TEXT')
+   {
+    let presentColor=colors[colorIndex];
+   colorIndex+=1;
+   return presentColor;
+   }
+   return "";
+ })()
+
+ }
+ >
        {(() => {
     switch (v.type) {
                         case "TEXT":  return v.value;
-                        case "IMG"||'GIF': return v.value.filePath;
+                        case "IMG":case 'GIF': return v.value.filePath;
                         case "VIDEO": return (v.value.url.split('/').pop());
                         case "AUDIO": return v.value;
-                        case "gForm": return v.value;
+                        case "gForm": {
+                          {/* if(JSON.stringify(v.value).includes('forms.gle'))
+                          {
+                            console.log("Bad GFORM");
+                            let tempText=v.value.split('/').pop();
+                            console.log(tempText);
+                            tempText=`https://docs.google.com/forms/d/e/${tempText}/viewform?usp=sf_link`;
+                            console.log(tempText);
+                            v.value=tempText;
+                            console.log(v.value);
+                          } */}
+                          return v.value
+                          };
                         case "PDF": return v.value;
                         default: return v.value;
                     }

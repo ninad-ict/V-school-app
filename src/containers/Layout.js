@@ -7,6 +7,7 @@ import Header from '../components/Header'
 import Main from '../containers/Main'
 import ThemedSuspense from '../components/ThemedSuspense'
 import { SidebarContext } from '../context/SidebarContext'
+import Background from "../assets/img/BackGround-1.png";
 
 const Page404 = lazy(() => import('../pages/404'))
 
@@ -20,7 +21,8 @@ function Layout() {
 
   return (
     <div
-      className={`flex h-screen bg-gray-50 dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
+      className={` setBackground-Content setBackground bg-dark-50 flex h-screen dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
+      // style={{backgroundImage: `url("${Background}")`,backgroundColor: 'rgba(232, 70, 70)',zIndex:-1}}
     >
       <Sidebar />
 

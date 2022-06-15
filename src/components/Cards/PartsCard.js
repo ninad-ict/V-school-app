@@ -3,12 +3,23 @@ import { Card, CardBody } from '@windmill/react-ui';
 import { MenuIcon } from '../../icons';
 import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext,Button } from '@windmill/react-ui'
 import ReactAudioPlayer from 'react-audio-player';
+import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../../icons';
 
+import { useSpeechSynthesis } from "react-speech-kit";
 
 function PartsCard(props) {
 
-  const {title,children,type} = {...props};
+  const {title,children,type,index,cardColor} = {...props};
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
+
+  const [value, setValue] = React.useState("");
+  const { speak } = useSpeechSynthesis();
+
+
+  const [textSound,setTextSound]=useState(false);
+
+  const colors = ['#CCE5FE', '#e3b3b8', '#FFF3CE', '#D4EDDA'];
+  let colorIndex = 0;
 
   function getMarkdownText(text) {
     return { __html: text };
@@ -20,13 +31,37 @@ function PartsCard(props) {
       case 'TEXT':
         return (
           <>
-            <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}>
+          { 
+            console.log("XXX"+children.replace(/<[^>]+>/g, '').replace(/&nbsp;/gi,''))
+            }
+          {setValue(children.replace(/<[^>]+>/g, '').replace(/&nbsp;/gi,''))}
+          {/* {setValue(children.innerHTML)} */}
+                      <Button className='text-red-600 float-right' icon={(textSound)? SoundOn:SoundOff} layout="link" aria-label="Like"  
+                        onClick={()=>{
+                          speak({text:""})
+                          setTextSound(!textSound);
+                          if(!textSound)
+                          {
+                            speak({ text:value })
+                          }
+                          // else
+                          // {
+                            
+                          // }
+
+                        }}
+                      />
+
+            <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}
+            >
+{/* {setValue(this.target.innerText)} */}
           
             </p>
 
           </>
         );      
-      case 'IMG'||'GIF':
+      case 'GIF':
+      case 'IMG':
         return (
           <>
           {children &&
@@ -46,20 +81,24 @@ function PartsCard(props) {
         return (<>
         {console.log(`https://www.youtube.com/embed/${children}`)}
         <div className="video-container">
-    <iframe src={`https://www.youtube.com/embed/${children}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {/* <iframe src={`https://www.youtube.com/embed/${children}?rel=0&autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
+    <iframe src={`https://www.youtube.com/embed/${children}`} allow="fullscreen;" frameborder="0" allowfullscreen></iframe>
     </div> </>);   
       case 'PPT':
         return (<>
-        {console.log(`${children}`)}
-        <iframe src={children} width="100%" height="500px"/>        </>);    
+        {(console.log("It worked"),console.log(`${children}`))}
+        {/* https://view.officeapps.live.com/op/embed.aspx?src=${linkToPPTFile}` */}
+        <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${children}`} width="100%" height="500px" frameborder='0'/>        </>);    
       case 'PDF':
         return (<>
         {console.log(`${children}`)}
         <iframe src={children} width="100%" height="500px"/>        </>);     
       case 'gForm':
         return (<>
-        {console.log(`${children}`)}
-        <iframe src={children} width="100%" height="500px"/>        </>);      
+        {console.log(`https://docs.google.com/gview?url=${children}`)}
+        {/* <iframe src={children} width="100%" height="500px"/>         */}
+        <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>        
+        </>);      
       case 'AUDIO':
         return (<>
          {console.log(`The audio file is ${children}`)}
@@ -92,6 +131,7 @@ function PartsCard(props) {
     setIsNotificationsMenuOpen(!isNotificationsMenuOpen)
   }
 
+  if(children)
   return (
     <Card>
     <div className="relative mr-10">
@@ -114,14 +154,19 @@ function PartsCard(props) {
               </DropdownItem>
 </Dropdown>
 </div>
-    <CardBody className={(type=='TEXT') ? 'bg-red-300':''}>
-      <p className="mb-4 font-semibold text-gray-600 dark:text-gray-600" >
+{
+  console.log(cardColor)}
+    <CardBody style={{
+       backgroundColor: cardColor,
+                                  padding: 8,
+    }}>
+      <p className="mb-4 font-semibold text-gray-100 dark:text-gray-100" >
       <p dangerouslySetInnerHTML={getMarkdownText(title)}/>
       <span className='text-right float-right'>
       {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
 </svg> */}
-<Button icon={MenuIcon} layout="link" aria-label="Like" onClick={handleNotificationsClick} />
+{/* <Button icon={MenuIcon} layout="link" aria-label="Like" onClick={handleNotificationsClick} /> */}
 
 
 </span>
@@ -132,6 +177,8 @@ function PartsCard(props) {
     </CardBody>
   </Card>
   )
+  else
+  return "";
 }
 
 export default PartsCard
