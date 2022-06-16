@@ -1,8 +1,8 @@
 import axios from "axios";
 // import APP_URL from './common/constants';
 // const APP_URL = 'http://dev.vopa.in/vopa/api/'; 
-// const APP_URL = 'http://vschoolindia.com/vopa/api/'; 
-const APP_URL = 'https://lessons.vopa.in/vopa/api/';
+const APP_URL = 'http://vschoolindia.com/vopa/api/'; 
+// const APP_URL = 'https://lessons.vopa.in/vopa/api/';
 
 
 // const config = {

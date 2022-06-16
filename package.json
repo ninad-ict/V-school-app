@@ -3,7 +3,7 @@
   "version": "0.4.0",
   "description": "vschool",
   "private": true,
-  "homepage": "https://ninad-ict.github.io/V-school-app/",
+  "homepage": "https://vschoolindia.com/",
   "scripts": {
     "tailwind:dev": "tailwindcss build src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
     "tailwind:build": "cross-env NODE_ENV=production postcss src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
