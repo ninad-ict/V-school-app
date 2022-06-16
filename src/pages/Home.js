@@ -684,7 +684,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
    if(v.type=='TEXT')
    {
-    let presentColor=colors[colorIndex];
+    let presentColor=colors[colorIndex%3];
    colorIndex+=1;
    return presentColor;
    }
