@@ -26,8 +26,8 @@
 
 
 .setBackground {
-    background-image: url('../img/BackGround-1.png');
-    background-color: #d1aeae;
+    /* background-image: url('../img/BackGround-1.png'); */
+    /* background-color: #d1aeae; */
     height: '100vh';
     background-position: 'center';
     background-repeat: 'no-repeat';

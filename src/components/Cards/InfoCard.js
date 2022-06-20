@@ -15,7 +15,7 @@ function InfoCard({ title, value, children: icon,handleClick}) {
 
 
   return (
-    <Card  className='shadow shadow-2xl'   
+    <Card  className='shadow shadow-md'   
     onClick={handleClick}
     
     //   style={{

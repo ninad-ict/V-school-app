@@ -7,14 +7,40 @@ import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../../icons';
 
 import { useSpeechSynthesis } from "react-speech-kit";
 
+import BloomImage from "../../assets/img/BloomBox.png";
+
+// import DoorDashFavorite from '../Typography/DoorDashFavorite';
+
 function PartsCard(props) {
 
   const {title,children,type,index,cardColor} = {...props};
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
 
   const [value, setValue] = React.useState("");
-  const { speak } = useSpeechSynthesis();
 
+  const [text, setText] = useState('I am a robot');
+  const [pitch, setPitch] = useState(1);
+  const [rate, setRate] = useState(1);
+  const [voiceIndex, setVoiceIndex] = useState(null);
+
+  const onEnd = () => {
+    // You could do something here after speaking has finished
+  };
+
+
+  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
+    onEnd,
+  });
+
+  const voice = voices[voiceIndex] || null;
+
+
+  console.log("voices");
+  console.log(voices[55]);
+
+  const englishMalevoice=voices[0];
+  const hindiFemalevoice=voices[21];
+  const hindiGoogleFemalevoice=voices && voices[55];
 
   const [textSound,setTextSound]=useState(false);
 
@@ -42,7 +68,8 @@ function PartsCard(props) {
                           setTextSound(!textSound);
                           if(!textSound)
                           {
-                            speak({ text:value })
+                            console.log("It must SPEAK")
+                            hindiGoogleFemalevoice && speak({ text:value,voice:hindiGoogleFemalevoice })
                           }
                           // else
                           // {
@@ -82,7 +109,7 @@ function PartsCard(props) {
         {console.log(`https://www.youtube.com/embed/${children}`)}
         <div className="video-container">
     {/* <iframe src={`https://www.youtube.com/embed/${children}?rel=0&autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-    <iframe src={`https://www.youtube.com/embed/${children}`} allow="fullscreen;" frameborder="0" allowfullscreen></iframe>
+    <iframe src={`https://www.youtube.com/embed/${children}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
     </div> </>);   
       case 'PPT':
         return (<>
@@ -96,8 +123,8 @@ function PartsCard(props) {
       case 'gForm':
         return (<>
         {console.log(`https://docs.google.com/gview?url=${children}`)}
-        {/* <iframe src={children} width="100%" height="500px"/>         */}
-        <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>        
+        <iframe src={children} width="100%" height="500px"/>        
+        {/* <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>         */}
         </>);      
       case 'AUDIO':
         return (<>
@@ -114,6 +141,27 @@ function PartsCard(props) {
         </p>
         </div>
 </>);
+      case 'SPECIAL_TEXT':
+        return(
+          <>
+            <div
+            className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
+            <div className='w-full lg:w-6/12 pr-4'>
+            <img
+              aria-hidden="true"
+              className="object-cover w-full h-full"
+              src={BloomImage}
+              alt="tiger"
+            />
+            </div>
+            <div className='w-full lg:w-6/12 text-lg py-auto my-auto font-extrabold' dangerouslySetInnerHTML={getMarkdownText(children)}>
+              
+            </div>
+
+
+            </div>
+          </>
+        )
       default:
         return `Unable to display ${type}`;
     }

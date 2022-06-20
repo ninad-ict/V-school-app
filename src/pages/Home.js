@@ -13,7 +13,7 @@ import { Card, CardBody } from '@windmill/react-ui';
 import { UserContext } from '../context/UserContext';
 import { BookIcon } from '../icons';
 import Tiger from '../assets/img/tiger.png';
-import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../icons'
+import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff,Letter } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
 import { NavLink } from 'react-router-dom';
@@ -26,10 +26,6 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from '@windmill/react-ui';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import styles from "../assets/css/Slider.module.css";
-
-
-
-
 
 import SectionTitle from '../components/Typography/SectionTitle'
 
@@ -52,6 +48,7 @@ import {
   doughnutLegends,
   lineLegends,
 } from '../utils/demo/chartsData'
+// import DoorDashFavorite from '../components/Typography/DoorDashFavorite';
 
 function Home() {
   const [page, setPage] = useState(1);
@@ -95,6 +92,15 @@ function Home() {
   }
 
 
+  useEffect(()=>{
+
+    if(chapterPreview.response)
+    {
+      setCurrPart(chapterPreview.response.chapter_parts[0]);
+    }
+
+  },[chapterPreview]);
+
 
   useEffect(()=>{
 
@@ -129,6 +135,15 @@ function Home() {
     console.log("CHanges again");
 
   },[]);
+
+  useEffect(()=>{
+
+    if(allSubjects)
+    {
+      setCurrSubject(allSubjects[0]);
+    }
+
+  },[allSubjects])
 
 
   function convertJSONtoArray(json)
@@ -257,7 +272,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       
         getChapterPreview(params).then(d=>{
           console.log("Chapter Preview"+d);
+          console.log(d);
           setChapterPreview(d);
+
         }).catch(e=>console.log(e));  
       }
 
@@ -513,10 +530,12 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
               setcolorSubject((colorSubject) ? "":'bg-blue-400')
               }} >
           <RoundIcon
-            icon={PeopleIcon}
+            // icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            bgColorClass="bg-orange-100 dark:bg-orange-500 shadow-md from-orange-500"
             className="mr-4"
+            letter={v.subject_name[0]}
+            mode='subject'
           />
         </InfoCard>
 
@@ -545,8 +564,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            bgColorClass="bg-orange-100 dark:bg-orange-500 shadow-md"
             className="mr-4"
+            letter={k+1}
+            mode='chapter'
           />
         <span className='dark:text-white'>{v.chapter_name}</span>
       </div>
@@ -580,7 +601,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
        
           <div className="flex items-center">
         <RoundIcon
-            icon={PeopleIcon}
+            icon={ZoomIn}
             iconColorClass="text-orange-500 dark:text-orange-100"
             bgColorClass="bg-orange-100 dark:bg-orange-500"
             className="mr-4"
@@ -597,14 +618,14 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 :""}
 
    </> :<>
-     <div className='flex flex-wrap'>
+     <div className='flex flex-wrap relative'>
      <div className="w-full lg:w-4/12 pr-4 font-light">
-     <CTA text={`Subject-${currSubject.subject_name}`} showMore='Back' handleClick={()=>{setCurrSubject("");setCurrChapter("")}} />
+     <CTA text={`Subject-${currSubject.subject_name}`} showMore='Back' handleClick={()=>{setCurrSubject(allSubjects[0]);setCurrChapter("")}} />
      </div>
      <div className="w-full lg:w-6/12 pr-4 font-light">
      <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-orange-600' showMore='Back' handleClick={()=>setCurrChapter("")} />
      </div> 
-      <div className="w-full lg:w-2/12 pr-4 font-light">
+      <div className="w-full lg:w-2/12 pr-4 font-light ">
       <Button className='text-red-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex>=1)
@@ -619,7 +640,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         }}/>
      </div>
 
-     <div className='sticky top-500 flex flex-wrap w-full lg:w-12/12 pr-4'>
+     <div className='flex flex-wrap w-full lg:w-12/12 pr-4'>
+     {/* <div class="fixed top-0  p-2 bg-black text-white uppercase">Sticky Heading 1</div> */}
+
 
      {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
        console.log(v.part_name)
@@ -627,10 +650,16 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      
      
      {/* {chapterPreview && [...chapterPreview.response.chapter_parts,"Summary"].map((v,k)=>( */}
-     {chapterPreview && [...chapterPreview.response.chapter_parts].map((v,k)=>(
+     {
+      chapterPreview && [...chapterPreview.response.chapter_parts].map((v,k)=>(
 
+       
+
+  
       <div className=" focus:border-red-400 w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
+      {/* {(k==0)? setCurrPart(v) :""}  */}
       {console.log("Value is"+v)}
+      {console.log(v)}
       {console.log("Iteration is "+k)}
       {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
       <Card className="mb-8 shadow-lg hover:bg-red-100 dark:hover:bg-red-300" onClick={()=>setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v)}>
@@ -639,7 +668,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
        
           <div className="flex items-center">
         <RoundIcon
-            icon={HeartIcon}
+            icon={BookIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
             bgColorClass="bg-orange-100 dark:bg-orange-500"
             className="mr-4"
@@ -649,14 +678,25 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </CardBody>
       </Card>
       </div>
-     ))}
+     ))
+     }
      </div>
      </div>
     { (currPart) ?
      <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef} >
-     <hr className='mb-4'/>
+     <hr className='mb-4 pb-2'/>
 
-     {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}
+     <div className='w-full lg:w-12/12 bg-white py-4 pl-4 underline h-10  rounded shadow-md'>
+    <p> {currPart &&
+    <div>
+    
+
+     <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>
+     </div>}</p>
+     </div>
+     <div className='w-full lg:w-12/12 bg-white py-4 pl-4 underline h-30 border-t-0 rounded shadow-md'></div>
+
+    
 <hr/>
      {/* {
        contentList && console.log("This is"+JSON.stringify( contentList.data.response.content))
@@ -669,7 +709,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
-        <div className="w-full lg:w-12/12 pr-4 font-light my-4 transform shadow hover:shadow-lg " onDoubleClick={openModal}>
+        <div className="w-full lg:w-12/12 pr-4 font-light my-4 " onDoubleClick={openModal}>
         {console.log(v)}
        <PartsCard title={
          (() => {
@@ -688,14 +728,19 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
    colorIndex+=1;
    return presentColor;
    }
-   return "";
+
+   if(v.type=='SPECIAL_TEXT')
+   {
+    return "#E6F4FF"; 
+   }
+ 
  })()
 
  }
  >
        {(() => {
     switch (v.type) {
-                        case "TEXT":  return v.value;
+                        case "TEXT":case 'SPECIAL_TEXT':  return v.value;
                         case "IMG":case 'GIF': return v.value.filePath;
                         case "VIDEO": return (v.value.url.split('/').pop());
                         case "AUDIO": return v.value;

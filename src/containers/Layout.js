@@ -21,7 +21,7 @@ function Layout() {
 
   return (
     <div
-      className={` setBackground-Content setBackground bg-dark-50 flex h-screen dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
+      className={` setBackground-Content setBackground bg-gray-50 flex h-screen dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
       // style={{backgroundImage: `url("${Background}")`,backgroundColor: 'rgba(232, 70, 70)',zIndex:-1}}
     >
       <Sidebar />

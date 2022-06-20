@@ -34,6 +34,7 @@ import { ReactComponent as ZoomIn } from './zoomin.svg'
 import { ReactComponent as ZoomOut } from './zoomout.svg'
 import { ReactComponent as SoundOn } from './sound-on.svg'
 import { ReactComponent as SoundOff } from './sound-off.svg'
+import { ReactComponent as Letter } from './letter.svg'
 
 export {
   ButtonsIcon,
@@ -71,5 +72,6 @@ export {
   ZoomIn,
   ZoomOut,
   SoundOn,
-  SoundOff
+  SoundOff,
+  Letter
 }
