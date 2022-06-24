@@ -35,6 +35,8 @@ import ExamLottie from "../assets/lottie/91736-exams.json";
 
 import { useSpeechSynthesis } from "react-speech-kit";
 
+import {SubjectImage} from "../assets/img/SubjectPhoto.png";
+
 
 
 
@@ -250,7 +252,7 @@ setlistenActivePart(-1);
 
     console.log("CHanges again");
 
-  },[userContext]);
+  },[userContext.profile,userContext.section]);
 
   useEffect(()=>{
 
@@ -641,8 +643,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       {(!currChapter||!currSubject) ?  <>
 
       <div className='flex flex-wrap '>
-      <div className="w-full lg:w-6/12 pr-4 border-r">
+      <div className="w-full lg:w-5/12 pr-4 border-r">
       <CTA text='Select Subject' />
+      {/* <div>
+        Select Subject
+      </div> */}
 
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2 overflow-x-auto">
       {/* {allSubjects.response.map((v,k)=>(console.log(v)))} */}
@@ -656,7 +661,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         allSubjects && allSubjects.map((v,k)=>(
     
       
-       <InfoCard color={(subjectActive==k)? "bg-red-400":""} title={v.subject_name} value={v.subject_name} key={k} handleClick={
+       <InfoCard color={(subjectActive==k)? "bg-purple-400":""} title={v.subject_name} value={v.subject_name} key={k} handleClick={
             e=>{
               setSubjectActive(k);
               setCurrSubject(v);
@@ -665,8 +670,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
               }} >
           <RoundIcon
             // icon={PeopleIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500 shadow-md from-orange-500"
+            iconColorClass="text-purple-500 dark:text-purple-100"
+            bgColorClass="bg-purple-100 dark:bg-purple-500 shadow-md from-purple-500"
             className="mr-4"
             letter={v.subject_name[0]}
             mode='subject'
@@ -690,7 +695,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </div> */}
         {(currSubject) ?
 <>
-        <div className="w-full lg:w-6/12 pl-4 ">
+        <div className="w-full lg:w-7/12 pl-4 ">
         <CTA text={`Select Chapter for ${currSubject.subject_name}`} />
         {/* <BrowserRouter basename="/V-school-app">
         <Switch>
@@ -700,15 +705,15 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
 {allChapters&&allChapters.map((v,k)=>(
-      <Card className="mb-8 shadow-lg dark:hover:bg-red-300 hover:bg-red-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+      <Card className="mb-8 shadow-lg dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
         <CardBody>
 
        
           <div className="flex items-center">
         <RoundIcon
             icon={PeopleIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500 shadow-md"
+            iconColorClass="text-purple-500 dark:text-purple-100"
+            bgColorClass="bg-purple-100 dark:bg-purple-500 shadow-md"
             className="mr-4"
             letter={k+1}
             mode='chapter'
@@ -742,15 +747,15 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
 {allChapters&&allChapters.map((v,k)=>(
-      <Card className="mb-8 shadow-md dark:hover:bg-red-300 hover:bg-red-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+      <Card className="mb-8 shadow-md dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
         <CardBody>
 
        
           <div className="flex items-center">
         <RoundIcon
             icon={ZoomIn}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            iconColorClass="text-purple-500 dark:text-purple-100"
+            bgColorClass="bg-purple-100 dark:bg-purple-500"
             className="mr-4"
           />
         <span className='dark:text-white'>{v.chapter_name}</span>
@@ -766,20 +771,20 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
    </> :<>
      <div className='flex flex-wrap relative'>
-     <div className="w-full lg:w-4/12 pr-4 font-light">
+     <div className="w-full lg:w-6/12 pr-4 font-light">
      <CTA text={`Subject-${currSubject.subject_name}`} showMore='Back' handleClick={()=>{setCurrSubject(allSubjects[0]);setCurrChapter("");setSubjectActive(0);setPartActive(0)}} />
      </div>
      <div className="w-full lg:w-6/12 pr-4 font-light">
-     <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-orange-600' showMore='Back' handleClick={()=>{setCurrChapter("");setPartActive(0)}} />
+     <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-purple-600' showMore='Back' handleClick={()=>{setCurrChapter("");setPartActive(0)}} />
      </div> 
-      <div className="w-full lg:w-2/12 pr-4 font-light ">
-      <Button className='text-red-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
+      <div className="w-full lg:w-2/12 pr-4 font-light hidden">
+      <Button className='text-purple-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex>=1)
         setMarginIndex(marginIndex-2)
         
         }} />
-      <Button  className='text-red-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
+      <Button  className='text-purple-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex<=30)
         setMarginIndex(marginIndex+2)
@@ -803,21 +808,21 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
        
 
   
-      <div className=" focus:border-red-400 w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
+      <div className=" focus:border-purple-400 w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
       {/* {(k==0)? setCurrPart(v) :""}  */}
       {console.log("Value is"+v)}
       {console.log(v)}
       {console.log("Iteration is "+k)}
       {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
-      <Card className={`mb-8 shadow-lg hover:bg-red-100 dark:hover:bg-red-300 ${(k==partActive) ? "bg-red-300":""}`} onClick={()=>{setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v);setPartActive(k)}}>
+      <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300 ${(k==partActive) ? "bg-purple-300":""}`} onClick={()=>{setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v);setPartActive(k)}}>
         <CardBody>
 
        
           <div className="flex items-center">
         <RoundIcon
             icon={BookIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            iconColorClass="text-purple-500 dark:text-purple-100"
+            bgColorClass="bg-purple-100 dark:bg-purple-500"
             className="mr-4"
           />
         <span className='dark:text-white'>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":"Part "+Number.parseInt(k+1)} </span>
@@ -830,7 +835,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      </div>
      </div>
     { (currPart) ?
-     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef} >
+     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${userContext.marginIndex}%`,marginLeft:`${userContext.marginIndex}%`}} ref={partRef} >
      <hr className='mb-4 pb-2'/>
 
      <div className='w-full lg:w-12/12 bg-white py-4 pl-4 underline h-10  rounded shadow-md'>

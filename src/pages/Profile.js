@@ -126,7 +126,7 @@ function Profile(props) {
   <InfoCard title="Student" value={v.first_name+" "+v.last_name} handleClick={e=>userContext.changeProfile(JSON.stringify(v))}>
           <RoundIcon
             icon={SmileIcon}
-            className="mr-4 hover:bg-sky-200"
+            className="mr-4 hover:bg-purple-200"
             letter={v.first_name[0]}
             mode='subject'
           />

@@ -16,6 +16,8 @@ import { HeartIcon, DownIcon } from '../icons';
 
 import ProfilePhoto from "../assets/img/ProfilePhoto.png";
 
+import { ZoomIn,ZoomOut} from '../icons';
+
 const sectionList=['Main Syllabus','Special Courses','Total Usage'];
 
 
@@ -160,6 +162,28 @@ function Header() {
       ))
       }
       </Dropdown>
+      </div>
+
+      <div>
+
+      <Button layout='outline' icon={ZoomIn} aria-label="Like" className='bg-purple-400'
+      onClick={()=>{
+        
+        if(userContext.marginIndex>=1)
+        userContext.changeMarginIndex(userContext.marginIndex-2)
+        
+        }}></Button>
+
+      </div>  <div>
+
+      <Button layout='outline' icon={ZoomOut} aria-label="Like" className='bg-purple-400'
+      onClick={()=>{
+        
+        if(userContext.marginIndex<=30)
+        userContext.changeMarginIndex(userContext.marginIndex+2)
+        
+        }}></Button>
+
       </div>
 
      {/* ----Drop down for Profile Change */}
