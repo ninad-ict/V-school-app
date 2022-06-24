@@ -1,5 +1,7 @@
 import axios from "axios";
 // import APP_URL from './common/constants';
+
+// - API Link for Dev server
 // const APP_URL = 'http://dev.vopa.in/vopa/api/';
 
 // - API Link for AWS BUILD

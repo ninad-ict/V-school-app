@@ -23,15 +23,37 @@ const sectionList=['Main Syllabus','Special Courses','Total Usage'];
 
 function Header() {
   const { mode, toggleMode } = useContext(WindmillContext)
-  const { toggleSidebar } = useContext(SidebarContext)
+  const { toggleSidebar } = useContext(SidebarContext);
+
+  const [students,setStudents]=useState(()=>{
+
+    if(localStorage.getItem("students"))
+    {
+      console.log(localStorage.getItem("students"));
+      return JSON.parse(localStorage.getItem('students'));
+    }
+    else
+    {
+      return "";
+    }
+
+  });
+
 
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false)
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+
   const [isMainSectionOpen,setIsMainSectionOpen]=useState(false);
+  const [isProfileSectionOpen,setIsProfileSectionOpen]=useState(false);
   
   const [sectionName,setSectionName]=useState(sectionList[0]);
+  const [currProfile,setcurrProfile]=useState(students[0]);
 
   const userContext=useContext(UserContext);
+
+
+
+  
 
   userContext.changeSection(sectionName);
 
@@ -56,12 +78,22 @@ function Header() {
     setIsProfileMenuOpen(!isProfileMenuOpen)
   }
 
-  function toggleDropdown() {
+  function toggleDropdown(item) {
+    if(item=='section')
     setIsMainSectionOpen(!isMainSectionOpen)
+    if(item=='profile')
+    setIsProfileSectionOpen(!isProfileSectionOpen)
+
   }
 
+  useEffect(()=>{
+
+    console.log("Reached profile");
+    console.log(userContext.profile)
+  },[userContext.profile])
+
   return (
-    <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
+    <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800" style={{'background':'#924ED6'}}>
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-red-600 dark:text-red-300 ">
         {/* <!-- Mobile hamburger --> */}
         <button
@@ -72,14 +104,22 @@ function Header() {
           <MenuIcon className="w-6 h-6" aria-hidden="true" />
         </button>
         {/* <!-- Search input --> */}
-        <div className="flex flex-1 lg:mr-2">
-          <div className="relative w-full max-w-xl focus-within:text-red-500 mx-auto">
-            <div className="inset-y-0 flex items-center pl-2">
+        <div className="flex flex-1 lg:mr-2 ">
+          <div className="relative flex-auto w-full  focus-within:text-red-500 mx-auto">
+            <div className="inset-y-0 flex flex-nowrap pl-2">
               {/* <SearchIcon className="w-4 h-4" aria-hidden="true" /> */}
-              <div className="relative mx-auto">
-      <Button layout="outline" onClick={toggleDropdown} aria-label="Notifications" aria-haspopup="true" className='px-10 lg:px-20 mx-auto' iconRight={DownIcon}>
+              <div className="relative flex flex-2 mx-auto">
+      {/* <Button  onClick={toggleDropdown} aria-label="Notifications" aria-haspopup="true" className='px-auto lg:px-auto mx-auto' iconRight={DownIcon}>
        {sectionName}
-      </Button>
+      </Button>       */}
+
+      {/* ----Drop down for Syllabus Type */}
+
+      <div className="flex flex-none flex-wrap md:flex-row md:items-end md:space-x-4">
+      <div className='relative'>
+      <Button  onClick={()=>toggleDropdown("section")} aria-label="Notifications" aria-haspopup="true" className='flex-none mx-6 lg:px-auto text-black'style={{'background': '#D9D7DA'}} iconRight={DownIcon}>
+       {sectionName}
+      </Button>  
       <Dropdown isOpen={isMainSectionOpen} onClose={() => setIsMainSectionOpen(false)} value={sectionName}>
       {sectionList.map( (v,k)=>(
         <DropdownItem className="justify-between" onClick={e => (setSectionName(e.target.innerText),setIsMainSectionOpen(false))}>
@@ -87,7 +127,44 @@ function Header() {
         </DropdownItem> 
       ))
       }
+      </Dropdown>   
+      </div>
+
+      {/* ----Drop down for Syllabus Type */}
+
+      
+       <Button  aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} >
+       {currProfile.medium_name+"-"+currProfile.class_name}
+      </Button>   
+      
+      <Button aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} >
+       {currProfile.board_name}
+      </Button>
+
+      
+      
+      {/* ----Drop down for Profile Change */}
+
+
+      <div className='relative'>
+       <Button onClick={()=>toggleDropdown("profile")}  aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} iconRight={DownIcon}>
+       {currProfile.first_name+' '+ currProfile.last_name}
+      </Button>
+      <Dropdown isOpen={isProfileSectionOpen} onClose={() => setIsProfileSectionOpen(false)} value={currProfile.first_name+' '+currProfile.last_name} className='top-50 right-50'
+     >
+      {console.log(students)}
+      {students && students.map( (v,k)=>(
+        <DropdownItem className="justify-between" onClick={e => (setcurrProfile(v),setIsProfileSectionOpen(false),userContext.changeProfile(JSON.stringify(v)))}>
+        {v.first_name+' '+v.last_name}
+        </DropdownItem> 
+      ))
+      }
       </Dropdown>
+      </div>
+
+     {/* ----Drop down for Profile Change */}
+      </div>
+ 
     </div>
             </div>     
           </div>
