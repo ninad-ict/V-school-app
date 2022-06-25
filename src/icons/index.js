@@ -35,6 +35,7 @@ import { ReactComponent as ZoomOut } from './zoomout.svg'
 import { ReactComponent as SoundOn } from './sound-on.svg'
 import { ReactComponent as SoundOff } from './sound-off.svg'
 import { ReactComponent as Letter } from './letter.svg'
+import { ReactComponent as ChevronLeft} from './chevron-left.svg'
 
 export {
   ButtonsIcon,
@@ -73,5 +74,6 @@ export {
   ZoomOut,
   SoundOn,
   SoundOff,
-  Letter
+  Letter,
+  ChevronLeft
 }

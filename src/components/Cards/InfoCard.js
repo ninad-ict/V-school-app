@@ -30,7 +30,7 @@ function InfoCard({ title, value, children: icon,handleClick,color}) {
     // onClick={handleClickk}
      >
      {/* <NavLink  exact className='bg-red-400' activeClassName='bg-red-400' to={`/app/Home/subject/${title}`}  > */}
-      <CardBody className="flex items-center hover:bg-red-400 hover:text-gray-50">
+      <CardBody className="flex items-center hover:bg-purple-400 hover:text-gray-50">
         {icon}
         <div>
           <p className="mb-2 text-sm font-medium text-gray-600">{title}</p>

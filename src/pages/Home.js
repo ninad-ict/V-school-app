@@ -13,7 +13,7 @@ import { Card, CardBody } from '@windmill/react-ui';
 import { UserContext } from '../context/UserContext';
 import { BookIcon } from '../icons';
 import Tiger from '../assets/img/tiger.png';
-import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff,Letter } from '../icons'
+import { HeartIcon,ZoomIn,ZoomOut,ChevronLeft } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
 import { NavLink, Switch,Route, BrowserRouter } from 'react-router-dom';
@@ -35,7 +35,7 @@ import ExamLottie from "../assets/lottie/91736-exams.json";
 
 import { useSpeechSynthesis } from "react-speech-kit";
 
-import {SubjectImage} from "../assets/img/SubjectPhoto.png";
+import {SubjectImage} from "../assets/img/VopaSideBar.png";
 
 
 
@@ -408,7 +408,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     if(currPart)
     {
-      partRef.current.scrollIntoView();
+      // partRef.current.scrollIntoView();
 
       const profile=JSON.parse(userContext.profile);
 
@@ -638,7 +638,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </ModalFooter>
       </Modal>
     <div ref={subjectRef} ></div>
-      <PageTitle>{userContext.section}</PageTitle>
+    
+      <PageTitle> <Button icon={ChevronLeft} layout="link" aria-label="Like" 
+        disabled={!currPart ? 'true':''}
+        onClick={()=>{setCurrSubject(allSubjects[0]);setCurrChapter("");setSubjectActive(0);setPartActive(0)}}
+      />{userContext.section}</PageTitle>
 
       {(!currChapter||!currSubject) ?  <>
 
@@ -659,9 +663,23 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       {/* <BrowserRouter > */}
       {
         allSubjects && allSubjects.map((v,k)=>(
-    
-      
-       <InfoCard color={(subjectActive==k)? "bg-purple-400":""} title={v.subject_name} value={v.subject_name} key={k} handleClick={
+
+    <>
+    {/* <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
+       <PartsCard title='Lets Catch a Glimpse of the Tiger' type='text'>
+       <p className="text-gray-600 dark:text-gray-400">
+            <img
+              aria-hidden="true"
+              className="object-cover w-full h-full"
+              src={Tiger}
+              alt="tiger"
+            />
+            </p>
+       </PartsCard>
+     </div>   */}
+       {
+     
+         <InfoCard color={(subjectActive==k)? "bg-purple-400":""} title={v.subject_name} value={v.subject_name} key={k} handleClick={
             e=>{
               setSubjectActive(k);
               setCurrSubject(v);
@@ -676,9 +694,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             letter={v.subject_name[0]}
             mode='subject'
           />
-        </InfoCard>
+        </InfoCard> 
+        }
      
-
+</>
         ))
       }
    {/*   <Switch>
@@ -772,10 +791,16 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
    </> :<>
      <div className='flex flex-wrap relative'>
      <div className="w-full lg:w-6/12 pr-4 font-light">
-     <CTA text={`Subject-${currSubject.subject_name}`} showMore='Back' handleClick={()=>{setCurrSubject(allSubjects[0]);setCurrChapter("");setSubjectActive(0);setPartActive(0)}} />
+     <CTA text={`Subject-${currSubject.subject_name}`} 
+    //  showMore='Back' handleClick={()=>{setCurrSubject(allSubjects[0]);setCurrChapter("");setSubjectActive(0);setPartActive(0)}} 
+
+     />
      </div>
      <div className="w-full lg:w-6/12 pr-4 font-light">
-     <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-purple-600' showMore='Back' handleClick={()=>{setCurrChapter("");setPartActive(0)}} />
+     <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-purple-600' 
+    //  showMore='Back' handleClick={()=>{setCurrChapter("");setPartActive(0)}} 
+
+     />
      </div> 
       <div className="w-full lg:w-2/12 pr-4 font-light hidden">
       <Button className='text-purple-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
