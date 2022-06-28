@@ -12,7 +12,7 @@ import response from '../utils/demo/tableData';
 import { Card, CardBody } from '@windmill/react-ui';
 import { UserContext } from '../context/UserContext';
 import { BookIcon } from '../icons';
-import Tiger from '../assets/img/tiger.png';
+// import Tiger from '../assets/img/tiger.png';
 import { HeartIcon,ZoomIn,ZoomOut,ChevronLeft } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
@@ -453,11 +453,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
     
   }
 
-  const slideImages = [
-    '../assets/img/tiger.png',
-    '../assets/img/tiger.png',
-    '../assets/img/tiger.png'
-  ];
+  // const slideImages = [
+  //   '../assets/img/tiger.png',
+  //   '../assets/img/tiger.png',
+  //   '../assets/img/tiger.png'
+  // ];
 
 //  function renderSwitchForSlides()
 //   {
@@ -483,9 +483,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      <Modal isOpen={isModalOpen} onClose={closeModal}  >
         <ModalBody  className='w-3\/4'>
         
-        <div className="each-slide hidden">
+        {/* <div className="each-slide hidden">
             <div style={{'backgroundImage': `url(${Tiger})`}}>
-              {/* <span>Slide 1</span> */}
             </div>
           </div>
           <div className="each-slide hidden">
@@ -497,7 +496,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             <div>
              <iframe width="100%" height="600" src="https://www.youtube.com/embed/YE7VzlLtp-4?ecver=2&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-          </div>
+          </div> */}
       
         <div className='w-3\/4 py-auto content-center'>
         <Slide easing="ease" style={{background:'none'}}>
@@ -992,15 +991,15 @@ listenActivePart={listenActivePart}
       ))
      } */}
     
-     <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
+     {/* <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
        <PartsCard title='Tiger Our National Animal'>
        <p className="text-gray-600 dark:text-gray-400">
             The magnificent tiger, Panthera tigris is a striped animal. It has a thick yellow coat of fur with dark stripes. The combination of grace, strength, agility and enormous power has earned the tiger its pride of place as the national animal of India.
             </p>
        </PartsCard>
-     </div>     
+     </div>      */}
      
-     <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
+     {/* <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
        <PartsCard title='Lets Catch a Glimpse of the Tiger' type='text'>
        <p className="text-gray-600 dark:text-gray-400">
             <img
@@ -1011,14 +1010,14 @@ listenActivePart={listenActivePart}
             />
             </p>
        </PartsCard>
-     </div>  
+     </div>   */}
      
-      <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
+      {/* <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
        <PartsCard title='Tiger In Motionss!'>
        <iframe width="100%" height="600" src="https://youtu.be/LLw0-5lmxR4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
        </PartsCard>
      </div>
-    
+     */}
      </div>
      :""}
    </>}

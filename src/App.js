@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
 import { useState } from 'react';
 import { UserContext } from './context/UserContext';
+// import ReactGA from 'react-ga';
+// const TRACKING_ID = "G-DZYH7BD5EX"; // OUR_TRACKING_ID
+// ReactGA.initialize(TRACKING_ID);
 
 const Layout = lazy(() => import('./containers/Layout'))
 const Login = lazy(() => import('./pages/Login'))
