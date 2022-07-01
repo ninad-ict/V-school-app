@@ -5,11 +5,12 @@ function CTA(props) {
 
   const text=props.text;
   const showMore=props.showMore || 'hidden'
-  const bgColor=props.bgColor || 'bg-red-600';
+  const bgColor=props.bgColor || 'bg-purple-600';
+  const textColor=props.textColor || ' text-purple-100'
   const handleClick=props.handleClick;
   const ref=props.ref;
 
-  const classes=`flex items-center justify-between p-4 mb-8 text-sm font-semibold text-red-100 ${bgColor} rounded-lg shadow-md focus:outline-none focus:shadow-outline-red`;
+  const classes=`flex items-center justify-between p-4 mb-8 text-sm font-semibold ${textColor} ${bgColor} rounded-lg shadow-md focus:outline-none focus:shadow-outline-red`;
   return (
     <p
       className={classes}

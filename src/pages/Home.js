@@ -12,11 +12,11 @@ import response from '../utils/demo/tableData';
 import { Card, CardBody } from '@windmill/react-ui';
 import { UserContext } from '../context/UserContext';
 import { BookIcon } from '../icons';
-import Tiger from '../assets/img/tiger.png';
-import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../icons'
+// import Tiger from '../assets/img/tiger.png';
+import { HeartIcon,ZoomIn,ZoomOut,ChevronLeft } from '../icons'
 import { Button } from '@windmill/react-ui';
 import PartsCard from '../components/Cards/PartsCard';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Switch,Route, BrowserRouter } from 'react-router-dom';
 // import BasicTabs  from '../components/Cards/BasicTabs';
 
 import {getStudentSubjects,getChapters,getChapterPreview,getChapterPartContentNew} from "../dataFromServer";
@@ -27,11 +27,20 @@ import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import styles from "../assets/css/Slider.module.css";
 
+import SectionTitle from '../components/Typography/SectionTitle';
+
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import ExamLottie from "../assets/lottie/91736-exams.json";
+
+
+import { useSpeechSynthesis } from "react-speech-kit";
+
+import {SubjectImage} from "../assets/img/VopaSideBar.png";
+
+import ThemedSuspense from '../components/ThemedSuspense';
 
 
 
-
-import SectionTitle from '../components/Typography/SectionTitle'
 
 import {
   TableBody,
@@ -52,8 +61,13 @@ import {
   doughnutLegends,
   lineLegends,
 } from '../utils/demo/chartsData'
+// import DoorDashFavorite from '../components/Typography/DoorDashFavorite';
 
 function Home() {
+
+
+  //-------STATES-------------------------
+  
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
 
@@ -83,7 +97,101 @@ function Home() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [mcq,setMcq]=useState(false);
+
+  const [subjectActive,setSubjectActive]=useState(0);
+  const [chapterActive,setChapterActive]=useState(-1);
+  const [partActive,setPartActive]=useState(0);
+  const [listenActivePart,setlistenActivePart]=useState(-1);
+
+    // -----States for Audio Support----------
+
+
+  const [text, setText] = useState('I am a robot');
+  const [pitch, setPitch] = useState(1);
+  const [rate, setRate] = useState(0.7);
+  const [voiceIndex, setVoiceIndex] = useState(21);
+
+  const [loading,setLoading]=useState(false);
+
+  // const [textSound,setTextSound]=useState(false);
+
+  // const [speechProps,setSpeechProps]=useState({
+  //   text:"",
+  //   pitch:1,
+  //   rate:0.7,
+  //   voiceIndex:55
+  // });
+
+ 
+
+
+    // -----States for Audio Support----------
+
+
+  //-------STATES-------------------------
+
+
+  //------Destructuring SpeechSyntehsis--------------
+
+  const onEnd = () => {
+
+setlistenActivePart(-1);
+
+
+    // You could do something here after speaking has finished
+  };
+
+  const { speak, cancel, speaking, supported, voices } = useSpeechSynthesis({
+    onEnd,
+  });
+
+  //------Destructuring SpeechSyntehsis--------------
+
+//----Handle Speech------------
+  function handleSpeech(partText,state)
+  {
+    if(!supported)
+    {
+      console.log("Audio is not supported in your system");
+      return;
+    }
+
+    console.log("It reached handleSpeech");
+    console.log(partText);
+    console.log(state);
+
+    setText(partText);
+
+    if(state=='Play')
+    {
+      if(speaking)
+        cancel();
+      
+    voices && speak({ text:partText,voice:voices[voiceIndex] })
+    console.log("Part Text");
+    }
+    else
+    {
+
+      cancel();
+
+    }
+    // speak({ text, voice, rate, pitch })}
+  }
+
+  useEffect(()=>{
+
+
+
+  },[text]);
+//----Handle Speech------------
+
+
   const colors = ['#CCE5FE', '#F8D7DA', '#FFF3CE', '#D4EDDA'];
+  
+
+
   let colorIndex = 0;
 
   function openModal() {
@@ -94,6 +202,15 @@ function Home() {
     setIsModalOpen(false)
   }
 
+
+  useEffect(()=>{
+
+    if(chapterPreview.response)
+    {
+      setCurrPart(chapterPreview.response.chapter_parts[0]);
+    }
+
+  },[chapterPreview]);
 
 
   useEffect(()=>{
@@ -108,6 +225,13 @@ function Home() {
     // console.log(profile.student_id);
     // console.log(profile.class_medium_id);
 
+        setCurrChapter("");
+    setCurrSubject("");
+    setCurrPart("");
+    setContentList("");
+    subjectRef.current.scrollIntoView();
+    setSubjectActive(0);
+
 
     const params=
     {
@@ -119,7 +243,11 @@ function Home() {
 
     console.log(params);
 
-    getStudentSubjects(params).then(d=>{setAllSubjects(d.response);console.log(d.response[0].subject_name)}).catch(e=>console.log("Error"+e));
+    getStudentSubjects(params).then(d=>{
+        setAllSubjects(d.response);
+        console.log(d.response[0].subject_name)
+      })
+      .catch(e=>console.log("Error"+e));
 
     
 
@@ -128,7 +256,16 @@ function Home() {
 
     console.log("CHanges again");
 
-  },[]);
+  },[userContext.profile,userContext.section]);
+
+  useEffect(()=>{
+
+    if(allSubjects)
+    {
+      setCurrSubject(allSubjects[0]);
+    }
+
+  },[allSubjects])
 
 
   function convertJSONtoArray(json)
@@ -200,11 +337,14 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
   useEffect(()=>{
 
-    setCurrChapter("");
-    setCurrSubject("");
-    setCurrPart("");
-    setContentList("");
-    subjectRef.current.scrollIntoView();
+    // setCurrChapter("");
+    // setCurrSubject("");
+    // setCurrPart("");
+    // setContentList("");
+    // subjectRef.current.scrollIntoView();
+    // setSubjectActive(0);
+
+    console.log("User Context Changed");
 
   },[userContext]);
 
@@ -216,6 +356,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     if(currSubject)
     {
+      setLoading(true);
+      setAllChapters("");
       chapterRef.current.scrollIntoView();
 
       const params=
@@ -231,6 +373,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       getChapters(params).then(d=>{
         console.log(d);
         setAllChapters(d.response);
+        setLoading(false);
       }).catch(e=>console.log(e));     
 
     }
@@ -244,7 +387,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
       setContentList("");
       setCurrPart("");
-  
+      setChapterPreview("");
+      setLoading(true);
 
       if(currChapter)
       {
@@ -257,7 +401,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       
         getChapterPreview(params).then(d=>{
           console.log("Chapter Preview"+d);
+          console.log(d);
           setChapterPreview(d);
+          setLoading(false);
+
         }).catch(e=>console.log(e));  
       }
 
@@ -270,7 +417,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     if(currPart)
     {
-      partRef.current.scrollIntoView();
+
+      
+      setContentList("");
+      setLoading(true);
+      // partRef.current.scrollIntoView();
 
       const profile=JSON.parse(userContext.profile);
 
@@ -281,8 +432,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
           "student_id":profile.student_id
         }
 
+
         
-      getChapterPartContentNew(params).then(d=>{console.log(d);setContentList(d)});
+      getChapterPartContentNew(params).then(d=>{console.log(d);setContentList(d);setLoading(false)});
     }
 
   },[currPart]);
@@ -303,11 +455,23 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
     console.log(marginSize[marginIndex]);
   },[marginIndex]);
 
-  const slideImages = [
-    '../assets/img/tiger.png',
-    '../assets/img/tiger.png',
-    '../assets/img/tiger.png'
-  ];
+
+  function handleMCQ()
+  {
+    console.log("OPEN MCQ");
+
+    if(!mcq)
+    {
+      setMcq(true);
+    }
+    
+  }
+
+  // const slideImages = [
+  //   '../assets/img/tiger.png',
+  //   '../assets/img/tiger.png',
+  //   '../assets/img/tiger.png'
+  // ];
 
 //  function renderSwitchForSlides()
 //   {
@@ -333,9 +497,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      <Modal isOpen={isModalOpen} onClose={closeModal}  >
         <ModalBody  className='w-3\/4'>
         
-        <div className="each-slide hidden">
+        {/* <div className="each-slide hidden">
             <div style={{'backgroundImage': `url(${Tiger})`}}>
-              {/* <span>Slide 1</span> */}
             </div>
           </div>
           <div className="each-slide hidden">
@@ -347,7 +510,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             <div>
              <iframe width="100%" height="600" src="https://www.youtube.com/embed/YE7VzlLtp-4?ecver=2&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-          </div>
+          </div> */}
       
         <div className='w-3\/4 py-auto content-center'>
         <Slide easing="ease" style={{background:'none'}}>
@@ -357,7 +520,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   
          (() => {
                   switch (v.type) {
-                        case v.value&& "TEXT":  
+                        case v.value&& "TEXT":
                         return (
                           <div className="each-slide"  style={{backgroundColor:'transparent'}}>
           <div style={{'background':'none'}}
@@ -368,7 +531,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
                           </p>
                           </div></div>
                         )
-                         case v.value.filePath && "IMG":case v.value.filePath && 'GIF':
+                         case v.value && v.value.filePath && "IMG":case v.value && v.value.filePath && 'GIF':
+                         {/* case "IMG":case 'GIF': */}
                           {console.log(`${v.value.filePath}`)}
                         return (   
                           <>
@@ -422,8 +586,12 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
                         return(
                           
                           <div className="each-slide">
-                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
-                          <iframe src={v.value} width="100%" height="500px"/>                      
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'
+                          dangerouslySetInnerHTML={{ __html:`<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?embedded=true" width="640" height="580" frameborder="0" marginheight="0" marginwidth="0">Loading…L</iframe>`}}>
+                          {/* {console.log(`${v.value}&output=embed`)}; */}
+                          {/* <iframe src={v.value} width="100%" height="500px"/> */}
+                          {/* <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?&output=embed" width="600" height="450" frameborder="0" style={{border:0}} allowfullscreen="" aria-hidden="false" tabindex="0"/>                     */}
+                          {/* <iframe src={`https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?&output=embed`} width="100%" height="500px">Loading...</iframe>                       */}
            </div>
                         </div>
 
@@ -488,13 +656,20 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </ModalFooter>
       </Modal>
     <div ref={subjectRef} ></div>
-      <PageTitle>{userContext.section}</PageTitle>
+    
+      <PageTitle> <Button icon={ChevronLeft} layout="link" aria-label="Like" 
+        disabled={!currPart ? 'true':''}
+        onClick={()=>{setCurrSubject(allSubjects[0]);setCurrChapter("");setSubjectActive(0);setPartActive(0)}}
+      />{userContext.section}</PageTitle>
 
       {(!currChapter||!currSubject) ?  <>
 
       <div className='flex flex-wrap '>
-      <div className="w-full lg:w-6/12 pr-4 border-r">
+      <div className="w-full lg:w-5/12 pr-4 border-r">
       <CTA text='Select Subject' />
+      {/* <div>
+        Select Subject
+      </div> */}
 
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2 overflow-x-auto">
       {/* {allSubjects.response.map((v,k)=>(console.log(v)))} */}
@@ -503,25 +678,53 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       {
         allSubjects&&allSubjects.map((v,k)=>(console.log(v)))
       }
+      {/* <BrowserRouter > */}
       {
         allSubjects && allSubjects.map((v,k)=>(
-      
-       <InfoCard color={colorSubject} title={v.subject_name} value={v.subject_name} handleClick={
+
+    <>
+    {/* <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
+       <PartsCard title='Lets Catch a Glimpse of the Tiger' type='text'>
+       <p className="text-gray-600 dark:text-gray-400">
+            <img
+              aria-hidden="true"
+              className="object-cover w-full h-full"
+              src={Tiger}
+              alt="tiger"
+            />
+            </p>
+       </PartsCard>
+     </div>   */}
+       {
+     
+         <InfoCard color={(subjectActive==k)? "bg-purple-400":""} title={v.subject_name} value={v.subject_name} key={k} handleClick={
             e=>{
+              setSubjectActive(k);
               setCurrSubject(v);
               // currSubject&&chapterRef.current.focus();
               setcolorSubject((colorSubject) ? "":'bg-blue-400')
               }} >
           <RoundIcon
-            icon={PeopleIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            // icon={PeopleIcon}
+            iconColorClass="text-purple-500 dark:text-purple-100"
+            bgColorClass="bg-purple-100 dark:bg-purple-500 shadow-md from-purple-500"
             className="mr-4"
+            letter={v.subject_name[0]}
+            mode='subject'
           />
-        </InfoCard>
-
+        </InfoCard> 
+        }
+     
+</>
         ))
-      }        
+      }
+   {/*   <Switch>
+    <Route exact path="/app/Home/subject/:subject">
+    {console.log("ROute worked")}
+   </Route> 
+   </Switch> */}
+              {/* </BrowserRouter> */}
+        
         </div>
 
         </div>
@@ -529,24 +732,30 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </div> */}
         {(currSubject) ?
 <>
-        <div className="w-full lg:w-6/12 pl-4 ">
+        <div className="w-full lg:w-7/12 pl-4 ">
         <CTA text={`Select Chapter for ${currSubject.subject_name}`} />
-      
+        {/* <BrowserRouter basename="/V-school-app">
+        <Switch>
+   <Route path="*"> */}
 <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2" >
+
+{loading && <ThemedSuspense/>}
 {
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
 {allChapters&&allChapters.map((v,k)=>(
-      <Card className="mb-8 shadow-lg dark:hover:bg-red-300 hover:bg-red-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+      <Card className="mb-8 shadow-lg dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
         <CardBody>
 
        
           <div className="flex items-center">
         <RoundIcon
             icon={PeopleIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            iconColorClass="text-purple-500 dark:text-purple-100"
+            bgColorClass="bg-purple-100 dark:bg-purple-500 shadow-md"
             className="mr-4"
+            letter={k+1}
+            mode='chapter'
           />
         <span className='dark:text-white'>{v.chapter_name}</span>
       </div>
@@ -555,6 +764,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       
       )) }
 </div>
+ {/* </Route>
+ </Switch>
+</BrowserRouter> */}
         </div>
         </> :""}
     
@@ -567,22 +779,22 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 <div className='flex flex-wrap hidden'>
       <div className="w-full lg:w-6/12">
 <div ref={chapterRef}></div>
-<CTA text={`Select Chapter for ${currSubject.subject_name}`} />
+<CTA text={`Select Chapters for ${currSubject.subject_name}`} />
       
 <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4" >
 {
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
 {allChapters&&allChapters.map((v,k)=>(
-      <Card className="mb-8 shadow-md dark:hover:bg-red-300 hover:bg-red-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
+      <Card className="mb-8 shadow-md dark:hover:bg-purple-300 hover:bg-purple-300  dark:hover:text-gray-50" onClick={()=>setCurrChapter(v)}>
         <CardBody>
 
        
           <div className="flex items-center">
         <RoundIcon
-            icon={PeopleIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            icon={ZoomIn}
+            iconColorClass="text-purple-500 dark:text-purple-100"
+            bgColorClass="bg-purple-100 dark:bg-purple-500"
             className="mr-4"
           />
         <span className='dark:text-white'>{v.chapter_name}</span>
@@ -597,21 +809,27 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 :""}
 
    </> :<>
-     <div className='flex flex-wrap'>
-     <div className="w-full lg:w-4/12 pr-4 font-light">
-     <CTA text={`Subject-${currSubject.subject_name}`} showMore='Back' handleClick={()=>{setCurrSubject("");setCurrChapter("")}} />
+     <div className='flex flex-wrap relative'>
+     <div className="w-full lg:w-6/12 pr-4 font-light">
+     <CTA text={`Subject-${currSubject.subject_name}`} 
+    //  showMore='Back' handleClick={()=>{setCurrSubject(allSubjects[0]);setCurrChapter("");setSubjectActive(0);setPartActive(0)}} 
+
+     />
      </div>
      <div className="w-full lg:w-6/12 pr-4 font-light">
-     <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-orange-600' showMore='Back' handleClick={()=>setCurrChapter("")} />
+     <CTA text={`Chapter-${currChapter.chapter_name}`} bgColor='bg-purple-600' 
+    //  showMore='Back' handleClick={()=>{setCurrChapter("");setPartActive(0)}} 
+
+     />
      </div> 
-      <div className="w-full lg:w-2/12 pr-4 font-light">
-      <Button className='text-red-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
+      <div className="w-full lg:w-2/12 pr-4 font-light hidden">
+      <Button className='text-purple-600' icon={ZoomIn} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex>=1)
         setMarginIndex(marginIndex-2)
         
         }} />
-      <Button  className='text-red-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
+      <Button  className='text-purple-600' icon={ZoomOut} layout="link" aria-label="Like" onClick={()=>{
         
         if(marginIndex<=30)
         setMarginIndex(marginIndex+2)
@@ -619,29 +837,38 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         }}/>
      </div>
 
-     <div className='sticky top-500 flex flex-wrap w-full lg:w-12/12 pr-4'>
+     <div className='flex flex-wrap w-full lg:w-12/12 pr-4'>
+     {/* <div class="fixed top-0  p-2 bg-black text-white uppercase">Sticky Heading 1</div> */}
 
+
+{loading && !chapterPreview && <ThemedSuspense/>}
      {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
        console.log(v.part_name)
      })}
      
      
      {/* {chapterPreview && [...chapterPreview.response.chapter_parts,"Summary"].map((v,k)=>( */}
-     {chapterPreview && [...chapterPreview.response.chapter_parts].map((v,k)=>(
+     {
+      chapterPreview && [...chapterPreview.response.chapter_parts].map((v,k)=>(
 
-      <div className=" focus:border-red-400 w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
+       
+
+  
+      <div className=" focus:border-purple-400 w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
+      {/* {(k==0)? setCurrPart(v) :""}  */}
       {console.log("Value is"+v)}
+      {console.log(v)}
       {console.log("Iteration is "+k)}
       {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
-      <Card className="mb-8 shadow-lg hover:bg-red-100 dark:hover:bg-red-300" onClick={()=>setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v)}>
+      <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300 ${(k==partActive) ? "bg-purple-300":""}`} onClick={()=>{setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v);setPartActive(k)}}>
         <CardBody>
 
        
           <div className="flex items-center">
         <RoundIcon
-            icon={HeartIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            icon={BookIcon}
+            iconColorClass="text-purple-500 dark:text-purple-100"
+            bgColorClass="bg-purple-100 dark:bg-purple-500"
             className="mr-4"
           />
         <span className='dark:text-white'>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":"Part "+Number.parseInt(k+1)} </span>
@@ -649,14 +876,25 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </CardBody>
       </Card>
       </div>
-     ))}
+     ))
+     }
      </div>
      </div>
     { (currPart) ?
-     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${marginIndex}%`,marginLeft:`${marginIndex}%`}} ref={partRef} >
-     <hr className='mb-4'/>
+     <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${userContext.marginIndex}%`,marginLeft:`${userContext.marginIndex}%`}} ref={partRef} >
+     <hr className='mb-4 pb-2'/>
 
-     {currPart && <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>}
+     <div className='w-full lg:w-12/12 bg-white py-4 pl-4 underline h-10  rounded shadow-md'>
+    <p> {currPart &&
+    <div>
+    
+
+     <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>
+     </div>}</p>
+     </div>
+     <div className='w-full lg:w-12/12 bg-white py-4 pl-4 underline h-30 border-t-0 rounded shadow-md'></div>
+
+    
 <hr/>
      {/* {
        contentList && console.log("This is"+JSON.stringify( contentList.data.response.content))
@@ -666,15 +904,17 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       contentList && console.log("D"+JSON.stringify(contentList.data.response.content))
      }
 
+     {loading && <ThemedSuspense/>}
+
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
-        <div className="w-full lg:w-12/12 pr-4 font-light my-4 transform shadow hover:shadow-lg " onDoubleClick={openModal}>
+        <div className="w-full lg:w-12/12 pr-4 font-light my-4 " onClick={()=>setlistenActivePart(k)}>
         {console.log(v)}
        <PartsCard title={
          (() => {
                   switch (v.type) {
-                        case "IMG": return v.value.description;
+                        // case "IMG": return v.value.description;
                         case "VIDEO": return (v.value.tag) ? v.value.tag:"    ";
                         default: return "";
                                   }
@@ -684,19 +924,27 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
    if(v.type=='TEXT')
    {
-    let presentColor=colors[colorIndex];
+    let presentColor=colors[colorIndex%3];
    colorIndex+=1;
    return presentColor;
    }
-   return "";
+
+   if(v.type=='SPECIAL_TEXT')
+   {
+    return "#E6F4FF"; 
+   }
+ 
  })()
 
  }
+
+texttoSpeech={handleSpeech}
+listenActivePart={listenActivePart}
  >
        {(() => {
     switch (v.type) {
-                        case "TEXT":  return v.value;
-                        case "IMG":case 'GIF': return v.value.filePath;
+                        case "TEXT":case 'SPECIAL_TEXT':  return v.value;
+                        case "IMG":case 'GIF': return v.value;
                         case "VIDEO": return (v.value.url.split('/').pop());
                         case "AUDIO": return v.value;
                         case "gForm": {
@@ -721,7 +969,24 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      </div>   
        )
        })
-     }
+    
+     }   
+     {
+      <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden" onClick={()=>setMcq(!mcq)} >
+        {(mcq) ? 
+        
+          <PartsCard type='MCQ-Start' ></PartsCard> : <PartsCard type='MCQ-Intro' >
+                <Player
+          autoplay
+          loop
+          src={ExamLottie}
+          style={{ height: '300px', width: '300px' }}
+        >
+          {/* <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} /> */}
+            </Player>
+        </PartsCard>}
+       </div>
+       }
      
      {/* {
       contentList &&   Object.keys(contentList.data.response.content).forEach(function(key) {
@@ -750,15 +1015,15 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       ))
      } */}
     
-     <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
+     {/* <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
        <PartsCard title='Tiger Our National Animal'>
        <p className="text-gray-600 dark:text-gray-400">
             The magnificent tiger, Panthera tigris is a striped animal. It has a thick yellow coat of fur with dark stripes. The combination of grace, strength, agility and enormous power has earned the tiger its pride of place as the national animal of India.
             </p>
        </PartsCard>
-     </div>     
+     </div>      */}
      
-     <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
+     {/* <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
        <PartsCard title='Lets Catch a Glimpse of the Tiger' type='text'>
        <p className="text-gray-600 dark:text-gray-400">
             <img
@@ -769,14 +1034,14 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             />
             </p>
        </PartsCard>
-     </div>  
+     </div>   */}
      
-      <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
+      {/* <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden">
        <PartsCard title='Tiger In Motionss!'>
        <iframe width="100%" height="600" src="https://youtu.be/LLw0-5lmxR4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
        </PartsCard>
      </div>
-    
+     */}
      </div>
      :""}
    </>}

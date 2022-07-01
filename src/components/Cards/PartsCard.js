@@ -7,14 +7,33 @@ import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../../icons';
 
 import { useSpeechSynthesis } from "react-speech-kit";
 
+import BloomImage from "../../assets/img/BloomBox.png";
+import McqCardImage from "../../assets/img/TestCard.png";
+
+
+
+// import DoorDashFavorite from '../Typography/DoorDashFavorite';
+
 function PartsCard(props) {
 
-  const {title,children,type,index,cardColor} = {...props};
+  const {title,children,type,index,cardColor,texttoSpeech,listenActivePart} = {...props};
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
 
   const [value, setValue] = React.useState("");
-  const { speak } = useSpeechSynthesis();
 
+  // function getTextBorder(cardColor)
+  // {
+  //   switch(cardColor):
+  // }
+
+
+
+  console.log("voices");
+  // console.log(voices[55]);
+
+  // const englishMalevoice=voices[0];
+  // const hindiFemalevoice=voices[21];
+  // const hindiGoogleFemalevoice=voices && voices[55];
 
   const [textSound,setTextSound]=useState(false);
 
@@ -34,16 +53,24 @@ function PartsCard(props) {
           { 
             console.log("XXX"+children.replace(/<[^>]+>/g, '').replace(/&nbsp;/gi,''))
             }
+            {
+              (console.log(listenActivePart),console.log(index))
+            }
           {setValue(children.replace(/<[^>]+>/g, '').replace(/&nbsp;/gi,''))}
           {/* {setValue(children.innerHTML)} */}
-                      <Button className='text-red-600 float-right' icon={(textSound)? SoundOn:SoundOff} layout="link" aria-label="Like"  
+                      <Button className='text-red-600 float-right' icon={(textSound && (listenActivePart==index))? SoundOn:SoundOff} layout="link" aria-label="Like"  
                         onClick={()=>{
-                          speak({text:""})
+
+                          texttoSpeech(value,(textSound)? "Stop":"Play");
+
+                          
+                          // speak({text:""})
                           setTextSound(!textSound);
-                          if(!textSound)
-                          {
-                            speak({ text:value })
-                          }
+                          // if(!textSound)
+                          // {
+                          //   console.log("It must SPEAK")
+                          //   hindiGoogleFemalevoice && speak({ text:value,voice:hindiGoogleFemalevoice })
+                          // }
                           // else
                           // {
                             
@@ -65,14 +92,21 @@ function PartsCard(props) {
         return (
           <>
           {children &&
-           <p className="text-gray-600 dark:text-gray-400">
+            <div className='flex flex-wrap'>
+            <div className='w-full lg:w-12/12 pr-4'>
             <img
               aria-hidden="true"
               className="object-cover w-full h-full"
-              src={children}
+              src={children.filePath}
               alt="tiger"
             />
-            </p>
+            </div>
+            <div className='w-full lg:w-12/12 text-lg py-auto my-auto font-extrabold text-justify' dangerouslySetInnerHTML={getMarkdownText(children.description)}>
+              
+            </div>
+
+
+            </div>
           }
 
           </>
@@ -82,13 +116,14 @@ function PartsCard(props) {
         {console.log(`https://www.youtube.com/embed/${children}`)}
         <div className="video-container">
     {/* <iframe src={`https://www.youtube.com/embed/${children}?rel=0&autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-    <iframe src={`https://www.youtube.com/embed/${children}`} allow="fullscreen;" frameborder="0" allowfullscreen></iframe>
+    <iframe src={`https://www.youtube.com/embed/${children}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
     </div> </>);   
       case 'PPT':
         return (<>
-        {(console.log("It worked"),console.log(`${children}`))}
+        {/* {children_1=children.trim().replace(' ','%20')} */}
+        {(console.log("It worked"),console.log(`https://view.officeapps.live.com/op/embed.aspx?src=${children.trim().replaceAll(' ','%20')}`))}
         {/* https://view.officeapps.live.com/op/embed.aspx?src=${linkToPPTFile}` */}
-        <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${children}`} width="100%" height="500px" frameborder='0'/>        </>);    
+        <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${children.trim().replaceAll(' ','%20')}`} width="100%" height="500px" frameborder='0'/>        </>);    
       case 'PDF':
         return (<>
         {console.log(`${children}`)}
@@ -96,8 +131,8 @@ function PartsCard(props) {
       case 'gForm':
         return (<>
         {console.log(`https://docs.google.com/gview?url=${children}`)}
-        {/* <iframe src={children} width="100%" height="500px"/>         */}
-        <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>        
+        <iframe src={children} width="100%" height="500px"/>        
+        {/* <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>         */}
         </>);      
       case 'AUDIO':
         return (<>
@@ -114,6 +149,66 @@ function PartsCard(props) {
         </p>
         </div>
 </>);
+      case 'SPECIAL_TEXT':
+        return(
+          <>
+            <div
+            className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
+            <div className='w-full lg:w-12/12 pr-4'>
+            <img
+              aria-hidden="true"
+              className="object-cover w-full h-full px-24"
+              src={BloomImage}
+              alt="tiger"
+            />
+            </div>
+            <div className='w-full lg:w-12/12 text-lg py-auto my-auto font-extrabold' dangerouslySetInnerHTML={getMarkdownText(children)}>
+              
+            </div>
+
+
+            </div>
+          </>
+        )
+        case 'MCQ-Intro':
+          return(
+            <>
+             <div
+            className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
+            <div className='w-full lg:w-12/12 pr-4'>
+            <img
+              aria-hidden="true"
+              className="object-cover w-full h-full px-24"
+              src={McqCardImage}
+              alt="tiger"
+            />
+            </div>
+            {/* <div className='w-full lg:w-6/12 text-lg py-auto my-auto font-extrabold' >
+              <p>Its Time for A Little Test!!</p>
+            </div> */}
+
+
+            </div>
+   
+            </>
+          )    
+          case 'MCQ-Start':
+          return(
+            <>
+             <div
+            className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
+            <div className='w-full lg:w-6/12 pr-4'>
+          <p>Hey lets start with MCQs!</p>
+            </div>
+            <div className='w-full lg:w-6/12 text-lg py-auto my-auto font-extrabold' >
+              <p>Its Time for A Little Test!!</p>
+            </div>
+
+
+            </div>
+   
+            </>
+          )
       default:
         return `Unable to display ${type}`;
     }
@@ -158,7 +253,11 @@ function PartsCard(props) {
   console.log(cardColor)}
     <CardBody style={{
        backgroundColor: cardColor,
-                                  padding: 8,
+       padding: 8,
+      //  border:{textborder}
+       
+       
+       
     }}>
       <p className="mb-4 font-semibold text-gray-100 dark:text-gray-100" >
       <p dangerouslySetInnerHTML={getMarkdownText(title)}/>

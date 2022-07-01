@@ -24,6 +24,8 @@ function UserProvider(props){
     
     });
 
+    const [marginIndex,setMarginIndex]=useState(10);
+
     const [login,setLogin]=useState(()=>{
         if(localStorage.getItem('login')&&localStorage.getItem("login")==="true")
         {
@@ -71,13 +73,20 @@ function UserProvider(props){
         
     }
 
+    function changeMarginIndex(index)
+    {
+        setMarginIndex(index)
+    }
+
     const value={
        section: section,
        changeSection: changeSection,
        login:login,
        changeLogin:changeLogin,
        profile:profile,
-       changeProfile:changeProfile
+       changeProfile:changeProfile,
+       marginIndex:marginIndex,
+       changeMarginIndex:changeMarginIndex
     }
 
  
