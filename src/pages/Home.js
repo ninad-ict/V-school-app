@@ -378,6 +378,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     }
 
+    return () => {
+      // cancel the subscription
+      setLoading(false);
+  };
+
     
 
   },[currSubject]);  
@@ -408,7 +413,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         }).catch(e=>console.log(e));  
       }
 
-
+      return () => {
+        // cancel the subscription
+        setLoading(false);
+    };
 
   },[currChapter]); 
   
@@ -436,6 +444,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         
       getChapterPartContentNew(params).then(d=>{console.log(d);setContentList(d);setLoading(false)});
     }
+
+    return () => {
+      // cancel the subscription
+      setLoading(false);
+  };
 
   },[currPart]);
 
@@ -737,9 +750,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         {/* <BrowserRouter basename="/V-school-app">
         <Switch>
    <Route path="*"> */}
+   {loading && <ThemedSuspense/>}
 <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2" >
 
-{loading && <ThemedSuspense/>}
+
 {
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
@@ -963,6 +977,7 @@ listenActivePart={listenActivePart}
     
      }   
      {
+      
       <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden" onClick={()=>setMcq(!mcq)} >
         {(mcq) ? 
         

@@ -173,12 +173,15 @@ function PartsCard(props) {
           </>
         )
         case 'json':
+
+      if(children.filePath)
           return(
             <>
                   <Player
           autoplay
           loop
-          src={`"https://vopa-bunny.b-cdn.net/media/LOTTY%20FILE/lottie_test.json_1645781109lottie_test.json"`}
+          // src={`"https://vopa-bunny.b-cdn.net/media/LOTTY%20FILE/lottie_test.json_1645781109lottie_test.json"`}
+          src={children.filePath.replaceAll(' ','%20')}
           style={{ height: '300px', width: '300px' }}
         >
           {/* <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} /> */}
