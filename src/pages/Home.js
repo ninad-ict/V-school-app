@@ -948,19 +948,10 @@ listenActivePart={listenActivePart}
                         case "VIDEO": return (v.value.url.split('/').pop());
                         case "AUDIO": return v.value;
                         case "gForm": {
-                          {/* if(JSON.stringify(v.value).includes('forms.gle'))
-                          {
-                            console.log("Bad GFORM");
-                            let tempText=v.value.split('/').pop();
-                            console.log(tempText);
-                            tempText=`https://docs.google.com/forms/d/e/${tempText}/viewform?usp=sf_link`;
-                            console.log(tempText);
-                            v.value=tempText;
-                            console.log(v.value);
-                          } */}
                           return v.value
                           };
                         case "PDF": return v.value;
+                        case 'json': return v.value;
                         default: return v.value;
                     }
 })()}

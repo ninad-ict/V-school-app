@@ -117,9 +117,9 @@ function Header() {
 
       {/* ----Drop down for Syllabus Type */}
 
-      <div className="flex flex-none flex-wrap md:flex-row md:items-end md:space-x-4">
-      <div className='relative'>
-      <Button  onClick={()=>toggleDropdown("section")} aria-label="Notifications" aria-haspopup="true" className='flex-none mx-6 lg:px-auto text-black'style={{'background': '#D9D7DA'}} iconRight={DownIcon}>
+      <div className="flex flex-wrap md:flex-row md:items-end md:space-x-4">
+      {/* <div className='relative'>
+      <Button  onClick={()=>toggleDropdown("section")} aria-label="Notifications" aria-haspopup="true" className='flex-none mx-6 lg:px-auto text-black rounded-lg'style={{'background': '#D9D7DA'}} iconRight={DownIcon}>
        {sectionName}
       </Button>  
       <Dropdown isOpen={isMainSectionOpen} onClose={() => setIsMainSectionOpen(false)} value={sectionName}>
@@ -130,25 +130,74 @@ function Header() {
       ))
       }
       </Dropdown>   
-      </div>
+      </div> */}
 
       {/* ----Drop down for Syllabus Type */}
 
-      
-       <Button  aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} >
+{/*       
+       <Button  aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} disabled={true} >
        {currProfile.medium_name+"-"+currProfile.class_name}
-      </Button>   
+      </Button>    */}
+      <div className='flex flex-wrap'>
+
+      <div className='relative mx-1'>
+      <div className='relative px-6 py-2 mx-1 lg:px-auto text-black rounded-lg'style={{'background': '#D9D7DA'}} onClick={()=>toggleDropdown("section")}>
+      <div className='pr-2'>{sectionName} </div>
+      <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+              <DownIcon className="w-5 h-5" aria-hidden="true" />
+            </div>
+      </div>   
+      <Dropdown isOpen={isMainSectionOpen} onClose={() => setIsMainSectionOpen(false)} value={sectionName}>
+      {sectionList.map( (v,k)=>(
+        <DropdownItem className="justify-between" onClick={e => (setSectionName(e.target.innerText),setIsMainSectionOpen(false))}>
+        {v}
+        </DropdownItem> 
+      ))
+      }
+      </Dropdown>   
+      </div>  
       
-      <Button aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} >
+
+       <div className='px-2 py-2 lg:px-auto text-black rounded-lg whitespace-nowrap mx-1' style={{'background': '#D9D7DA'}}>
+      {currProfile.medium_name+"-"+currProfile.class_name}
+      </div>  
+      
+
+       <div className='px-2 py-2 lg:px-auto text-black rounded-lg mx-1'style={{'background': '#D9D7DA'}}>
        {currProfile.board_name}
-      </Button>
+      </div>
+      {/* <Button aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} >
+       {currProfile.board_name}
+      </Button> */}
 
       
       
       {/* ----Drop down for Profile Change */}
 
-
-      <div className='relative'>
+      <div className='relative mx-1'>
+      <div 
+      className='relative px-6 py-2 lg:px-auto text-black rounded-lg'
+      style={{'background': '#D9D7DA'}} 
+      onClick={()=>toggleDropdown("profile")} >
+      <div className='pr-2'> {currProfile.first_name+' '+ currProfile.last_name[0]} </div>
+      <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+              <DownIcon className="w-5 h-5" aria-hidden="true" />
+            </div>
+      </div>   
+      <Dropdown isOpen={isProfileSectionOpen} onClose={() => setIsProfileSectionOpen(false)} value={currProfile.first_name+' '+currProfile.last_name[0]} className='top-50 right-50'
+     >
+      {console.log(students)}
+      {students && students.map( (v,k)=>(
+        <DropdownItem className="justify-between" onClick={e => (setcurrProfile(v),setIsProfileSectionOpen(false),userContext.changeProfile(JSON.stringify(v)))}>
+        {v.first_name+' '+v.last_name[0]}
+        </DropdownItem> 
+      ))
+      }
+      </Dropdown> 
+      </div> 
+      
+      </div>
+      {/* <div className='relative'>
        <Button onClick={()=>toggleDropdown("profile")}  aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} iconRight={DownIcon}>
        {currProfile.first_name+' '+ currProfile.last_name}
       </Button>
@@ -162,7 +211,7 @@ function Header() {
       ))
       }
       </Dropdown>
-      </div>
+      </div> */}
 
       <div>
 

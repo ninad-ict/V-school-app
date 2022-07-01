@@ -9,6 +9,8 @@ import { useSpeechSynthesis } from "react-speech-kit";
 
 import BloomImage from "../../assets/img/BloomBox.png";
 import McqCardImage from "../../assets/img/TestCard.png";
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
+
 
 
 
@@ -170,6 +172,19 @@ function PartsCard(props) {
             </div>
           </>
         )
+        case 'json':
+          return(
+            <>
+                  <Player
+          autoplay
+          loop
+          src={`"https://vopa-bunny.b-cdn.net/media/LOTTY%20FILE/lottie_test.json_1645781109lottie_test.json"`}
+          style={{ height: '300px', width: '300px' }}
+        >
+          {/* <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} /> */}
+            </Player>
+            </>
+          )
         case 'MCQ-Intro':
           return(
             <>
