@@ -37,6 +37,8 @@ import { useSpeechSynthesis } from "react-speech-kit";
 
 import {SubjectImage} from "../assets/img/VopaSideBar.png";
 
+import ThemedSuspense from '../components/ThemedSuspense';
+
 
 
 
@@ -109,6 +111,8 @@ function Home() {
   const [pitch, setPitch] = useState(1);
   const [rate, setRate] = useState(0.7);
   const [voiceIndex, setVoiceIndex] = useState(21);
+
+  const [loading,setLoading]=useState(false);
 
   // const [textSound,setTextSound]=useState(false);
 
@@ -352,6 +356,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     if(currSubject)
     {
+      setLoading(true);
+      setAllChapters("");
       chapterRef.current.scrollIntoView();
 
       const params=
@@ -367,6 +373,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       getChapters(params).then(d=>{
         console.log(d);
         setAllChapters(d.response);
+        setLoading(false);
       }).catch(e=>console.log(e));     
 
     }
@@ -380,7 +387,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
       setContentList("");
       setCurrPart("");
-  
+      setChapterPreview("");
+      setLoading(true);
 
       if(currChapter)
       {
@@ -395,6 +403,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
           console.log("Chapter Preview"+d);
           console.log(d);
           setChapterPreview(d);
+          setLoading(false);
 
         }).catch(e=>console.log(e));  
       }
@@ -408,6 +417,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     if(currPart)
     {
+
+      
+      setContentList("");
+      setLoading(true);
       // partRef.current.scrollIntoView();
 
       const profile=JSON.parse(userContext.profile);
@@ -419,8 +432,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
           "student_id":profile.student_id
         }
 
+
         
-      getChapterPartContentNew(params).then(d=>{console.log(d);setContentList(d)});
+      getChapterPartContentNew(params).then(d=>{console.log(d);setContentList(d);setLoading(false)});
     }
 
   },[currPart]);
@@ -506,7 +520,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   
          (() => {
                   switch (v.type) {
-                        case v.value&& "TEXT":  
+                        case v.value&& "TEXT":
                         return (
                           <div className="each-slide"  style={{backgroundColor:'transparent'}}>
           <div style={{'background':'none'}}
@@ -517,7 +531,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
                           </p>
                           </div></div>
                         )
-                         case v.value.filePath && "IMG":case v.value.filePath && 'GIF':
+                         case v.value && v.value.filePath && "IMG":case v.value && v.value.filePath && 'GIF':
+                         {/* case "IMG":case 'GIF': */}
                           {console.log(`${v.value.filePath}`)}
                         return (   
                           <>
@@ -571,8 +586,12 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
                         return(
                           
                           <div className="each-slide">
-                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
-                          <iframe src={v.value} width="100%" height="500px"/>                      
+                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'
+                          dangerouslySetInnerHTML={{ __html:`<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?embedded=true" width="640" height="580" frameborder="0" marginheight="0" marginwidth="0">Loading…L</iframe>`}}>
+                          {/* {console.log(`${v.value}&output=embed`)}; */}
+                          {/* <iframe src={v.value} width="100%" height="500px"/> */}
+                          {/* <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?&output=embed" width="600" height="450" frameborder="0" style={{border:0}} allowfullscreen="" aria-hidden="false" tabindex="0"/>                     */}
+                          {/* <iframe src={`https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?&output=embed`} width="100%" height="500px">Loading...</iframe>                       */}
            </div>
                         </div>
 
@@ -719,6 +738,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         <Switch>
    <Route path="*"> */}
 <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2" >
+
+{loading && <ThemedSuspense/>}
 {
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
@@ -820,6 +841,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {/* <div class="fixed top-0  p-2 bg-black text-white uppercase">Sticky Heading 1</div> */}
 
 
+{loading && !chapterPreview && <ThemedSuspense/>}
      {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
        console.log(v.part_name)
      })}
@@ -881,6 +903,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {
       contentList && console.log("D"+JSON.stringify(contentList.data.response.content))
      }
+
+     {loading && <ThemedSuspense/>}
 
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
@@ -948,7 +972,7 @@ listenActivePart={listenActivePart}
     
      }   
      {
-      <div className="w-full lg:w-12/12 pr-4 font-light my-4" onClick={()=>setMcq(!mcq)} >
+      <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden" onClick={()=>setMcq(!mcq)} >
         {(mcq) ? 
         
           <PartsCard type='MCQ-Start' ></PartsCard> : <PartsCard type='MCQ-Intro' >

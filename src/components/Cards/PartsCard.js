@@ -8,6 +8,7 @@ import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../../icons';
 import { useSpeechSynthesis } from "react-speech-kit";
 
 import BloomImage from "../../assets/img/BloomBox.png";
+import McqCardImage from "../../assets/img/TestCard.png";
 
 
 
@@ -19,6 +20,11 @@ function PartsCard(props) {
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
 
   const [value, setValue] = React.useState("");
+
+  // function getTextBorder(cardColor)
+  // {
+  //   switch(cardColor):
+  // }
 
 
 
@@ -148,15 +154,15 @@ function PartsCard(props) {
           <>
             <div
             className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
-            <div className='w-full lg:w-6/12 pr-4'>
+            <div className='w-full lg:w-12/12 pr-4'>
             <img
               aria-hidden="true"
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full px-24"
               src={BloomImage}
               alt="tiger"
             />
             </div>
-            <div className='w-full lg:w-6/12 text-lg py-auto my-auto font-extrabold' dangerouslySetInnerHTML={getMarkdownText(children)}>
+            <div className='w-full lg:w-12/12 text-lg py-auto my-auto font-extrabold' dangerouslySetInnerHTML={getMarkdownText(children)}>
               
             </div>
 
@@ -169,12 +175,17 @@ function PartsCard(props) {
             <>
              <div
             className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
-            <div className='w-full lg:w-6/12 pr-4'>
-           {children}
+            <div className='w-full lg:w-12/12 pr-4'>
+            <img
+              aria-hidden="true"
+              className="object-cover w-full h-full px-24"
+              src={McqCardImage}
+              alt="tiger"
+            />
             </div>
-            <div className='w-full lg:w-6/12 text-lg py-auto my-auto font-extrabold' >
+            {/* <div className='w-full lg:w-6/12 text-lg py-auto my-auto font-extrabold' >
               <p>Its Time for A Little Test!!</p>
-            </div>
+            </div> */}
 
 
             </div>
@@ -242,7 +253,11 @@ function PartsCard(props) {
   console.log(cardColor)}
     <CardBody style={{
        backgroundColor: cardColor,
-                                  padding: 8,
+       padding: 8,
+      //  border:{textborder}
+       
+       
+       
     }}>
       <p className="mb-4 font-semibold text-gray-100 dark:text-gray-100" >
       <p dangerouslySetInnerHTML={getMarkdownText(title)}/>
