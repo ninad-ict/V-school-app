@@ -119,10 +119,11 @@ function PartsCard(props) {
         );          
       case 'VIDEO':
         return (<>
-        {console.log(`https://www.youtube.com/embed/${children}`)}
+        
+        {console.log(`https://www.youtube.com/embed/${children.replaceAll("watch?v=",'')}`)}
         <div className="video-container">
     {/* <iframe src={`https://www.youtube.com/embed/${children}?rel=0&autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-    <iframe src={`https://www.youtube.com/embed/${children}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
+    <iframe src={`https://www.youtube.com/embed/${children.replaceAll("watch?v=",'')}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
     </div> </>);   
       case 'PPT':
         return (<>

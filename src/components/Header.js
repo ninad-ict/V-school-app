@@ -24,6 +24,8 @@ const sectionList=['Main Syllabus','Special Courses','Total Usage'];
 
 
 function Header() {
+  const userContext=useContext(UserContext);
+  const initialProfile=JSON.parse(userContext.profile);
   const { mode, toggleMode } = useContext(WindmillContext)
   const { toggleSidebar } = useContext(SidebarContext);
 
@@ -49,9 +51,10 @@ function Header() {
   const [isProfileSectionOpen,setIsProfileSectionOpen]=useState(false);
   
   const [sectionName,setSectionName]=useState(sectionList[0]);
-  const [currProfile,setcurrProfile]=useState(students[0]);
+  console.log(initialProfile);
+  const [currProfile,setcurrProfile]=useState(initialProfile);
 
-  const userContext=useContext(UserContext);
+
 
 
 
@@ -91,7 +94,9 @@ function Header() {
   useEffect(()=>{
 
     console.log("Reached profile");
-    console.log(userContext.profile)
+    console.log(userContext.profile);
+    // if(userContext.profile.first_name)
+      // setcurrProfile(userContext.profile.first_name+" "+userContext.profile.last_name[0])
   },[userContext.profile])
 
   return (
