@@ -956,18 +956,18 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 texttoSpeech={handleSpeech}
 listenActivePart={listenActivePart}
  >
-       {(() => {
-    switch (v.type) {
+       {v.value && (() => {
+     switch (v.type) {
                         case "TEXT":case 'SPECIAL_TEXT':  return v.value;
-                        case "IMG":case 'GIF': return v.value;
+                        case "IMG" :case 'GIF': return v.value;
                         case "VIDEO": return (v.value.url.split('/').pop());
                         case "AUDIO": return v.value;
                         case "gForm": {
                           return v.value
                           };
-                        case "PDF": return v.value;
+                        case "PDF":case "PPT": return v.value;
                         case 'json': return v.value;
-                        default: return v.value;
+                        {/* default: return v.value ; */}
                     }
 })()}
        {/* {v.value} */}
