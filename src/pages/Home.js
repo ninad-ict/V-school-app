@@ -378,6 +378,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     }
 
+    return () => {
+      // cancel the subscription
+      setLoading(false);
+  };
+
     
 
   },[currSubject]);  
@@ -408,7 +413,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         }).catch(e=>console.log(e));  
       }
 
-
+      return () => {
+        // cancel the subscription
+        setLoading(false);
+    };
 
   },[currChapter]); 
   
@@ -436,6 +444,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         
       getChapterPartContentNew(params).then(d=>{console.log(d);setContentList(d);setLoading(false)});
     }
+
+    return () => {
+      // cancel the subscription
+      setLoading(false);
+  };
 
   },[currPart]);
 
@@ -737,9 +750,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         {/* <BrowserRouter basename="/V-school-app">
         <Switch>
    <Route path="*"> */}
+   {loading && <ThemedSuspense/>}
 <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2" >
 
-{loading && <ThemedSuspense/>}
+
 {
   allChapters&&allChapters.map((v,k)=>(console.log(v)))
       }
@@ -941,27 +955,18 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 texttoSpeech={handleSpeech}
 listenActivePart={listenActivePart}
  >
-       {(() => {
-    switch (v.type) {
+       {v.value && (() => {
+     switch (v.type) {
                         case "TEXT":case 'SPECIAL_TEXT':  return v.value;
-                        case "IMG":case 'GIF': return v.value;
+                        case "IMG" :case 'GIF': return v.value;
                         case "VIDEO": return (v.value.url.split('/').pop());
                         case "AUDIO": return v.value;
                         case "gForm": {
-                          {/* if(JSON.stringify(v.value).includes('forms.gle'))
-                          {
-                            console.log("Bad GFORM");
-                            let tempText=v.value.split('/').pop();
-                            console.log(tempText);
-                            tempText=`https://docs.google.com/forms/d/e/${tempText}/viewform?usp=sf_link`;
-                            console.log(tempText);
-                            v.value=tempText;
-                            console.log(v.value);
-                          } */}
                           return v.value
                           };
-                        case "PDF": return v.value;
-                        default: return v.value;
+                        case "PDF":case "PPT": return v.value;
+                        case 'json': return v.value;
+                        {/* default: return v.value ; */}
                     }
 })()}
        {/* {v.value} */}
@@ -972,6 +977,7 @@ listenActivePart={listenActivePart}
     
      }   
      {
+      
       <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden" onClick={()=>setMcq(!mcq)} >
         {(mcq) ? 
         

@@ -9,6 +9,8 @@ import { useSpeechSynthesis } from "react-speech-kit";
 
 import BloomImage from "../../assets/img/BloomBox.png";
 import McqCardImage from "../../assets/img/TestCard.png";
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
+
 
 
 
@@ -20,6 +22,9 @@ function PartsCard(props) {
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
 
   const [value, setValue] = React.useState("");
+
+  // if (!props.children)
+  // return;
 
   // function getTextBorder(cardColor)
   // {
@@ -58,7 +63,7 @@ function PartsCard(props) {
             }
           {setValue(children.replace(/<[^>]+>/g, '').replace(/&nbsp;/gi,''))}
           {/* {setValue(children.innerHTML)} */}
-                      <Button className='text-red-600 float-right' icon={(textSound && (listenActivePart==index))? SoundOn:SoundOff} layout="link" aria-label="Like"  
+                      <Button className='text-red-600 float-right hidden' icon={(textSound && (listenActivePart==index))? SoundOn:SoundOff} layout="link" aria-label="Like"  
                         onClick={()=>{
 
                           texttoSpeech(value,(textSound)? "Stop":"Play");
@@ -77,6 +82,7 @@ function PartsCard(props) {
                           // }
 
                         }}
+                        
                       />
 
             <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}
@@ -91,7 +97,7 @@ function PartsCard(props) {
       case 'IMG':
         return (
           <>
-          {children &&
+          {children && children.filePath &&
             <div className='flex flex-wrap'>
             <div className='w-full lg:w-12/12 pr-4'>
             <img
@@ -113,10 +119,11 @@ function PartsCard(props) {
         );          
       case 'VIDEO':
         return (<>
-        {console.log(`https://www.youtube.com/embed/${children}`)}
+        
+        {console.log(`https://www.youtube.com/embed/${children.replaceAll("watch?v=",'')}`)}
         <div className="video-container">
     {/* <iframe src={`https://www.youtube.com/embed/${children}?rel=0&autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-    <iframe src={`https://www.youtube.com/embed/${children}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
+    <iframe src={`https://www.youtube.com/embed/${children.replaceAll("watch?v=",'')}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
     </div> </>);   
       case 'PPT':
         return (<>
@@ -170,6 +177,22 @@ function PartsCard(props) {
             </div>
           </>
         )
+        case 'json':
+
+      if(children.filePath)
+          return(
+            <>
+                  <Player
+          autoplay
+          loop
+          // src={`"https://vopa-bunny.b-cdn.net/media/LOTTY%20FILE/lottie_test.json_1645781109lottie_test.json"`}
+          src={children.filePath.replaceAll(' ','%20')}
+          style={{ height: '300px', width: '300px' }}
+        >
+          {/* <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} /> */}
+            </Player>
+            </>
+          )
         case 'MCQ-Intro':
           return(
             <>
