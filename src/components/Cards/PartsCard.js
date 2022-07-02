@@ -191,42 +191,20 @@ function PartsCard(props) {
         case 'MCQ-Intro':
           return(
             <>
-             <div
-            className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
+                  <div className='flex flex-wrap'>
             <div className='w-full lg:w-12/12 pr-4'>
             <img
               aria-hidden="true"
-              className="object-cover w-full h-full px-24"
+              className="object-cover w-full h-full"
               src={McqCardImage}
-              alt="tiger"
+              
+              
             />
             </div>
-            {/* <div className='w-full lg:w-6/12 text-lg py-auto my-auto font-extrabold' >
-              <p>Its Time for A Little Test!!</p>
-            </div> */}
-
-
             </div>
    
             </>
           )    
-          case 'MCQ-Start':
-          return(
-            <>
-             <div
-            className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
-            <div className='w-full lg:w-6/12 pr-4'>
-          <p>Hey lets start with MCQs!</p>
-            </div>
-            <div className='w-full lg:w-6/12 text-lg py-auto my-auto font-extrabold' >
-              <p>Its Time for A Little Test!!</p>
-            </div>
-
-
-            </div>
-   
-            </>
-          )
       default:
         return `Unable to display ${type}`;
     }

@@ -979,10 +979,10 @@ listenActivePart={listenActivePart}
      }   
      {
       
-      <div className="w-full lg:w-12/12 pr-4 font-light my-4 hidden" onClick={()=>setMcq(!mcq)} >
-        {(mcq) ? 
+      <div className="w-full lg:w-12/12 font-light p-10" onClick={()=>setMcq(!mcq)} >
+       
         
-          <PartsCard type='MCQ-Start' ></PartsCard> : <PartsCard type='MCQ-Intro' >
+          <PartsCard type='MCQ-Intro' >
                 <Player
           autoplay
           loop
@@ -991,7 +991,7 @@ listenActivePart={listenActivePart}
         >
           {/* <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} /> */}
             </Player>
-        </PartsCard>}
+        </PartsCard>
        </div>
        }
      
