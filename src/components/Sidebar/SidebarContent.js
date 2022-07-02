@@ -25,7 +25,7 @@ function SidebarContent() {
   const userContext=useContext(UserContext);
   const profile=JSON.parse(userContext.profile);
   return (
-    <div className="py-1 text-gray-50  dark:text-gray-400 items-center sidebar-design h-screen" 
+    <div className="py-1 text-gray-50  dark:text-gray-400 items-center sidebar-design h-screen w-auto" 
     // style={{'background':'linear-gradient(180deg, #924ED6 33.87%, rgba(36, 121, 221, 0.82) 131.56%)'}}
     >
       <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">

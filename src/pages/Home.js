@@ -190,6 +190,8 @@ setlistenActivePart(-1);
 
 
   const colors = ['#CCE5FE', '#F8D7DA', '#FFF3CE', '#D4EDDA'];
+
+  // #667380 #eb6c77 #f5d36c #78c48a
   
 
 
@@ -939,7 +941,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
    if(v.type=='TEXT')
    {
-    let presentColor=colors[colorIndex%3];
+    let presentColor=colors[colorIndex%4];
    colorIndex+=1;
    return presentColor;
    }
@@ -952,6 +954,36 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
  })()
 
  }
+
+ border={
+
+  (()=>{
+
+if(v.type=='TEXT')
+{
+ switch(colorIndex%4)
+ {
+  case 1:
+    return "2px solid #75b8fa ";  
+  case 2:
+    return "2px solid #eb6c77 ";  
+  case 3:
+    return "2px solid #f5d36c ";  
+  case 0:
+    return "2px solid #73f091";
+  default:
+    return ;
+ }
+}
+
+if(v.type=='SPECIAL_TEXT')
+{
+ return "#E6F4FF"; 
+}
+
+})()
+
+}
 
 texttoSpeech={handleSpeech}
 listenActivePart={listenActivePart}
@@ -982,7 +1014,8 @@ listenActivePart={listenActivePart}
       <div className="w-full lg:w-12/12 font-light p-10" onClick={()=>setMcq(!mcq)} >
        
         
-          <PartsCard type='MCQ-Intro' >
+          <PartsCard type='MCQ-Intro' 
+          border='2px solid #A015B7'>
                 <Player
           autoplay
           loop

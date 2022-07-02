@@ -18,7 +18,7 @@ import { Player, Controls } from '@lottiefiles/react-lottie-player';
 
 function PartsCard(props) {
 
-  const {title,children,type,index,cardColor,texttoSpeech,listenActivePart} = {...props};
+  const {title,children,type,index,cardColor,texttoSpeech,listenActivePart,border} = {...props};
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
 
   const [value, setValue] = React.useState("");
@@ -105,6 +105,7 @@ function PartsCard(props) {
               className="object-cover w-full h-full"
               src={children.filePath}
               alt="tiger"
+              style={{borderRadius: '10px'}}
             />
             </div>
             <div className='w-full lg:w-12/12 text-lg py-auto my-auto font-extrabold text-justify' dangerouslySetInnerHTML={getMarkdownText(children.description)}>
@@ -121,7 +122,7 @@ function PartsCard(props) {
         return (<>
         
         {console.log(`https://www.youtube.com/embed/${children.replaceAll("watch?v=",'')}`)}
-        <div className="video-container">
+        <div className="video-container" style={{borderRadius: '10px'}}>
     {/* <iframe src={`https://www.youtube.com/embed/${children}?rel=0&autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
     <iframe src={`https://www.youtube.com/embed/${children.replaceAll("watch?v=",'')}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
     </div> </>);   
@@ -229,7 +230,7 @@ function PartsCard(props) {
 
   if(children)
   return (
-    <Card>
+    <Card style={{borderRadius: '10px',border:border,backgroundColor:'none'}}>
     <div className="relative mr-10">
 <Dropdown
               align="right"
@@ -255,7 +256,8 @@ function PartsCard(props) {
     <CardBody style={{
        backgroundColor: cardColor,
        padding: 8,
-      //  border:{textborder}
+      
+      
        
        
        
