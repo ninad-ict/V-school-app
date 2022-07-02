@@ -23,6 +23,9 @@ function PartsCard(props) {
 
   const [value, setValue] = React.useState("");
 
+  // if (!props.children)
+  // return;
+
   // function getTextBorder(cardColor)
   // {
   //   switch(cardColor):
@@ -60,7 +63,7 @@ function PartsCard(props) {
             }
           {setValue(children.replace(/<[^>]+>/g, '').replace(/&nbsp;/gi,''))}
           {/* {setValue(children.innerHTML)} */}
-                      <Button className='text-red-600 float-right' icon={(textSound && (listenActivePart==index))? SoundOn:SoundOff} layout="link" aria-label="Like"  
+                      <Button className='text-red-600 float-right hidden' icon={(textSound && (listenActivePart==index))? SoundOn:SoundOff} layout="link" aria-label="Like"  
                         onClick={()=>{
 
                           texttoSpeech(value,(textSound)? "Stop":"Play");
@@ -79,6 +82,7 @@ function PartsCard(props) {
                           // }
 
                         }}
+                        
                       />
 
             <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}
@@ -93,7 +97,7 @@ function PartsCard(props) {
       case 'IMG':
         return (
           <>
-          {children &&
+          {children && children.filePath &&
             <div className='flex flex-wrap'>
             <div className='w-full lg:w-12/12 pr-4'>
             <img
