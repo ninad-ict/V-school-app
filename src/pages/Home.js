@@ -20,6 +20,8 @@ import PartsCard from '../components/Cards/PartsCard';
 import { NavLink, Switch,Route, BrowserRouter } from 'react-router-dom';
 // import BasicTabs  from '../components/Cards/BasicTabs';
 
+import  McqTest from  "./McqTest";
+
 import {getStudentSubjects,getChapters,getChapterPreview,getChapterPartContentNew} from "../dataFromServer";
 
 import { Modal, ModalHeader, ModalBody, ModalFooter } from '@windmill/react-ui';
@@ -62,6 +64,8 @@ import {
   doughnutLegends,
   lineLegends,
 } from '../utils/demo/chartsData'
+import { fa } from 'faker/lib/locales';
+// import McqTest from './McqTest';
 // import DoorDashFavorite from '../components/Typography/DoorDashFavorite';
 
 function Home() {
@@ -83,6 +87,9 @@ function Home() {
 
   const [colorSubject,setcolorSubject]=useState("");
 
+  const [partMcq,setPartMcq]=useState();
+
+
 
   const userContext=useContext(UserContext);
 
@@ -99,6 +106,8 @@ function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [mcq,setMcq]=useState(false);
+  const [startMcq,setStartMcq]=useState(false);
+
 
   const [subjectActive,setSubjectActive]=useState(0);
   const [chapterActive,setChapterActive]=useState(-1);
@@ -211,6 +220,8 @@ setlistenActivePart(-1);
     if(chapterPreview.response)
     {
       setCurrPart(chapterPreview.response.chapter_parts[0]);
+      console.log("chapterPreview.response");
+      console.log(chapterPreview.response);
     }
 
   },[chapterPreview]);
@@ -279,6 +290,13 @@ setlistenActivePart(-1);
     });
 
     return arr
+  }
+
+  function handleMcqTest()
+  {
+    console.log("Mcq Should open");
+    setStartMcq(true);
+  //  return McqTest();
   }
 
 
@@ -409,7 +427,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       
         getChapterPreview(params).then(d=>{
           console.log("Chapter Preview"+d);
-          console.log(d);
+          console.log(d.response.chapter_parts[0].mcq);
+          setMcq((d.response.chapter_parts[0].mcq.length>0? true :false))
           setChapterPreview(d);
           setLoading(false);
 
@@ -428,6 +447,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
     if(currPart)
     {
+
+      console.log("Current Part");
+      console.log(currPart);
 
       
       setContentList("");
@@ -472,16 +494,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
   },[marginIndex]);
 
 
-  function handleMCQ()
-  {
-    console.log("OPEN MCQ");
-
-    if(!mcq)
-    {
-      setMcq(true);
-    }
-    
-  }
+ 
 
   // const slideImages = [
   //   '../assets/img/tiger.png',
@@ -510,147 +523,15 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 
   return (
     <>
-     <Modal isOpen={isModalOpen} onClose={closeModal}  >
-        <ModalBody  className='w-3\/4'>
-        
-        {/* <div className="each-slide hidden">
-            <div style={{'backgroundImage': `url(${Tiger})`}}>
-            </div>
-          </div>
-          <div className="each-slide hidden">
-            <div >
-              <span>People seldom have a </span>
-            </div>
-          </div>
-          <div className="each-slide hidden">
-            <div>
-             <iframe width="100%" height="600" src="https://www.youtube.com/embed/YE7VzlLtp-4?ecver=2&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-          </div> */}
-      
-        <div className='w-3\/4 py-auto content-center'>
-        <Slide easing="ease" style={{background:'none'}}>
-          {
-       contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
-         return(
-  
-         (() => {
-                  switch (v.type) {
-                        case v.value&& "TEXT":
-                        return (
-                          <div className="each-slide"  style={{backgroundColor:'transparent'}}>
-          <div style={{'background':'none'}}
-          className='w-3\/4 my-auto mt-64 mb-64 content-center py-auto'>
-                          <p className="text-2xl px-4" 
-                          style={{backgroundColor:'transparent'}}>
-                            <div  style={{backgroundColor:'transparent'}} dangerouslySetInnerHTML={{__html:`<p style="color:'none';background-color:transparent;background:'none';text-align: justify;">${v.value}</p>`}}></div>
-                          </p>
-                          </div></div>
-                        )
-                         case v.value && v.value.filePath && "IMG":case v.value && v.value.filePath && 'GIF':
-                         {/* case "IMG":case 'GIF': */}
-                          {console.log(`${v.value.filePath}`)}
-                        return (   
-                          <>
-                          {/* <div className="each-slide">   
-                           <div
-                           className='min-h-96 content-center py-auto'>
-                              <img
-                                aria-hidden="true"
-                                className="object-cover my-auto"
-                                src={`${v.value.filePath}`}
-                                alt="tiger"
-                              />
-                    </div>
-                    </div> */}
-
-                          <div className="each-slide">
-                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
-                          <img
-                                aria-hidden="true"
-                                className="object-cover"
-                                src={`${v.value.filePath}`}
-                                alt="tiger"
-                              />                          </div>
-                        </div>
-
-                        </>
-
-                        )
-                        case v.value&&'VIDEO':
-                        return(
-                          <div className="each-slide">
-                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
-                          <iframe width="100%" height='600' src={`https://www.youtube.com/embed/${v.value.url.split('/').pop()}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                          </div>
-                        </div>
-
-                        )  
-                        case v.value && 'AUDIO':
-                        return(
-                          
-                          <div className="each-slide">
-                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
-                          <audio controls>
-                             <source src={`${v.value}`} type="audio/mp3"/>
-                          </audio>                         
-           </div>
-                        </div>
-
-                        )                   
-                        case v.value && 'gForm':
-                        return(
-                          
-                          <div className="each-slide">
-                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'
-                          dangerouslySetInnerHTML={{ __html:`<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?embedded=true" width="640" height="580" frameborder="0" marginheight="0" marginwidth="0">Loading…L</iframe>`}}>
-                          {/* {console.log(`${v.value}&output=embed`)}; */}
-                          {/* <iframe src={v.value} width="100%" height="500px"/> */}
-                          {/* <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?&output=embed" width="600" height="450" frameborder="0" style={{border:0}} allowfullscreen="" aria-hidden="false" tabindex="0"/>                     */}
-                          {/* <iframe src={`https://docs.google.com/forms/d/e/1FAIpQLSesM2ppPRxxpinwVM9Fn4RinVPufGYNb9xwS3NOQIpdt3kX4Q/viewform?&output=embed`} width="100%" height="500px">Loading...</iframe>                       */}
-           </div>
-                        </div>
-
-                        )  
-                        case v.value && 'PDF':
-                        return(
-                          
-                          <div className="each-slide">
-                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
-                          <iframe src={v.value} width="100%" height="500px"/>                    
-           </div>
-                        </div>
-
-                        )
-                        case v.value && 'PPT':
-                        return(
-                          
-                          <div className="each-slide">
-                          <div className='min-h-fit w-fit my-auto mt-64 mb-64 content-center py-auto'>
-                    <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${v.value}`} width="100%" height="500px" frameborder='0'/> 
-                 
-           </div>
-                        </div>
-
-                        )
-                        default: return;
-                                  }
-                    })()
-                  
- 
-      )
-       })
-     }
-        </Slide>
-      </div>        
-        
+   {isModalOpen&& <McqTest isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} part={currPart.part_id || 0}/> } 
+     {/* <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <ModalHeader>Modal header</ModalHeader>
+        <ModalBody>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendi repudiandae
+          voluptatem tempore!
         </ModalBody>
-        <ModalFooter className='hidden'>
-          {/* I don't like this approach. Consider passing a prop to ModalFooter
-           * that if present, would duplicate the buttons in a way similar to this.
-           * Or, maybe find some way to pass something like size="large md:regular"
-           * to Button
-           */}
+        <ModalFooter>
+     
           <div className="hidden sm:block">
             <Button layout="outline" onClick={closeModal}>
               Cancel
@@ -670,7 +551,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             </Button>
           </div>
         </ModalFooter>
-      </Modal>
+      </Modal> */}
     <div ref={subjectRef} ></div>
     
       <PageTitle> <Button icon={ChevronLeft} layout="link" aria-label="Like" 
@@ -874,10 +755,16 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       <div className=" focus:border-purple-400 w-full lg:w-2/12 sm:w-6/12 pr-4 font-light">
       {/* {(k==0)? setCurrPart(v) :""}  */}
       {console.log("Value is"+v)}
+      {(console.log("Length:"),console.log(v.mcq.length))}
       {console.log(v)}
       {console.log("Iteration is "+k)}
       {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
-      <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300 ${(k==partActive) ? "bg-purple-300":""}`} onClick={()=>{setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v);setPartActive(k)}}>
+      <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300 ${(k==partActive) ? "bg-purple-300":""}`} onClick={
+        ()=>{
+          setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v);
+          setPartActive(k);
+          setMcq(()=>v.mcq.length>0? true:false)
+          }}>
         <CardBody>
 
        
@@ -1011,7 +898,11 @@ listenActivePart={listenActivePart}
      }   
      {
       
-      <div className="w-full lg:w-12/12 font-light p-10" onClick={()=>setMcq(!mcq)} >
+      mcq &&
+      <div className="w-full lg:w-12/12 font-light p-10" 
+      // onClick={openModal} 
+      onClick={()=>setIsModalOpen(true)}
+      >
        
         
           <PartsCard type='MCQ-Intro' 

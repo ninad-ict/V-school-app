@@ -1,4 +1,4 @@
-import http from "./axios";
+import http,{httpV2} from "./axios";
 // import react,{ useContext } from "react";
 // import { UserContext } from './context/UserContext';
 
@@ -303,7 +303,7 @@ export function verifyOTP(mobile,otp){
   };
 
   const getContentFromUrl = (data) => {
-    return fetch(data.content, {
+    return fetch(data.content || data, {
       method: 'GET',
       headers: new Headers({
         'content-type': 'application/json',
@@ -330,6 +330,31 @@ export function verifyOTP(mobile,otp){
       return result;
     });
   };
+
+
+  export const getMCQForPart = (param)=>{
+    return httpV2.
+    get(`mcq/${param}/get_part_mcq_tests/`,config)
+    .then(async (result) => {
+
+      console.log("Fetched Mcq data");
+      console.log(result.data);
+      console.log(result.data.data[0].question_url);
+
+      let obj = {};
+        let chapterContent;
+        let contentTrans;
+        if (result.data && result.data.data.length > 0) {
+          chapterContent = await getContentFromUrl(result.data.data[0].question_url);
+          contentTrans = await chapterContent.json();
+          obj = {id: result.data.data, result: JSON.parse(contentTrans)};
+          console.log(obj);
+          return obj;
+        }
+
+    });
+
+  }
 
 
 

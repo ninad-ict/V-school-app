@@ -6,6 +6,7 @@ import axios from "axios";
 
 // - API Link for AWS BUILD
 const APP_URL = 'https://vschoolindia.com/vopa/api/'; 
+const SEPARATE_URL = 'https://vschoolindia.com/content/api/';
 
 // - API Link for Local server
 // const APP_URL = 'https://lessons.vopa.in/vopa/api/';
@@ -26,6 +27,10 @@ const APP_URL = 'https://vschoolindia.com/vopa/api/';
 
 const http = axios.create({
     baseURL: APP_URL,
+  });
+  
+export const httpV2 = axios.create({
+    baseURL: SEPARATE_URL,
   });
 
 
