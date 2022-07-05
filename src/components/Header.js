@@ -108,10 +108,10 @@ function Header() {
           onClick={toggleSidebar}
           aria-label="Menu"
         >
-          <MenuIcon className="w-6 h-6" aria-hidden="true" />
+          <MenuIcon className="w-6 h-6 text-white" aria-hidden="true" />
         </button>
         {/* <!-- Search input --> */}
-        <div className="flex flex-1 lg:mr-2 ">
+        <div className="mx-auto ">
           <div className="relative flex-auto w-full  focus-within:text-purple-500 mx-auto">
             <div className="inset-y-0 flex flex-nowrap pl-2">
               {/* <SearchIcon className="w-4 h-4" aria-hidden="true" /> */}
@@ -143,16 +143,16 @@ function Header() {
        <Button  aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} disabled={true} >
        {currProfile.medium_name+"-"+currProfile.class_name}
       </Button>    */}
-      <div className='flex flex-wrap'>
+      <div className='flex h-15'>
 
-      <div className='relative mx-1'>
+      <div className='relative mx-1 flex-none'>
       <div className='relative px-6 py-2 mx-1 lg:px-auto text-black rounded-lg'style={{'background': '#D9D7DA'}} onClick={()=>toggleDropdown("section")}>
       <div className='pr-2'>{sectionName} </div>
       <div className="absolute inset-y-0 right-0 flex items-center pr-2">
               <DownIcon className="w-5 h-5" aria-hidden="true" />
             </div>
       </div>   
-      <Dropdown isOpen={isMainSectionOpen} onClose={() => setIsMainSectionOpen(false)} value={sectionName}>
+      <Dropdown isOpen={isMainSectionOpen} onClose={() => setIsMainSectionOpen(false)} value={sectionName} >
       {sectionList.map( (v,k)=>(
         <DropdownItem className="justify-between" onClick={e => (setSectionName(e.target.innerText),setIsMainSectionOpen(false))}>
         {v}
@@ -163,12 +163,12 @@ function Header() {
       </div>  
       
 
-       <div className='px-2 py-2 lg:px-auto text-black rounded-lg whitespace-nowrap mx-1' style={{'background': '#D9D7DA'}}>
+       <div className='flex-none px-2 py-2 lg:px-auto text-black rounded-lg whitespace-nowrap mx-1' style={{'background': '#D9D7DA'}}>
       {currProfile.medium_name+"-"+currProfile.class_name}
       </div>  
       
 
-       <div className='px-2 py-2 lg:px-auto text-black rounded-lg mx-1'style={{'background': '#D9D7DA'}}>
+       <div className='flex-none px-2 py-2 lg:px-auto text-black rounded-lg mx-1'style={{'background': '#D9D7DA'}}>
        {currProfile.board_name}
       </div>
       {/* <Button aria-label="Notifications" aria-haspopup="true" className='px-auto mx-4 lg:px-auto text-black'style={{'background': '#D9D7DA'}} >
@@ -179,9 +179,9 @@ function Header() {
       
       {/* ----Drop down for Profile Change */}
 
-      <div className='relative mx-1'>
+      <div className='relative mx-1 flex-none'>
       <div 
-      className='relative px-6 py-2 lg:px-auto text-black rounded-lg'
+      className='px-6 py-2 lg:px-auto text-black rounded-lg'
       style={{'background': '#D9D7DA'}} 
       onClick={()=>toggleDropdown("profile")} >
       <div className='pr-2'> {currProfile.first_name+' '+ currProfile.last_name[0]} </div>
@@ -189,7 +189,7 @@ function Header() {
               <DownIcon className="w-5 h-5" aria-hidden="true" />
             </div>
       </div>   
-      <Dropdown isOpen={isProfileSectionOpen} onClose={() => setIsProfileSectionOpen(false)} value={currProfile.first_name+' '+currProfile.last_name[0]} className='top-50 right-50'
+      <Dropdown className='z-40' isOpen={isProfileSectionOpen} onClose={() => setIsProfileSectionOpen(false)} value={currProfile.first_name+' '+currProfile.last_name[0]} 
      >
       {console.log(students)}
       {students && students.map( (v,k)=>(
@@ -200,6 +200,28 @@ function Header() {
       }
       </Dropdown> 
       </div> 
+
+      <div className='ml-4'>
+
+<Button layout='outline' icon={ZoomIn} aria-label="Like" className='bg-purple-400 dark:text-purple-600 dark:bg-white'
+onClick={()=>{
+  
+  if(userContext.marginIndex>=1)
+  userContext.changeMarginIndex(userContext.marginIndex-2)
+  
+  }}></Button>
+
+</div>  <div className='ml-4'>
+
+<Button layout='outline' icon={ZoomOut} aria-label="Like" className='bg-purple-400 dark:text-purple-600 dark:bg-white'
+onClick={()=>{
+  
+  if(userContext.marginIndex<=30)
+  userContext.changeMarginIndex(userContext.marginIndex+2)
+  
+  }}></Button>
+
+</div>
       
       </div>
       {/* <div className='relative'>
@@ -218,27 +240,7 @@ function Header() {
       </Dropdown>
       </div> */}
 
-      <div>
-
-      <Button layout='outline' icon={ZoomIn} aria-label="Like" className='bg-purple-400 dark:text-purple-600 dark:bg-white'
-      onClick={()=>{
-        
-        if(userContext.marginIndex>=1)
-        userContext.changeMarginIndex(userContext.marginIndex-2)
-        
-        }}></Button>
-
-      </div>  <div>
-
-      <Button layout='outline' icon={ZoomOut} aria-label="Like" className='bg-purple-400 dark:text-purple-600 dark:bg-white'
-      onClick={()=>{
-        
-        if(userContext.marginIndex<=30)
-        userContext.changeMarginIndex(userContext.marginIndex+2)
-        
-        }}></Button>
-
-      </div>
+     
 
      {/* ----Drop down for Profile Change */}
       </div>

@@ -245,6 +245,7 @@ setlistenActivePart(-1);
     setContentList("");
     subjectRef.current.scrollIntoView();
     setSubjectActive(0);
+    setPartActive(0);
 
 
     const params=
@@ -466,6 +467,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         }
 
 
+        console.log("Params check");
+        console.log(params);
         
       getChapterPartContentNew(params).then(d=>{console.log(d);setContentList(d);setLoading(false)});
     }
@@ -761,7 +764,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
       <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300 ${(k==partActive) ? "bg-purple-300":""}`} onClick={
         ()=>{
-          setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter.no_of_parts)) ? "Summary":v);
+          setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":v);
           setPartActive(k);
           setMcq(()=>v.mcq.length>0? true:false)
           }}>

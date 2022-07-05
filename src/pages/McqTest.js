@@ -201,14 +201,14 @@ export default function McqTest(props) {
             {(testSubmitted.status)?"Close Test":(currQuestion==-1)? 'Cancel':'Previous'}
             </Button>
           </div>
-          <div className="hidden sm:block">
+         {(!testSubmitted.status) &&  <div className="hidden sm:block">
             <Button onClick={()=>{
                 (testSubmitted.status)?setCurrQuestion(0):(currQuestion+1<mcqDetails.result.questions.length)?setCurrQuestion(currQuestion+1):handleSubmitMcq();
                 
                 }}>
             {(testSubmitted.status)?"Verify Answers":(currQuestion==-1)? 'Start Test':(currQuestion+1==mcqDetails.result.questions.length)?"Submit":'Next'}
             </Button>
-          </div>
+          </div>}
           <div className="block w-full sm:hidden">
             {/* <Button block size="large" layout="outline" onClick={closeModal}> */}
             <Button block size="large" layout="outline" onClick={closeModal}>
