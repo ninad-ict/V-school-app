@@ -130,7 +130,23 @@ export default function McqTest(props) {
             <span className='float-right'>({currQuestion+1}/{mcqDetails.result.questions.length}) </span> </p>
            
             {mcqDetails.result.questions[currQuestion].answers.map((v,k)=>(
-                <Card key={k} className={`mb-4 shadow-lg bg-grey-40  ${(!testSubmitted.status)? 'hover:bg-purple-200':''}  border ${(activeAnswer[currQuestion]==k)? "bg-purple-400 dark:bg-purple-400 dark:text-white":""}`}
+                <Card key={k} className={`
+                mb-4 shadow-lg bg-grey-40  
+                ${
+                    (!testSubmitted.status)? 'hover:bg-purple-200':
+                    (k+1==mcqDetails.result.questions[currQuestion].correctAnswer)? "bg-green-400 dark:bg-green-400 dark:text-white":""
+                }  
+                border 
+                ${(activeAnswer[currQuestion]==k)? 
+                (!testSubmitted.status)?
+                "bg-purple-400 dark:bg-purple-400 dark:text-white"
+                :
+                (activeAnswer[currQuestion]+1==mcqDetails.result.questions[currQuestion].correctAnswer)?
+                "bg-green-400 dark:bg-green-400 dark:text-white":"bg-red-400 dark:bg-red-400 dark:text-white"
+                :
+                ""
+                }
+                `}
                 onClick={()=> !testSubmitted.status && setActiveAnswer({...activeAnswer,[currQuestion]:k})}>
                 <CardBody>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -141,7 +157,16 @@ export default function McqTest(props) {
 
             ))}
 
-            {testSubmitted.status && <><hr/> <div className='mt-1 ' >Correct!</div></>}
+            {
+                testSubmitted.status && 
+                <><hr/> 
+            {(activeAnswer[currQuestion]+1==mcqDetails.result.questions[currQuestion].correctAnswer)?
+                <div className='mt-1 border-2 border-green-400 bg-green-100 rounded p-2' >
+                Right Answer :{mcqDetails.result.questions[currQuestion].messageForCorrectAnswer}</div>:
+                <div className='mt-1 border-2 border-red-400 bg-red-100 rounded p-2' >
+                Wrong Answer: {mcqDetails.result.questions[currQuestion].messageForIncorrectAnswer}
+                </div>}
+            </>}
            
         </> :
         <>
