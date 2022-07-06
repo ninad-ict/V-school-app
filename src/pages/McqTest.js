@@ -118,7 +118,7 @@ export default function McqTest(props) {
 
 {mcqDetails &&
         <Modal isOpen={isModalOpen} onClose={closeModal} >
-        <ModalHeader ><div className='text-center'><p>Test-{mcqDetails.result.quizTitle}</p></div></ModalHeader>
+        <ModalHeader ><div className='text-center'><p>Test-{mcqDetails.result.quizTitle} {(testSubmitted.status)?"(Results)":""}</p></div></ModalHeader>
         <ModalBody>
         {currQuestion==-1?
             <><p className='text-center'>(Total Marks:{mcqDetails.id[0].max_marks})</p>
@@ -130,8 +130,8 @@ export default function McqTest(props) {
             <span className='float-right'>({currQuestion+1}/{mcqDetails.result.questions.length}) </span> </p>
            
             {mcqDetails.result.questions[currQuestion].answers.map((v,k)=>(
-                <Card key={k} className={`mb-4 shadow-lg bg-grey-40 hover:bg-purple-200  border ${(activeAnswer[currQuestion]==k)? "bg-purple-400 dark:bg-purple-400 dark:text-white":""}`}
-                onClick={()=>setActiveAnswer({...activeAnswer,[currQuestion]:k})}>
+                <Card key={k} className={`mb-4 shadow-lg bg-grey-40  ${(!testSubmitted.status)? 'hover:bg-purple-200':''}  border ${(activeAnswer[currQuestion]==k)? "bg-purple-400 dark:bg-purple-400 dark:text-white":""}`}
+                onClick={()=> !testSubmitted.status && setActiveAnswer({...activeAnswer,[currQuestion]:k})}>
                 <CardBody>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                     {k+1}. {v}
@@ -140,6 +140,8 @@ export default function McqTest(props) {
             </Card>
 
             ))}
+
+            {testSubmitted.status && <><hr/> <div className='mt-1 ' >Correct!</div></>}
            
         </> :
         <>
@@ -213,7 +215,7 @@ export default function McqTest(props) {
                 (testSubmitted.status)?setCurrQuestion(currQuestion>=mcqDetails.result.questions.length? 0:currQuestion+1):(currQuestion+1<mcqDetails.result.questions.length)?setCurrQuestion(currQuestion+1):handleSubmitMcq();
                 
                 }}>
-            {(testSubmitted.status)?"Verify Answers":(currQuestion==-1)? 'Start Test':(currQuestion+1==mcqDetails.result.questions.length)?"Submit":'Next'}
+            {(testSubmitted.status&&currQuestion==mcqDetails.result.questions.length)?"Verify Answers":(currQuestion==-1)? 'Start Test':(!testSubmitted.status&&currQuestion+1==mcqDetails.result.questions.length)?"Submit":'Next'}
             </Button>
           </div>
           }
