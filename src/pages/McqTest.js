@@ -58,6 +58,7 @@ export default function McqTest(props) {
 
       useEffect(()=>{
         console.log(currQuestion);
+        console.log(testSubmitted);
         // setActiveAnswer(-1);
       },[currQuestion]);      
       
@@ -72,7 +73,7 @@ export default function McqTest(props) {
     function handleSubmitMcq()
     {
 
-        setTestSubmitted({...testSubmitted,status:true});
+        // setTestSubmitted({...testSubmitted,status:true});
         let rightAnswer=0;
         let totalScore=0;
 
@@ -101,15 +102,19 @@ export default function McqTest(props) {
     // });
 
         setTestSubmitted({...testSubmitted,status:true,correctAnswer:rightAnswer,totalScore:totalScore});
+        setCurrQuestion(currQuestion+1);
+        console.log("testSubmit Data Updated");
     }
 
     return(
 
 <>
 {loading && 
-    <Modal isOpen={isModalOpen} onClose={closeModal}>
+
+    <Modal isOpen={isModalOpen} onClose={closeModal} border>
        <div className='text-center my-auto'><p>Loading...</p></div>
       </Modal>}
+
 
 {mcqDetails &&
         <Modal isOpen={isModalOpen} onClose={closeModal} >
@@ -118,7 +123,7 @@ export default function McqTest(props) {
         {currQuestion==-1?
             <><p className='text-center'>(Total Marks:{mcqDetails.id[0].max_marks})</p>
         <p className='text-center mt-2'>{mcqDetails.result.quizSynopsis}</p>
-        </>:(!testSubmitted.status && currQuestion+1<=mcqDetails.result.questions.length) ?
+        </>:(!testSubmitted.status || currQuestion<mcqDetails.result.questions.length) ?
         <>
             <p className='mb-4'><span className='font-extrabold'>Q. {currQuestion+1}. </span>
             {mcqDetails.result.questions[currQuestion].question} 
@@ -196,19 +201,22 @@ export default function McqTest(props) {
            * Or, maybe find some way to pass something like size="large md:regular"
            * to Button
            */}
-          <div className="hidden sm:block">
-            <Button layout="outline" onClick={()=>{(testSubmitted.status)?closeModal():(currQuestion>-1)? setCurrQuestion(currQuestion-1):closeModal()}}>
-            {(testSubmitted.status)?"Close Test":(currQuestion==-1)? 'Cancel':'Previous'}
+         { (!testSubmitted.status || currQuestion!=0) && <div className="hidden sm:block">
+            <Button layout="outline" onClick={()=>{(testSubmitted.status&&currQuestion==mcqDetails.result.questions.length)?closeModal():(currQuestion>-1)? setCurrQuestion(currQuestion-1):closeModal()}}>
+            {(testSubmitted.status&&currQuestion==mcqDetails.result.questions.length)?"Close Test":(currQuestion==-1)? 'Cancel':'Previous'}
             </Button>
           </div>
-         {(!testSubmitted.status) &&  <div className="hidden sm:block">
+          }
+         {
+             <div className="hidden sm:block">
             <Button onClick={()=>{
-                (testSubmitted.status)?setCurrQuestion(0):(currQuestion+1<mcqDetails.result.questions.length)?setCurrQuestion(currQuestion+1):handleSubmitMcq();
+                (testSubmitted.status)?setCurrQuestion(currQuestion>=mcqDetails.result.questions.length? 0:currQuestion+1):(currQuestion+1<mcqDetails.result.questions.length)?setCurrQuestion(currQuestion+1):handleSubmitMcq();
                 
                 }}>
             {(testSubmitted.status)?"Verify Answers":(currQuestion==-1)? 'Start Test':(currQuestion+1==mcqDetails.result.questions.length)?"Submit":'Next'}
             </Button>
-          </div>}
+          </div>
+          }
           <div className="block w-full sm:hidden">
             {/* <Button block size="large" layout="outline" onClick={closeModal}> */}
             <Button block size="large" layout="outline" onClick={closeModal}>
