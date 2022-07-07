@@ -26,11 +26,13 @@ export default function McqTest(props) {
         status:false,
         correctAnswer:0,
         totalScore:0,
-        time:0
+        maximumScore:0,
+        time:0,
+        maximumTime:0
     });
 
     const [loading,setLoading]=useState(true);
-
+    const [timeTaken,setTimeTaken]=useState(0);
 
     console.log("partCheck");
     console.log(part);
@@ -66,6 +68,18 @@ export default function McqTest(props) {
         console.log(activeAnswer);
         // setActiveAnswer(-1);
       },[activeAnswer]);
+
+      useEffect(()=>{
+        console.log("time->");
+        console.log(timeTaken);
+        setTestSubmitted({...testSubmitted,time:timeTaken});
+      },[timeTaken]);
+
+
+      useEffect(()=>{
+        console.log("testSubmitted");
+        console.log(testSubmitted);
+      },[testSubmitted]);
     
 
     // const []
@@ -76,34 +90,56 @@ export default function McqTest(props) {
         // setTestSubmitted({...testSubmitted,status:true});
         let rightAnswer=0;
         let totalScore=0;
+        let maximumScore=0;
+        let maximumTime=0;
 
 
-        Object.keys(activeAnswer).forEach(function(key) {
-            // arr.push(json[key]);
 
-            if (activeAnswer[key]+1==mcqDetails.result.questions[key].correctAnswer)
+        // Object.keys(activeAnswer).forEach(function(key) {
+        //     // arr.push(json[key]);
+
+        //     if (activeAnswer[key]+1==mcqDetails.result.questions[key].correctAnswer)
+        //     {
+        //         rightAnswer++;
+        //         totalScore +=Number(mcqDetails.result.questions[key].point);
+
+        //     }
+        //     maximumScore+=Number(mcqDetails.result.questions[key].point);
+        //     maximumTime+=Number(mcqDetails.result.questions[key].time);
+
+        //     console.log(maximumScore);
+
+        //   });
+
+          mcqDetails.result.questions.map((v,k)=>{
+
+            if (activeAnswer[k] && activeAnswer[k]+1==v.correctAnswer)
             {
                 rightAnswer++;
-                totalScore +=Number(mcqDetails.result.questions[key].point);
+                totalScore +=Number(v.point);
 
             }
 
-          });
+            maximumScore+=Number(v.point);
+            maximumTime+=Number(v.time);
 
-    //     activeAnswer.map((v,k)=>{
+            console.log(maximumScore);
 
-    //         if (v+1==mcqDetails.result.questions[k].correctAnswer)
-    //         {
-    //             rightAnswer++;
-    //             totalScore +=mcqDetails.result.questions[k].point;
 
-    //         }
+          })
 
-    // });
+           setTimeTaken(Math.round((new Date()-timeTaken)/1000));
 
-        setTestSubmitted({...testSubmitted,status:true,correctAnswer:rightAnswer,totalScore:totalScore});
+        setTestSubmitted({...testSubmitted,
+          status:true,
+          correctAnswer:rightAnswer,
+          totalScore:totalScore,
+          maximumScore:maximumScore,
+          maximumTime:maximumTime,
+        });
         setCurrQuestion(currQuestion+1);
         console.log("testSubmit Data Updated");
+        console.log(testSubmitted);
     }
 
     return(
@@ -178,39 +214,41 @@ export default function McqTest(props) {
                 >
                 <CardBody>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                <span className='font-bold'>Correct Answer :</span> {testSubmitted.correctAnswer}
+                <span className='font-bold'>Correct Answer :</span> {testSubmitted.correctAnswer} / {mcqDetails.result.questions.length-testSubmitted.correctAnswer}
                 </p>
                 </CardBody>
             </Card>
 
-            </div>        <div className="w-full lg:w-6/12  p-1">
+            </div>        
+            {/* <div className="w-full lg:w-6/12  p-1">
             <Card className={`mb-4 shadow-lg bg-grey-40 border`}
                 >
                 <CardBody>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                <span className='font-bold'> Wrong Answer :</span>  {mcqDetails.result.questions.length-testSubmitted.correctAnswer}
+                <span className='font-bold'> Wrong Answer :</span>  
                 </p>
                 </CardBody>
             </Card>
 
-            </div>        <div className="w-full lg:w-6/12  p-1">
+            </div>     */}
+                <div className="w-full lg:w-6/12  p-1">
             <Card className={`mb-4 shadow-lg bg-grey-40 border`}
                 >
                 <CardBody>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                <span className='font-bold'> Total Score : </span> {testSubmitted.totalScore}
+                <span className='font-bold'> Total Score : </span> {testSubmitted.totalScore} / {testSubmitted.maximumScore}
                 </p>
                 </CardBody>
             </Card>
 
             </div>
             
-            <div className="w-full lg:w-6/12 p-1">
+            <div className="w-full lg:w-12/12 p-1">
             <Card className={`mb-4 shadow-lg bg-grey-40 border`}
                 >
                 <CardBody>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                <span className='font-bold'>  Time Taken / Total Time : </span> 
+                <span className='font-bold'>  Time Taken / Total Time : </span>  {timeTaken} Seconds / {testSubmitted.maximumTime} Seconds
                 </p>
                 </CardBody>
             </Card>
@@ -237,10 +275,30 @@ export default function McqTest(props) {
          {
              <div className="hidden sm:block">
             <Button onClick={()=>{
-                (testSubmitted.status)?setCurrQuestion(currQuestion>=mcqDetails.result.questions.length? 0:currQuestion+1):(currQuestion+1<mcqDetails.result.questions.length)?setCurrQuestion(currQuestion+1):handleSubmitMcq();
+                (testSubmitted.status)
+                ? 
+                  setCurrQuestion(currQuestion>=mcqDetails.result.questions.length? 0:currQuestion+1)
+                :
+                  (
+                  (currQuestion+1<mcqDetails.result.questions.length)
+                  ?
+                    (
+                    (currQuestion==-1)
+                    ?
+                      (()=>{setTimeTaken(new Date());setCurrQuestion(currQuestion+1)})()
+                    :
+                      setCurrQuestion(currQuestion+1)
+                    )
+                  :
+                    handleSubmitMcq()
+                  )
                 
                 }}>
-            {(testSubmitted.status&&currQuestion==mcqDetails.result.questions.length)?"Verify Answers":(currQuestion==-1)? 'Start Test':(!testSubmitted.status&&currQuestion+1==mcqDetails.result.questions.length)?"Submit":'Next'}
+            {
+              (testSubmitted.status&&currQuestion==mcqDetails.result.questions.length)?"Verify Answers":
+              (currQuestion==-1)? 'Start Test':
+               (!testSubmitted.status&&currQuestion+1==mcqDetails.result.questions.length)?"Submit":'Next'
+            }
             </Button>
           </div>
           }
