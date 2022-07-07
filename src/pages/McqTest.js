@@ -112,11 +112,20 @@ export default function McqTest(props) {
         //   });
 
           mcqDetails.result.questions.map((v,k)=>{
+            console.log("ValuesAnswers");
+            console.log(v);
+            console.log(k);
+            console.log(activeAnswer[k]);
+            console.log(activeAnswer[k]+1);
+            console.log(v.correctAnswer);
 
-            if (activeAnswer[k] && activeAnswer[k]+1==v.correctAnswer)
+            if (activeAnswer[k]+1==v.correctAnswer)
             {
-                rightAnswer++;
+                rightAnswer+=1;
                 totalScore +=Number(v.point);
+
+                console.log("AnswerIsRight");
+                console.log(rightAnswer);
 
             }
 
@@ -214,7 +223,7 @@ export default function McqTest(props) {
                 >
                 <CardBody>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                <span className='font-bold'>Correct Answer :</span> {testSubmitted.correctAnswer} / {mcqDetails.result.questions.length-testSubmitted.correctAnswer}
+                <span className='font-bold'>Correct Answer :</span> {testSubmitted.correctAnswer} / {mcqDetails.result.questions.length}
                 </p>
                 </CardBody>
             </Card>
