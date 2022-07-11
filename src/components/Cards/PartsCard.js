@@ -97,16 +97,21 @@ function PartsCard(props) {
       case 'GIF':
       case 'IMG':
         return (
+
+          (!String(children).includes('.gif')&&!String(children).includes('.png')&&!String(children).includes('.jpg')&&!String(children).includes('.jpeg')&&!String(children).includes('.tiff')&&!String(children).includes('.raw'))?
+          "":
           <>
-          {children && children.filePath && console.log(children.filePath.trim().replaceAll(' ','%20'))}
-          {children && children.filePath &&
+          {console.log("Check IMage")}
+          {console.log(children)}
+          {children  && console.log(String(children).replaceAll(' ','%20'))}
+          {children  &&
             <div className='flex flex-wrap'>
             <div className='w-full lg:w-12/12 pr-4'>
             <img
               aria-hidden="true"
               className="object-cover w-full h-full"
-              src={children.filePath.trim().replaceAll(' ','%20')}
-              alt="tiger"
+              src={String(children).replaceAll(' ','%20')}
+              alt="Unable to Load Image"
               style={{borderRadius: '10px'}}
             />
             </div>
@@ -123,17 +128,17 @@ function PartsCard(props) {
       case 'VIDEO':
         return (<>
         
-        {console.log(`https://www.youtube.com/embed/${children.replaceAll("watch?v=",'')}`)}
+        {console.log(`https://www.youtube.com/embed/${String(children).replaceAll("watch?v=",'')}`)}
         <div className="video-container" style={{borderRadius: '10px'}}>
     {/* <iframe src={`https://www.youtube.com/embed/${children}?rel=0&autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-    <iframe src={`https://www.youtube.com/embed/${children.replaceAll("watch?v=",'')}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
+    <iframe src={`https://www.youtube.com/embed/${String(children).replaceAll("watch?v=",'')}`} allow="fullscreen;" frameborder="0" allowFullScreen></iframe>
     </div> </>);   
       case 'PPT':
         return (<>
         {/* {children_1=children.trim().replace(' ','%20')} */}
-        {(console.log("It worked"),console.log(`https://view.officeapps.live.com/op/embed.aspx?src=${children.trim().replaceAll(' ','%20')}`))}
+        {children && (console.log("It worked"),console.log(`https://view.officeapps.live.com/op/embed.aspx?src=${String(children).trim().replaceAll(' ','%20')}`))}
         {/* https://view.officeapps.live.com/op/embed.aspx?src=${linkToPPTFile}` */}
-        <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${children.trim().replaceAll(' ','%20')}`} width="100%" height="500px" frameborder='0'/>        </>);    
+        { children && <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=${String(children).trim().replaceAll(' ','%20')}`} width="100%" height="500px" frameborder='0'/>  }      </>);    
       case 'PDF':
         return (<>
         {console.log(`${children}`)}

@@ -822,7 +822,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
          (() => {
                   switch (v.type) {
                         // case "IMG": return v.value.description;
-                        case "VIDEO": return (v.value.tag) ? v.value.tag:"    ";
+                        case "VIDEO" && v.value: return (v.value.tag) ? v.value.tag:"    ";
                         default: return "";
                                   }
                     })()}       
@@ -881,7 +881,7 @@ listenActivePart={listenActivePart}
        {v.value && (() => {
      switch (v.type) {
                         case "TEXT":case 'SPECIAL_TEXT':  return v.value;
-                        case "IMG" :case 'GIF': return v.value;
+                        case "IMG" :case 'GIF': return (v.value.filePath ? v.value.filePath:v.value? v.value:'');
                         case "VIDEO": return (
                           v.value.url? v.value.url.split('/').pop() : v.value.split('/').pop()
                           );
