@@ -10,6 +10,7 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import BloomImage from "../../assets/img/BloomBox.png";
 import McqCardImage from "../../assets/img/TestCard.png";
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import QuizLottie from "../../assets/lottie/StartQuiz.json"
 
 
 
@@ -97,13 +98,14 @@ function PartsCard(props) {
       case 'IMG':
         return (
           <>
+          {children && children.filePath && console.log(children.filePath.trim().replaceAll(' ','%20'))}
           {children && children.filePath &&
             <div className='flex flex-wrap'>
             <div className='w-full lg:w-12/12 pr-4'>
             <img
               aria-hidden="true"
               className="object-cover w-full h-full"
-              src={children.filePath}
+              src={children.filePath.trim().replaceAll(' ','%20')}
               alt="tiger"
               style={{borderRadius: '10px'}}
             />
@@ -139,7 +141,21 @@ function PartsCard(props) {
       case 'gForm':
         return (<>
         {console.log(`https://docs.google.com/gview?url=${children}`)}
-        <iframe src={children} width="100%" height="500px"/>        
+        {(children.includes('forms.gle'))? 
+       <><div className='relative align-items-center'> <a href={children} target='_blank'>
+        <Player
+          autoplay
+          loop
+          src={QuizLottie}
+          style={{ height: '300px', width: '300px' }}
+        >
+          {/* <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} /> */}
+            </Player>
+            </a>
+            {/* <p className='text-center text-purple-800'>Its time for Quiz!</p> */}
+            </div></>:
+        <iframe src={children} width="100%" height="500px"/> }
+               
         {/* <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>         */}
         </>);      
       case 'AUDIO':

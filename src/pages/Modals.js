@@ -24,7 +24,7 @@ function Modals() {
         <Button onClick={openModal}>Open modal</Button>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isModalOpen} onClose={closeModal} >
         <ModalHeader>Modal header</ModalHeader>
         <ModalBody>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum et eligendi repudiandae

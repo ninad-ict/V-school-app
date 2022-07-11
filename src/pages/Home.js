@@ -882,7 +882,9 @@ listenActivePart={listenActivePart}
      switch (v.type) {
                         case "TEXT":case 'SPECIAL_TEXT':  return v.value;
                         case "IMG" :case 'GIF': return v.value;
-                        case "VIDEO": return (v.value.url.split('/').pop());
+                        case "VIDEO": return (
+                          v.value.url? v.value.url.split('/').pop() : v.value.split('/').pop()
+                          );
                         case "AUDIO": return v.value;
                         case "gForm": {
                           return v.value

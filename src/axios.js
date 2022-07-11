@@ -1,12 +1,13 @@
 import axios from "axios";
 // import APP_URL from './common/constants';
 
-// - API Link for Dev server
-// const APP_URL = 'http://dev.vopa.in/vopa/api/';
+// - API Link for DEV server
+const APP_URL = 'http://dev.vopa.in/vopa/api/';
+const SEPARATE_URL = 'http://dev.vopa.in/content/api/';
 
-// - API Link for AWS BUILD
-const APP_URL = 'https://vschoolindia.com/vopa/api/'; 
-const SEPARATE_URL = 'https://vschoolindia.com/content/api/';
+// - API Link for PROD BUILD
+// const APP_URL = 'https://vschoolindia.com/vopa/api/'; 
+// const SEPARATE_URL = 'https://vschoolindia.com/content/api/';
 
 // - API Link for Local server
 // const APP_URL = 'https://lessons.vopa.in/vopa/api/';

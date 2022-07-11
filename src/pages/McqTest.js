@@ -41,9 +41,28 @@ export default function McqTest(props) {
         setIsModalOpen(true)
       }
     
-      function closeModal() {
+      function closeModal(e) {
+        // e.preventDefault();
+     
         setIsModalOpen(false)
       }
+
+      function handleCross(e)
+      {console.log("eee");
+        console.log(e);
+
+        e.preventDefault();
+        closeModal();
+
+      }
+
+    //   const closeModal = (event, reason) => {
+    //     console.log("reason");
+    //     console.log(reason);
+    //     if (reason && reason == "backdropClick") 
+    //         return;
+    //         setIsModalOpen(false)
+    // }
 
       useEffect(()=>{
         console.log("Reached MCQ");
@@ -156,13 +175,19 @@ export default function McqTest(props) {
 <>
 {loading && 
 
-    <Modal isOpen={isModalOpen} onClose={closeModal} border>
+    <Modal isOpen={isModalOpen} onClose={closeModal} >
        <div className='text-center my-auto'><p>Loading...</p></div>
       </Modal>}
 
 
 {mcqDetails &&
-        <Modal isOpen={isModalOpen} onClose={closeModal} >
+        <Modal isOpen={isModalOpen} 
+        data-backdrop="false"
+         onClose={
+           (e)=> handleCross(e)
+          }
+          shouldCloseOnOverlayClick={true}
+         >
         <ModalHeader ><div className='text-center'><p>Test-{mcqDetails.result.quizTitle} {(testSubmitted.status)?"(Results)":""}</p></div></ModalHeader>
         <ModalBody>
         {currQuestion==-1?
@@ -275,14 +300,17 @@ export default function McqTest(props) {
            * Or, maybe find some way to pass something like size="large md:regular"
            * to Button
            */}
-         { (!testSubmitted.status || currQuestion!=0) && <div className="hidden sm:block">
-            <Button layout="outline" onClick={()=>{(testSubmitted.status&&currQuestion==mcqDetails.result.questions.length)?closeModal():(currQuestion>-1)? setCurrQuestion(currQuestion-1):closeModal()}}>
+         { (!testSubmitted.status || currQuestion!=0) && 
+         <div className="sm:block">
+            <Button layout="outline" 
+            onClick={()=>{(testSubmitted.status&&currQuestion==mcqDetails.result.questions.length)?closeModal():(currQuestion>-1)? setCurrQuestion(currQuestion-1):closeModal()}}>
             {(testSubmitted.status&&currQuestion==mcqDetails.result.questions.length)?"Close Test":(currQuestion==-1)? 'Cancel':'Previous'}
             </Button>
           </div>
           }
+
          {
-             <div className="hidden sm:block">
+             <div className="sm:block">
             <Button onClick={()=>{
                 (testSubmitted.status)
                 ? 
@@ -311,8 +339,8 @@ export default function McqTest(props) {
             </Button>
           </div>
           }
+{/* 
           <div className="block w-full sm:hidden">
-            {/* <Button block size="large" layout="outline" onClick={closeModal}> */}
             <Button block size="large" layout="outline" onClick={closeModal}>
             Cancel
             </Button>
@@ -321,7 +349,7 @@ export default function McqTest(props) {
             <Button block size="large">
               Accept
             </Button>
-          </div>
+          </div> */}
         </ModalFooter>
       </Modal>
 
