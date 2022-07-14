@@ -883,7 +883,7 @@ listenActivePart={listenActivePart}
                         case "TEXT":case 'SPECIAL_TEXT':  return v.value;
                         case "IMG" :case 'GIF': return (v.value.filePath ? v.value.filePath:v.value? v.value:'');
                         case "VIDEO": return (
-                          v.value.url? v.value.url.split('/').pop() : v.value.split('/').pop()
+                          v.value.url? String(v.value.url).split('/').pop() : String(v.value).split('/').pop()
                           );
                         case "AUDIO": return v.value;
                         case "gForm": {

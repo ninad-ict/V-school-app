@@ -1,4 +1,4 @@
-import React, { lazy, useRef,useContext } from 'react'
+import React, { lazy, useRef,useContext,useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
 import { useState } from 'react';
@@ -18,6 +18,22 @@ const Home = lazy(() => import('./pages/Home'))
 function App() {
 
   const pageHeading=useContext(UserContext);
+
+  // useEffect(() => {
+  //   const handleTabClose = event => {
+  //     event.preventDefault();
+
+  //     console.log('beforeunload event triggered');
+
+  //     return (event.returnValue = 'Are you sure you want to exit?');
+  //   };
+
+  //   window.addEventListener('beforeunload', handleTabClose);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleTabClose);
+  //   };
+  // }, []);
 
 
   console.log("local->"+localStorage.getItem('login'));
