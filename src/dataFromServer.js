@@ -22,6 +22,20 @@ console.log(config);
 
 // const pageHeading=useContext(UserContext);
 
+export function sendWebTimeSpend(time)
+{
+  console.log("Sending time spent");
+  http.post(`web_time_spend`,{
+    time_spend:time
+  },config).then((result)=>{
+    if(result.success)
+    {
+     return result.data; 
+    }
+
+  });
+}
+
 
 export function startAuth(mobile,isEmail,emailId)
 {

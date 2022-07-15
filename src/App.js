@@ -6,6 +6,9 @@ import { UserContext } from './context/UserContext';
 // import ReactGA from 'react-ga';
 // const TRACKING_ID = "G-DZYH7BD5EX"; // OUR_TRACKING_ID
 // ReactGA.initialize(TRACKING_ID);
+import {sendWebTimeSpend} from "./dataFromServer";
+
+import { useStopwatch } from "react-use-stopwatch";
 
 const Layout = lazy(() => import('./containers/Layout'))
 const Login = lazy(() => import('./pages/Login'))
@@ -13,21 +16,39 @@ const CreateAccount = lazy(() => import('./pages/CreateAccount'))
 const Profile = lazy(() => import('./pages/Profile'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
-const Home = lazy(() => import('./pages/Home'))
+const Home = lazy(() => import('./pages/Home'));
+
+
+
+
 
 function App() {
 
   const pageHeading=useContext(UserContext);
-  console.log("Total Time of visit"+localStorage.getItem("timeOfVisit"))
+  // console.log("Total Time of visit"+localStorage.getItem("timeOfVisit"))
 
-  const [sessiontime,setSessionTime]=useState(Date());
+  const [{ time, format }, start, stop, reset] = useStopwatch();
+  start();
 
   useEffect(() => {
+
+    // start();
+
 
     const handleTabClose = event => {
       event.preventDefault();
 
+      // stop();
       console.log('beforeunload event triggered');
+      console.log('Time Elapsed'+time);
+
+
+
+    //   sendWebTimeSpend(sessiontime).then(d=>{
+    //   setAllSubjects(d.response);
+    //   console.log(d.response[0].subject_name)
+    // })
+    // .catch(e=>console.log("Error"+e));
 
 
       // localStorage.setItem("")

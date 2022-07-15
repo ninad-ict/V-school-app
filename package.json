@@ -40,6 +40,7 @@
     "react-slideshow-image": "^3.7.5",
     "react-speech-kit": "^3.0.1",
     "react-transition-group": "4.4.1",
+    "react-use-stopwatch": "^2.1.2",
     "redux": "^4.2.0"
   },
   "devDependencies": {
