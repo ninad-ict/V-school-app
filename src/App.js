@@ -18,22 +18,28 @@ const Home = lazy(() => import('./pages/Home'))
 function App() {
 
   const pageHeading=useContext(UserContext);
+  console.log("Total Time of visit"+localStorage.getItem("timeOfVisit"))
 
-  // useEffect(() => {
-  //   const handleTabClose = event => {
-  //     event.preventDefault();
+  const [sessiontime,setSessionTime]=useState(Date());
 
-  //     console.log('beforeunload event triggered');
+  useEffect(() => {
 
-  //     return (event.returnValue = 'Are you sure you want to exit?');
-  //   };
+    const handleTabClose = event => {
+      event.preventDefault();
 
-  //   window.addEventListener('beforeunload', handleTabClose);
+      console.log('beforeunload event triggered');
 
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleTabClose);
-  //   };
-  // }, []);
+
+      // localStorage.setItem("")
+      return (event.returnValue = 'Are you sure you want to exit?');
+    };
+
+    window.addEventListener('beforeunload', handleTabClose);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleTabClose);
+    };
+  }, []);
 
 
   console.log("local->"+localStorage.getItem('login'));
