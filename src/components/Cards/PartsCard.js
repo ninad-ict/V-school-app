@@ -86,7 +86,7 @@ function PartsCard(props) {
                         
                       />
 
-            <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}
+            <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(String(children).replaceAll('text-white',''))}
             >
 {/* {setValue(this.target.innerText)} */}
           
