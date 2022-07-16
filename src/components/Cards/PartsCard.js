@@ -98,7 +98,7 @@ function PartsCard(props) {
       case 'IMG':
         return (
 
-          (!String(children).includes('.gif')&&!String(children).includes('.png')&&!String(children).includes('.jpg')&&!String(children).includes('.jpeg')&&!String(children).includes('.tiff')&&!String(children).includes('.raw'))?
+          (!String(children).includes('.gif')&&!String(children).includes('.GIF')&&!String(children).includes('.png')&&!String(children).includes('.PNG')&&!String(children).includes('.jpg')&&!String(children).includes('.JPG')&&!String(children).includes('.jpeg')&&!String(children).includes('.JPEG')&&!String(children).includes('.tiff')&&!String(children).includes('.raw'))?
           "":
           <>
           {console.log("Check IMage")}
