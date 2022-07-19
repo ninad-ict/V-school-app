@@ -86,7 +86,7 @@ function PartsCard(props) {
                         
                       />
 
-            <p className="text-gray-600 dark:text-gray-600 text-2xl" dangerouslySetInnerHTML={getMarkdownText(children)}
+            <p className="text-gray-600 dark:text-gray-600 text-2xl p-3" dangerouslySetInnerHTML={getMarkdownText(String(children).replaceAll('text-white',''))}
             >
 {/* {setValue(this.target.innerText)} */}
           
@@ -98,7 +98,7 @@ function PartsCard(props) {
       case 'IMG':
         return (
 
-          (!String(children).includes('.gif')&&!String(children).includes('.png')&&!String(children).includes('.jpg')&&!String(children).includes('.jpeg')&&!String(children).includes('.tiff')&&!String(children).includes('.raw'))?
+          (!String(children).includes('.gif')&&!String(children).includes('.GIF')&&!String(children).includes('.png')&&!String(children).includes('.PNG')&&!String(children).includes('.jpg')&&!String(children).includes('.JPG')&&!String(children).includes('.jpeg')&&!String(children).includes('.JPEG')&&!String(children).includes('.tiff')&&!String(children).includes('.raw'))?
           "":
           <>
           {console.log("Check IMage")}
@@ -106,7 +106,7 @@ function PartsCard(props) {
           {children  && console.log(String(children).replaceAll(' ','%20'))}
           {children  &&
             <div className='flex flex-wrap'>
-            <div className='w-full lg:w-12/12 pr-4'>
+            <div className='w-full lg:w-12/12'>
             <img
               aria-hidden="true"
               className="object-cover w-full h-full"
@@ -182,7 +182,7 @@ function PartsCard(props) {
         return(
           <>
             <div
-            className='flex flex-wrap' style={{'background':'#E6F4FF'}}>
+            className='flex flex-wrap p-4' style={{'background':'#E6F4FF'}}>
             <div className='w-full lg:w-12/12 pr-4'>
             <img
               aria-hidden="true"
@@ -251,8 +251,8 @@ function PartsCard(props) {
 
   if(children)
   return (
-    <Card style={{borderRadius: '10px',border:border,backgroundColor:'none'}}>
-    <div className="relative mr-10">
+    <Card style={{borderRadius: '10px',border:border,backgroundColor:'none',padding:'0px'}}>
+    {/* <div className="relative mr-10">
 <Dropdown
               align="right"
               isOpen={isNotificationsMenuOpen}
@@ -261,42 +261,33 @@ function PartsCard(props) {
             >
               <DropdownItem tag="a" href="#" className="justify-between">
                 <span>Full Screen</span>
-                {/* <Badge type="danger">133</Badge> */}
               </DropdownItem>
               <DropdownItem tag="a" href="#" className="justify-between">
                 <span>Info</span>
-                {/* <Badge type="danger">2</Badge> */}
               </DropdownItem>
               <DropdownItem tag="a" href="#" className="justify-between" >
                 <span>More...</span>
               </DropdownItem>
 </Dropdown>
-</div>
+</div> */}
 {
   console.log(cardColor)}
     <CardBody style={{
-       backgroundColor: cardColor,
-       padding: 8,
+       backgroundColor: cardColor ||'none',
+      //  backgroundColor: 'red',
+       padding:'0px',
       
       
        
        
        
     }}>
-      <p className="mb-4 font-semibold text-gray-100 dark:text-gray-100" >
+      <p className="font-semibold text-gray-100 dark:text-gray-100" >
       <p dangerouslySetInnerHTML={getMarkdownText(title)}/>
-      <span className='text-right float-right'>
-      {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-<path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-</svg> */}
-{/* <Button icon={MenuIcon} layout="link" aria-label="Like" onClick={handleNotificationsClick} /> */}
-
-
-</span>
 </p>
-      <p className="text-gray-600 dark:text-gray-400">
+      {/* <p className="text-gray-600 dark:text-gray-400"> */}
       <CheckPart/>
-      </p>
+      {/* </p> */}
     </CardBody>
   </Card>
   )
