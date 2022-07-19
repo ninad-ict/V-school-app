@@ -597,7 +597,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      </div>   */}
        {
      
-         <InfoCard color={(subjectActive==k)? "bg-purple-400":""} title={v.subject_name} value={v.subject_name} key={k} handleClick={
+         <InfoCard color={(subjectActive==k)? "bg-purple-400 dark:bg-purple-400":""} title={v.subject_name} value={v.subject_name} key={k} handleClick={
             e=>{
               setSubjectActive(k);
               setCurrSubject(v);
@@ -762,7 +762,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       {console.log(v)}
       {console.log("Iteration is "+k)}
       {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
-      <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300 ${(k==partActive) ? "bg-purple-300":""}`} onClick={
+      <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300  ${(k==partActive) ? "bg-purple-300 dark:bg-purple-300 dark:text-black":""}`} onClick={
         ()=>{
           setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":v);
           setPartActive(k);
@@ -778,7 +778,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             bgColorClass="bg-purple-100 dark:bg-purple-500"
             className="mr-4"
           />
-        <span className='dark:text-white'>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":"Part "+Number.parseInt(k+1)} </span>
+        <span className={`dark:hover:text-black ${(k==partActive) ? "dark:text-black":"dark:text-white"}`}>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":"Part "+Number.parseInt(k+1)} </span>
       </div>
         </CardBody>
       </Card>
@@ -791,15 +791,14 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      <div className={'flex flex-wrap lg:w-12/12 mx-0'} style={{marginRight:`${userContext.marginIndex}%`,marginLeft:`${userContext.marginIndex}%`}} ref={partRef} >
      <hr className='mb-4 pb-2'/>
 
-     <div className='w-full lg:w-12/12 bg-white py-4 pl-4 underline h-10  rounded shadow-md'>
-    <p> {currPart &&
-    <div>
+     {
+      currPart && 
+     /* <div className='relative w-full lg:w-12/12 bg-purple-400 text-purple-50 pl-4 py-auto  underline h-10 mb-4  rounded shadow-md'> */
+   <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>
     
-
-     <SectionTitle>{(currPart.part_name)? currPart.part_name:"Summary"}</SectionTitle>
-     </div>}</p>
-     </div>
-     <div className='w-full lg:w-12/12 bg-white py-4 pl-4 underline h-30 border-t-0 rounded shadow-md'></div>
+     /* </div> */
+     }
+     {/* <div className='w-full lg:w-12/12 bg-white py-4 pl-4 underline h-30 border-t-0 rounded shadow-md'></div> */}
 
     
 <hr/>
@@ -816,8 +815,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
-        <div className="w-full lg:w-12/12 pr-4 font-light my-4 " onClick={()=>setlistenActivePart(k)}>
-        {console.log(v)}
+        <div className="w-full lg:w-12/12 font-light my-4" onClick={()=>setlistenActivePart(k)}>
        <PartsCard title={
          (() => {
                   switch (v.type) {
