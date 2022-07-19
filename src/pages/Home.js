@@ -762,7 +762,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       {console.log(v)}
       {console.log("Iteration is "+k)}
       {console.log("Length is"+Number.parseInt(chapterPreview.response.chapter_parts.length))}
-      <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300 ${(k==partActive) ? "bg-purple-300 dark:bg-purple-300 dark:text-gray-50":""}`} onClick={
+      <Card className={`mb-8 shadow-lg hover:bg-purple-100 dark:hover:bg-purple-300  ${(k==partActive) ? "bg-purple-300 dark:bg-purple-300 dark:text-black":""}`} onClick={
         ()=>{
           setCurrPart((Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":v);
           setPartActive(k);
@@ -778,7 +778,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
             bgColorClass="bg-purple-100 dark:bg-purple-500"
             className="mr-4"
           />
-        <span className='dark:text-white'>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":"Part "+Number.parseInt(k+1)} </span>
+        <span className={`dark:hover:text-black ${(k==partActive) ? "dark:text-black":"dark:text-white"}`}>{(Number.parseInt(k)==Number.parseInt(chapterPreview.response.chapter_parts.length)) ? "Summary":"Part "+Number.parseInt(k+1)} </span>
       </div>
         </CardBody>
       </Card>
