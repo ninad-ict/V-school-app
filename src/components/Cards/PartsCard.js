@@ -189,14 +189,15 @@ function PartsCard(props) {
          {
           console.log(`The audio file is ${children}`)
           }
-        <div className='flex items-center bg-none'>
-        {/* <p className="text-gray-600 dark:text-gray-400 mx-auto"> */}
-        <audio>
+        {/* <div className='flex items-center bg-purple-400'> */}
+        <p className="mx-auto">
+        {/* <audio controls>
           <source src={`${children}`} type="audio/mp3"/>
-          </audio>
+          </audio> */}
+          <AudioPlayerCard/>
       
-        {/* </p> */}
-        </div>
+        </p>
+        {/* </div> */}
 </>);
       case 'SPECIAL_TEXT':
         return(

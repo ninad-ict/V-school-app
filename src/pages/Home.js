@@ -869,6 +869,11 @@ if(v.type=='SPECIAL_TEXT')
  return "#E6F4FF"; 
 }
 
+if(v.type=='AUDIO')
+{
+ return "2px solid #7D3AF2"; 
+}
+
 })()
 
 }
