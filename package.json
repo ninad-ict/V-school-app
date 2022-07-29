@@ -42,6 +42,7 @@
     "react-music-player": "^1.0.3",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
+    "react-slider": "^2.0.1",
     "react-slideshow-image": "^3.7.5",
     "react-speech-kit": "^3.0.1",
     "react-transition-group": "4.4.1",
