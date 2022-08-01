@@ -24,16 +24,16 @@ import CLAudioPlayer from 'react-cl-audio-player';
 
 // import ReactMusicPlayer from 'react-music-player/src/ReactMusicPlayer';
 
-const songs = [
-  {
-    url: 'https://vopa-bunny.b-cdn.net/media/21/452/1.mp3',
-    // cover: 'http://www.nossoarmario.com/blog/wp-content/uploads/2015/01/redfoo.jpg',
-    artist: {
-      name: 'Metallica',
-      song: 'Fuel'
-    },
-  },
-];
+// const songs = [
+//   {
+//     url: 'https://vopa-bunny.b-cdn.net/media/21/452/1.mp3',
+//     // cover: 'http://www.nossoarmario.com/blog/wp-content/uploads/2015/01/redfoo.jpg',
+//     artist: {
+//       name: 'Metallica',
+//       song: 'Fuel'
+//     },
+//   },
+// ];
 
 
 // import DoorDashFavorite from '../Typography/DoorDashFavorite';
@@ -73,6 +73,7 @@ function PartsCard(props) {
 
   function CheckPart()
   {
+    
     switch(type) {
       case 'TEXT':
         return (
@@ -185,20 +186,13 @@ function PartsCard(props) {
         {/* <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>         */}
         </>);      
       case 'AUDIO':
-        return (<>
-         {
-          console.log(`The audio file is ${children}`)
-          }
-        {/* <div className='flex items-center bg-purple-400'> */}
-        <p className="mx-auto">
-        {/* <audio controls>
-          <source src={`${children}`} type="audio/mp3"/>
-          </audio> */}
-          <AudioPlayerCard/>
-      
-        </p>
-        {/* </div> */}
-</>);
+
+        // <AudioPlayerCard audioLink={`${children}`}/>
+        return (
+          <AudioPlayerCard audioLink={`${children}`}></AudioPlayerCard>
+        // <AudioPlayerCard audioLink={`${children}`}/>
+        // "Hii"
+        );
       case 'SPECIAL_TEXT':
         return(
           <>

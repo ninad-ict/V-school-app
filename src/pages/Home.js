@@ -65,6 +65,7 @@ import {
   lineLegends,
 } from '../utils/demo/chartsData'
 import { fa } from 'faker/lib/locales';
+import AudioPlayerCard from '../components/Cards/AudioPlayerCard';
 // import McqTest from './McqTest';
 // import DoorDashFavorite from '../components/Typography/DoorDashFavorite';
 
@@ -266,7 +267,7 @@ setlistenActivePart(-1);
 
     
 
-   console.log(profile)
+   console.log(profile);
 
 
     console.log("CHanges again");
@@ -556,6 +557,8 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </ModalFooter>
       </Modal> */}
     <div ref={subjectRef} ></div>
+
+    <AudioPlayerCard/>
     
       <PageTitle> <Button icon={ChevronLeft} layout="link" aria-label="Like" 
         disabled={!currPart ? 'true':''}
@@ -710,6 +713,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 :""}
 
    </> :<>
+   {console.log("hanging Problem!")}
      <div className='flex flex-wrap relative'>
      <div className="w-full lg:w-6/12 pr-4 font-light">
      <CTA text={`Subject-${currSubject.subject_name}`} 
@@ -742,10 +746,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {/* <div class="fixed top-0  p-2 bg-black text-white uppercase">Sticky Heading 1</div> */}
 
 
-{loading && !chapterPreview && <ThemedSuspense/>}
-     {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
-       console.log(v.part_name)
-     })}
+      {loading && !chapterPreview && <ThemedSuspense/>}
+      
+     {/* {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
+       console.log(v.part_name);
+     })} */}
      
      
      {/* {chapterPreview && [...chapterPreview.response.chapter_parts,"Summary"].map((v,k)=>( */}
@@ -816,7 +821,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
         <div className="w-full lg:w-12/12 font-light my-4" onClick={()=>setlistenActivePart(k)}>
-       <PartsCard title={
+       <PartsCard key={k} title={
          (() => {
                   switch (v.type) {
                         // case "IMG": return v.value.description;
