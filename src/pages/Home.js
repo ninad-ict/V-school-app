@@ -65,7 +65,6 @@ import {
   lineLegends,
 } from '../utils/demo/chartsData'
 import { fa } from 'faker/lib/locales';
-import AudioPlayerCard from '../components/Cards/AudioPlayerCard';
 // import McqTest from './McqTest';
 // import DoorDashFavorite from '../components/Typography/DoorDashFavorite';
 
@@ -558,7 +557,6 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
       </Modal> */}
     <div ref={subjectRef} ></div>
 
-    <AudioPlayerCard/>
     
       <PageTitle> <Button icon={ChevronLeft} layout="link" aria-label="Like" 
         disabled={!currPart ? 'true':''}
@@ -820,7 +818,9 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
-        <div className="w-full lg:w-12/12 font-light my-4" onClick={()=>setlistenActivePart(k)}>
+        <div className="w-full lg:w-12/12 font-light my-4" 
+        // onClick={()=>setlistenActivePart(k)}
+        >
        <PartsCard key={k} title={
          (() => {
                   switch (v.type) {

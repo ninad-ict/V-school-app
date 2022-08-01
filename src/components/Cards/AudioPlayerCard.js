@@ -11,10 +11,59 @@ function AudioPlayerCard(props)
 
 	const {audioLink}=props;
 	const [time,setTime]=useState('00:00');
-	// const [audio,setAudio] = useState(new Audio(audioLink));
+	const [audio,setAudio] = useState(new Audio(audioLink));
 	const [isPlaying,setIsPlaying]=useState(false);
+	const [audioDuration,setAudioDuration]=useState(0);
+	const [audioCurrentTime,setAudioCurrentTime]=useState(0);
 
-	// const audio=new Audio('https://vopa-bunny.b-cdn.net/media/21/452/2.mp3');
+	// const audio=new Audio(audioLink);
+
+	function createMinutesSeconds(time)
+	{
+		console.log("total Time is "+time);
+		console.log("Minutes is "+parseInt(time/60));
+		console.log("Seconds is "+parseInt(time%60));
+		// console.log()
+		const minutes=parseInt(time/60);
+		const seconds=parseInt(time%60);
+		// String(minutes).padEnd(2,'0');
+
+		return String(minutes).padStart(2,'0')+":"+String(seconds).padStart(2,'0');
+	}
+
+	useEffect(()=>{
+
+		console.log("Current time is"+audio.currentTime);
+
+	},
+	[audio.currentTime]);
+
+
+	useEffect(()=>{
+
+		const timeupdate = (e) => {
+			let time = e.target.currentTime;
+			// setCurrentTime(time);
+			console.log("The actual time is"+time);
+			setAudioCurrentTime(time);	
+		  };
+		  audio.addEventListener("timeupdate", timeupdate);
+		  return () => {
+			audio.removeEventListener("timeup	date", timeupdate);
+		  };
+
+	},[]);
+
+
+
+
+
+
+	audio.addEventListener('loadedmetadata', (e) => {
+		// return "Hii";
+		setAudioDuration(e.target.duration);
+		console.log("Current time->"+e.target.currentTime);
+  });
 	
 	useEffect(()=>{
 
@@ -23,18 +72,18 @@ function AudioPlayerCard(props)
 		if(isPlaying)
 		{
 			console.log("Playing");
-			// audio.play();
+			audio.play();
 		}
 		else
 		{
 			console.log("Paused");
-			// audio.pause();
+			audio.pause();
 		}
-		// return () => {
-		// 	// cancel the subscription
-		// 	// setAudio(null);
-		// 	setIsPlaying(false);
-		// };
+
+		return(()=>{
+			audio.pause();
+		})
+
 	},[isPlaying]);
 
 	function handlePlayPause(e)
@@ -42,6 +91,8 @@ function AudioPlayerCard(props)
 		e.preventDefault();
 		setIsPlaying(isPlaying=>!isPlaying);
 	}
+
+
 
 return(
 
@@ -65,16 +116,21 @@ return(
 		<div className="flex">
 		<div >
 			<Label htmlFor="default-range" className="block text-sm font-medium text-gray-900 dark:text-gray-300 mx-10">
-			{/* {audio.currentTime} */}
-			000
+			{createMinutesSeconds(audioCurrentTime)}
+			{/* 000 */}
 			</Label>
 		</div>
 		<div className="flex-1">
-			<Label htmlFor="default-range" className="float-right block text-sm font-medium text-gray-900 dark:text-gray-300 mx-10">03:00</Label>
+			<Label htmlFor="default-range" className="float-right block text-sm font-medium text-gray-900 dark:text-gray-300 mx-10">
+			{/* 03:00 */}
+			{/* {audio.duration} */}
+			{/* {audio && duration} */}
+			{audio && createMinutesSeconds(audioDuration)}
+			</Label>
 		</div>
 		</div>
 		<div className="flex">
-			{/* <input id="default-range"  type="range" className="w-full h-2 my-4 mx-10 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"/> */}
+			<input id="default-range"  type="range" value={audio.currentTime} max={audioDuration} className="w-full h-2 my-4 mx-10 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"/>
 		</div>
 		</div>
 		
