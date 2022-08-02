@@ -35,6 +35,12 @@ function AudioPlayerCard(props)
 
 		console.log("Current time is"+audio.currentTime);
 
+		if(audio.currentTime==audio.duration)
+		{
+			audio.currentTime=0;
+			setIsPlaying(false);
+		}
+
 	},
 	[audio.currentTime]);
 
@@ -48,8 +54,17 @@ function AudioPlayerCard(props)
 			setAudioCurrentTime(time);	
 		  };
 		  audio.addEventListener("timeupdate", timeupdate);
+
+		  const timeDuration= (e)=>{
+			setAudioDuration(e.target.duration);
+			console.log("Current time->"+e.target.currentTime);
+		  }
+
+		  audio.addEventListener('loadedmetadata', timeDuration);
+
 		  return () => {
-			audio.removeEventListener("timeup	date", timeupdate);
+			audio.removeEventListener("timeupdate", timeupdate);
+			audio.removeEventListener("loadedmetadata", timeDuration);
 		  };
 
 	},[]);
@@ -59,11 +74,7 @@ function AudioPlayerCard(props)
 
 
 
-	audio.addEventListener('loadedmetadata', (e) => {
-		// return "Hii";
-		setAudioDuration(e.target.duration);
-		console.log("Current time->"+e.target.currentTime);
-  });
+
 	
 	useEffect(()=>{
 
@@ -92,6 +103,15 @@ function AudioPlayerCard(props)
 		setIsPlaying(isPlaying=>!isPlaying);
 	}
 
+	function handleRangeSlider(e)
+	{
+
+		setAudioCurrentTime(e.target.value);
+		audio.currentTime=e.target.value;
+	}
+
+
+
 
 
 return(
@@ -101,7 +121,9 @@ return(
 
 		<div className="flex items-center justify-center">
 		<div className='m-2'>
-		<Button icon={AudioBackward} aria-label="Like" size="small"/>
+		<Button icon={AudioBackward} aria-label="Like" size="small"
+		onClick={()=>(audio.currentTime-10>0)? audio.currentTime-=10 :audio.currentTime=0}	
+		/>
 		</div>
 		<div className='m-2'>
 		<Button icon={(isPlaying) ? AudioPause:AudioPlay} size='large' 
@@ -109,7 +131,11 @@ return(
 
 		/>
 		</div>
-		<div className='m-2'><Button icon={AudioForward} aria-label="Like" size="small"/></div>
+		<div className='m-2'>
+		<Button icon={AudioForward} aria-label="Like" size="small"
+			onClick={()=>(audio.currentTime+10>audio.duration)? audio.currentTime=audio.duration :audio.currentTime+=10}	
+		/>
+		</div>
 
 		</div>
 		<div className="flex-wrap">
@@ -130,7 +156,15 @@ return(
 		</div>
 		</div>
 		<div className="flex">
-			<input id="default-range"  type="range" value={audio.currentTime} max={audioDuration} className="w-full h-2 my-4 mx-10 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"/>
+			<input id="default-range"  
+			type="range" 
+			value={audioCurrentTime} 
+			max={audioDuration}
+			onInput={e=>handleRangeSlider(e)} 
+			className="w-full h-2 my-4 mx-10 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+			
+			
+			/>
 		</div>
 		</div>
 		
