@@ -6,13 +6,34 @@ import ReactAudioPlayer from 'react-audio-player';
 import { HeartIcon,ZoomIn,ZoomOut,SoundOn,SoundOff } from '../../icons';
 
 import { useSpeechSynthesis } from "react-speech-kit";
+import AudioPlayerCard  from './AudioPlayerCard';
+// import CLAudioPlayerCard  from './AudioPlayerCard';
+// import {fa,}
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+// import { fa-play } from '@fortawesome/free-solid-svg-icons';
+import {fa} from "@fortawesome/fontawesome-svg-core";
+
 
 import BloomImage from "../../assets/img/BloomBox.png";
 import McqCardImage from "../../assets/img/TestCard.png";
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
-import QuizLottie from "../../assets/lottie/StartQuiz.json"
+import QuizLottie from "../../assets/lottie/StartQuiz.json";
+import AudioPlayer from 'react-cl-audio-player';
+import CLAudioPlayer from 'react-cl-audio-player';
 
+// import ReactMusicPlayer from 'react-music-player/src/ReactMusicPlayer';
 
+// const songs = [
+//   {
+//     url: 'https://vopa-bunny.b-cdn.net/media/21/452/1.mp3',
+//     // cover: 'http://www.nossoarmario.com/blog/wp-content/uploads/2015/01/redfoo.jpg',
+//     artist: {
+//       name: 'Metallica',
+//       song: 'Fuel'
+//     },
+//   },
+// ];
 
 
 // import DoorDashFavorite from '../Typography/DoorDashFavorite';
@@ -52,6 +73,7 @@ function PartsCard(props) {
 
   function CheckPart()
   {
+    
     switch(type) {
       case 'TEXT':
         return (
@@ -164,20 +186,13 @@ function PartsCard(props) {
         {/* <iframe src={`https://docs.google.com/gview?url=${children}`} width="100%" height="500px"/>         */}
         </>);      
       case 'AUDIO':
-        return (<>
-         {console.log(`The audio file is ${children}`)}
-        <div className='flex items-center'>
-        <p className="text-gray-600 dark:text-gray-400 mx-auto">
-        <audio controls>
-          <source src={`${children}`} type="audio/mp3"/>
-          </audio>
-        {/* <ReactAudioPlayer className='text-center'
-  src={children}
-  controls
-/>      */}
-        </p>
-        </div>
-</>);
+
+        // <AudioPlayerCard audioLink={`${children}`}/>
+        return (
+          <AudioPlayerCard audioLink={`${children}`}></AudioPlayerCard>
+        // <AudioPlayerCard audioLink={`${children}`}/>
+        // "Hii"
+        );
       case 'SPECIAL_TEXT':
         return(
           <>

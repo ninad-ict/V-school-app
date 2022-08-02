@@ -36,6 +36,10 @@ import { ReactComponent as SoundOn } from './sound-on.svg'
 import { ReactComponent as SoundOff } from './sound-off.svg'
 import { ReactComponent as Letter } from './letter.svg'
 import { ReactComponent as ChevronLeft} from './chevron-left.svg'
+import { ReactComponent as AudioPlay} from './audioplay.svg'
+import { ReactComponent as AudioPause} from './audiopause.svg'
+import { ReactComponent as AudioForward} from './audioforward.svg'
+import { ReactComponent as AudioBackward} from './audiobackward.svg'
 
 export {
   ButtonsIcon,
@@ -75,5 +79,9 @@ export {
   SoundOn,
   SoundOff,
   Letter,
-  ChevronLeft
+  ChevronLeft,
+  AudioPlay,
+  AudioPause,
+  AudioForward,
+  AudioBackward
 }

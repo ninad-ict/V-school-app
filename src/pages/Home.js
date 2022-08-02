@@ -266,7 +266,7 @@ setlistenActivePart(-1);
 
     
 
-   console.log(profile)
+   console.log(profile);
 
 
     console.log("CHanges again");
@@ -556,6 +556,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
         </ModalFooter>
       </Modal> */}
     <div ref={subjectRef} ></div>
+
     
       <PageTitle> <Button icon={ChevronLeft} layout="link" aria-label="Like" 
         disabled={!currPart ? 'true':''}
@@ -710,6 +711,7 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
 :""}
 
    </> :<>
+   {console.log("hanging Problem!")}
      <div className='flex flex-wrap relative'>
      <div className="w-full lg:w-6/12 pr-4 font-light">
      <CTA text={`Subject-${currSubject.subject_name}`} 
@@ -742,10 +744,11 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {/* <div class="fixed top-0  p-2 bg-black text-white uppercase">Sticky Heading 1</div> */}
 
 
-{loading && !chapterPreview && <ThemedSuspense/>}
-     {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
-       console.log(v.part_name)
-     })}
+      {loading && !chapterPreview && <ThemedSuspense/>}
+      
+     {/* {chapterPreview && chapterPreview.response.chapter_parts.map((v,k)=>{
+       console.log(v.part_name);
+     })} */}
      
      
      {/* {chapterPreview && [...chapterPreview.response.chapter_parts,"Summary"].map((v,k)=>( */}
@@ -815,8 +818,10 @@ console.log("Current Subject"+currSubject+"\tcurrent Chapter"+currChapter);
      {
        contentList && convertJSONtoArray(contentList.data.response.content).map((v,k)=>{
          return(
-        <div className="w-full lg:w-12/12 font-light my-4" onClick={()=>setlistenActivePart(k)}>
-       <PartsCard title={
+        <div className="w-full lg:w-12/12 font-light my-4" 
+        // onClick={()=>setlistenActivePart(k)}
+        >
+       <PartsCard key={k} title={
          (() => {
                   switch (v.type) {
                         // case "IMG": return v.value.description;
@@ -867,6 +872,11 @@ if(v.type=='TEXT')
 if(v.type=='SPECIAL_TEXT')
 {
  return "#E6F4FF"; 
+}
+
+if(v.type=='AUDIO')
+{
+ return "2px solid #7D3AF2"; 
 }
 
 })()
